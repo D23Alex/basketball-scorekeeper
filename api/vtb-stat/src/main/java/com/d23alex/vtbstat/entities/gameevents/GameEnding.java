@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Table(name="game_endings")
 @Entity
 @Data
@@ -14,5 +16,5 @@ import lombok.NoArgsConstructor;
 public class GameEnding {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     @ManyToOne Game game;
-    Long secondsSinceStart;
+    Timestamp timestamp;
 }
