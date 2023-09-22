@@ -24,7 +24,8 @@ public class FieldGoalAttempt {
     Long secondsSinceStart;
     FieldGoalType type;
     @ManyToOne Player shooter;
-    @OneToOne PersonalFoul foulOnShooter; // NULL если фола на броске не было
     Boolean isSuccessful;
-    @ManyToOne Player assistant;
+    @OneToOne PersonalFoul foulOnShooter; // NULL если фола на броске не было
+    @ManyToOne Player assistant; // NULL если мяч не был забит после передачи
+    @ManyToOne Player blockedBy; // NULL если мяч не был заблокирован
 }
