@@ -26,4 +26,5 @@ public class FieldGoalAttempt {
     @ManyToOne Player shooter;
     @OneToOne PersonalFoul foulOnShooter; // NULL если фола на броске не было
     Boolean isSuccessful;
+    @ManyToOne Player assistant;
 }

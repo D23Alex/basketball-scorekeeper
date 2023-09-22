@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Table(name="games")
 @Entity
@@ -18,5 +18,5 @@ public class Game {
     @ManyToOne Team team1;
     @ManyToOne Team team2;
     @ManyToOne Team homeTeam;
-    Date scheduledStartTime;
+    Timestamp scheduledStartTime;
 }
