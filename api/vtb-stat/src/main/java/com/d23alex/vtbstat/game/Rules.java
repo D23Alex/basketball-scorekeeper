@@ -1,4 +1,4 @@
-package com.d23alex.vtbstat;
+package com.d23alex.vtbstat.game;
 
 public class Rules {
     public enum EjectionCause {

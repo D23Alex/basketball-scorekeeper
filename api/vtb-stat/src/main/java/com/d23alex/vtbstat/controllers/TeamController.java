@@ -1,9 +1,8 @@
 package com.d23alex.vtbstat.controllers;
 
-import com.d23alex.vtbstat.repositories.TeamRepository;
+import com.d23alex.vtbstat.db.repositories.TeamRepository;
 import com.d23alex.vtbstat.entities.Team;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

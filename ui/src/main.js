@@ -3,10 +3,11 @@ import {createRouter, createWebHistory} from "vue-router";
 import App from './App.vue'
 
 import './assets/main.css'
-import Teams from "@/components/Teams.vue";
+import Teams from "@/components/league/Teams.vue";
 import Auth from "@/components/Auth.vue";
 import Welcome from "@/components/Welcome.vue";
 import Error from "@/components/Error.vue";
+import Game from "@/components/game/Game.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -20,6 +21,11 @@ const router = createRouter({
             path: "/teams",
             name: "teams",
             component: Teams
+        },
+        {
+            path: "/game/:gameId",
+            name: "game",
+            component: Game,
         },
         {
             path: "/",
