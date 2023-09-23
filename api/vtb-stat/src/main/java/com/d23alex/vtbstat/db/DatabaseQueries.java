@@ -1,9 +1,18 @@
 package com.d23alex.vtbstat.db;
 
+import com.d23alex.vtbstat.db.repositories.PlayerContractRepository;
+import com.d23alex.vtbstat.db.repositories.PlayerRepository;
 import com.d23alex.vtbstat.db.repositories.gameevents.*;
-import com.d23alex.vtbstat.game.GameEvents;
+import com.d23alex.vtbstat.entities.Player;
+import com.d23alex.vtbstat.entities.PlayerContract;
+import com.d23alex.vtbstat.game.GameEventLog;
 import com.d23alex.vtbstat.db.repositories.GameRepository;
 import org.springframework.stereotype.Component;
+
+import java.sql.Date;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /*
 На данном этапе компонент существует главным образом для того, чтобы не прописывать множество зависимостей в контроллерах
@@ -11,6 +20,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseQueries {
     private final GameRepository gameRepository;
+    private final PlayerRepository playerRepository;
+    private final PlayerContractRepository playerContractRepository;
 
     private final CoachEjectionRepository coachEjectionRepository;
     private final CoachTechnicalFoulRepository coachTechnicalFoulRepository;
@@ -32,6 +43,8 @@ public class DatabaseQueries {
 
     public DatabaseQueries(
             GameRepository gameRepository,
+            PlayerRepository playerRepository,
+            PlayerContractRepository playerContractRepository,
             FieldGoalAttemptRepository fieldGoalAttemptRepository,
             CoachEjectionRepository coachEjectionRepository,
             CoachTechnicalFoulRepository coachTechnicalFoulRepository,
@@ -50,6 +63,8 @@ public class DatabaseQueries {
             TimeoutRepository timeoutRepository,
             TurnoverRepository turnoverRepository) {
         this.gameRepository = gameRepository;
+        this.playerRepository = playerRepository;
+        this.playerContractRepository = playerContractRepository;
         this.fieldGoalAttemptRepository = fieldGoalAttemptRepository;
         this.coachEjectionRepository = coachEjectionRepository;
         this.coachTechnicalFoulRepository = coachTechnicalFoulRepository;
@@ -73,24 +88,35 @@ public class DatabaseQueries {
         return gameRepository.existsById(id);
     }
 
-    public GameEvents gameEventsByGameId(Long gameId) {
-        return new GameEvents(
+    public GameEventLog gameEventsByGameId(Long gameId) {
+        return new GameEventLog(
                 gameStartRepository.findByGameId(gameId),
                 gameEndingRepository.findByGameId(gameId),
                 lineupOccurrenceRepository.findAllByGameId(gameId),
                 startingLineupOccurrenceRepository.findAllByGameId(gameId),
-                coachEjectionRepository.findAllByGameId(gameId),
-                coachTechnicalFoulRepository.findAllByGameId(gameId),
-                fieldGoalAttemptRepository.findAllByGameId(gameId),
-                freeThrowAttemptRepository.findAllByGameId(gameId),
-                personalFoulRepository.findAllByGameId(gameId),
-                playerEjectionRepository.findAllByGameId(gameId),
-                playerTechnicalFoulRepository.findAllByGameId(gameId),
-                reboundRepository.findAllByGameId(gameId),
-                substitutionCallRepository.findAllByGameId(gameId),
+                coachEjectionRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
+                coachTechnicalFoulRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
+                fieldGoalAttemptRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
+                freeThrowAttemptRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
+                personalFoulRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
+                playerEjectionRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
+                playerTechnicalFoulRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
+                reboundRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
+                substitutionCallRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
                 substitutionInRepository.findAllByGameId(gameId),
                 substitutionOutRepository.findAllByGameId(gameId),
-                timeoutRepository.findAllByGameId(gameId),
-                turnoverRepository.findAllByGameId(gameId));
+                timeoutRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
+                turnoverRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId));
+    }
+
+    public Optional<Player> playerById(Long id) {
+        return playerRepository.findById(id);
+    }
+
+
+    public Set<Player> teamMembersByDate(Long teamId, Date date) {
+        return playerContractRepository.findAllByTeamIdAndValidFromBeforeAndValidToAfter(teamId, date, date)
+                .stream().map(PlayerContract::getPlayer)
+                .collect(Collectors.toSet());
     }
 }

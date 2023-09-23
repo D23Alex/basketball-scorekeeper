@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Turnover {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     @ManyToOne Game game;
-    Long secondsSinceStart;
+    Long millisecondsSinceStart;
     @ManyToOne Player player;
     Rules.TurnoverCause cause;
 }

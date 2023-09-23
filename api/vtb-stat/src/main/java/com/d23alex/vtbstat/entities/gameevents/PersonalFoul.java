@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class PersonalFoul {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     @ManyToOne Game game;
-    Long secondsSinceStart;
+    Long millisecondsSinceStart;
     Boolean isUnsportsmanlike;
     @ManyToOne Player foulingPlayer;
     @ManyToOne Player fouledPlayer;

@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 public class CoachTechnicalFoul {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     @ManyToOne Game game;
-    Long secondsSinceStart;
+    Long millisecondsSinceStart;
     @ManyToOne Coach coach;
 }

@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 public class SubstitutionCall {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     @ManyToOne Game game;
-    Long secondsSinceStart;
+    Long millisecondsSinceStart;
     @ManyToOne Team callingTeam;
 }

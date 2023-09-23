@@ -21,7 +21,7 @@ public class FieldGoalAttempt {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     @ManyToOne Game game;
-    Long secondsSinceStart;
+    Long millisecondsSinceStart;
     FieldGoalType type;
     @ManyToOne Player shooter;
     Boolean isSuccessful;

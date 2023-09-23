@@ -1,7 +1,7 @@
 package com.d23alex.vtbstat.controllers;
 
 import com.d23alex.vtbstat.db.DatabaseQueries;
-import com.d23alex.vtbstat.game.GameEvents;
+import com.d23alex.vtbstat.game.GameEventLog;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +18,7 @@ public class GameEventController {
     }
 
     @GetMapping("/api/events/game/{gameId}")
-    Optional<GameEvents> gameEventsByGameId(@PathVariable long gameId) {
+    Optional<GameEventLog> gameEventsByGameId(@PathVariable long gameId) {
         if (databaseQueries.gameExistsById(gameId))
             return Optional.of(databaseQueries.gameEventsByGameId(gameId));
         return Optional.empty();

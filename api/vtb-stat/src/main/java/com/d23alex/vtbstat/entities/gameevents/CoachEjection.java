@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 public class CoachEjection {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     @ManyToOne Game game;
-    Long secondsSinceStart;
+    Long millisecondsSinceStart;
     Rules.EjectionCause ejectionCause;
 }

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class FreeThrowAttempt {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     @ManyToOne Game game;
-    Long secondsSinceStart;
+    Long millisecondsSinceStart;
     @ManyToOne Player shooter;
     Boolean isSuccessful;
 }
