@@ -20,7 +20,7 @@ public class GameEventController {
     @GetMapping("/api/events/game/{gameId}")
     Optional<GameEvents> gameEventsByGameId(@PathVariable long gameId) {
         if (databaseQueries.gameExistsById(gameId))
-            return Optional.empty();
-        return Optional.of(databaseQueries.gameEventsByGameId(gameId));
+            return Optional.of(databaseQueries.gameEventsByGameId(gameId));
+        return Optional.empty();
     }
 }
