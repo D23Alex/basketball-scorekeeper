@@ -3,6 +3,7 @@ package com.d23alex.vtbstat.db;
 import com.d23alex.vtbstat.db.repositories.PlayerContractRepository;
 import com.d23alex.vtbstat.db.repositories.PlayerRepository;
 import com.d23alex.vtbstat.db.repositories.gameevents.*;
+import com.d23alex.vtbstat.entities.Game;
 import com.d23alex.vtbstat.entities.Player;
 import com.d23alex.vtbstat.entities.PlayerContract;
 import com.d23alex.vtbstat.game.GameEventLog;
@@ -86,6 +87,10 @@ public class DatabaseQueries {
 
     public boolean gameExistsById(Long id) {
         return gameRepository.existsById(id);
+    }
+
+    public Optional<Game> gameById(Long id) {
+        return gameRepository.findById(id);
     }
 
     public GameEventLog gameEventsByGameId(Long gameId) {
