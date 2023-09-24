@@ -14,9 +14,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FieldGoalAttempt {
     public enum FieldGoalType {
-        TWO_POINTER,
+        TWO_POINTER_JUMP_SHOT,
+        TWO_POINTER_DRIVE,
+        TWO_POINTER_DUNK,
         THREE_POINTER,
-        DUNK
     }
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
@@ -28,4 +29,5 @@ public class FieldGoalAttempt {
     @OneToOne PersonalFoul foulOnShooter; // NULL если фола на броске не было
     @ManyToOne Player assistant; // NULL если мяч не был забит после передачи
     @ManyToOne Player blockedBy; // NULL если мяч не был заблокирован
+    @ManyToOne Player reboundedBy; // NULL если никто не совершил успешный подбор этого броска
 }

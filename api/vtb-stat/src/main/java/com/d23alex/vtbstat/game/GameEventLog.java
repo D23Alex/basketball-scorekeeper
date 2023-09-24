@@ -18,7 +18,6 @@ public record GameEventLog(
     List<PersonalFoul> personalFouls,
     List<PlayerEjection> playerEjections,
     List<PlayerTechnicalFoul> playerTechnicalFouls,
-    List<Rebound> rebounds,
     List<SubstitutionCall> substitutionCalls,
     Set<SubstitutionIn> substitutionIns,
     Set<SubstitutionOut> substitutionOuts,

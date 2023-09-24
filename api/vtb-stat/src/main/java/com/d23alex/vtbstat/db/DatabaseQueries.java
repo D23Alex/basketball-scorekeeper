@@ -34,7 +34,6 @@ public class DatabaseQueries {
     private final PersonalFoulRepository personalFoulRepository;
     private final PlayerEjectionRepository playerEjectionRepository;
     private final PlayerTechnicalFoulRepository playerTechnicalFoulRepository;
-    private final ReboundRepository reboundRepository;
     private final StartingLineupOccurrenceRepository startingLineupOccurrenceRepository;
     private final SubstitutionCallRepository substitutionCallRepository;
     private final SubstitutionInRepository substitutionInRepository;
@@ -56,7 +55,6 @@ public class DatabaseQueries {
             PersonalFoulRepository personalFoulRepository,
             PlayerEjectionRepository playerEjectionRepository,
             PlayerTechnicalFoulRepository playerTechnicalFoulRepository,
-            ReboundRepository reboundRepository,
             StartingLineupOccurrenceRepository startingLineupOccurrenceRepository,
             SubstitutionCallRepository substitutionCallRepository,
             SubstitutionInRepository substitutionInRepository,
@@ -76,7 +74,6 @@ public class DatabaseQueries {
         this.personalFoulRepository = personalFoulRepository;
         this.playerEjectionRepository = playerEjectionRepository;
         this.playerTechnicalFoulRepository = playerTechnicalFoulRepository;
-        this.reboundRepository = reboundRepository;
         this.startingLineupOccurrenceRepository = startingLineupOccurrenceRepository;
         this.substitutionCallRepository = substitutionCallRepository;
         this.substitutionInRepository = substitutionInRepository;
@@ -106,7 +103,6 @@ public class DatabaseQueries {
                 personalFoulRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
                 playerEjectionRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
                 playerTechnicalFoulRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
-                reboundRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
                 substitutionCallRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
                 substitutionInRepository.findAllByGameId(gameId),
                 substitutionOutRepository.findAllByGameId(gameId),

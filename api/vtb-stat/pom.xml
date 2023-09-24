@@ -13,8 +13,14 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>vtb-stat</name>
     <description>vtb-stat</description>
+    <repositories>
+        <repository>
+            <id>projectlombok.org</id>
+            <url>https://projectlombok.org/edge-releases</url>
+        </repository>
+    </repositories>
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -48,9 +54,14 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.7</version>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>edge-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -67,6 +78,23 @@
     <build>
         <plugins>
             <plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compilerplugin.version}</version>
+                    <configuration>
+                        <source>21</source>
+                        <target>21</target>
+                        <enablePreview>true</enablePreview>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>edge-SNAPSHOT</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
