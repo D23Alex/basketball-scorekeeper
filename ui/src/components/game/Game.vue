@@ -25,7 +25,6 @@ export default {
         personalFouls: [],
         playerEjections: [],
         playerTechnicalFouls: [],
-        rebounds: [],
         substitutionCalls: [],
         substitutionIns: [],
         substitutionOuts: [],

@@ -21,7 +21,7 @@ const stats = {
             points: this.pointsInShots(gameEventLog.fieldGoalAttempts.filter((fga) => eq.equalIds(fga.shooter, player)),
                 gameEventLog.freeThrowAttempts.filter((fga) =>  eq.equalIds(fga.shooter, player))),
             assists: gameEventLog.fieldGoalAttempts.filter((fga) =>  eq.equalIds(fga.assistant, player)).length,
-            rebounds: gameEventLog.rebounds.filter((rebound) =>  eq.equalIds(rebound.rebounder, player)).length
+            rebounds: gameEventLog.fieldGoalAttempts.filter((fga) =>  eq.equalIds(fga.reboundedBy, player)).length,
         }
     }
 }
