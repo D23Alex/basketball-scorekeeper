@@ -8,6 +8,7 @@ public class Rules {
     }
 
     public enum TurnoverCause {
+        STOLEN_BY_OPPONENT,
         FIVE_SECOND_VIOLATION,
         EIGHT_SECOND_VIOLATION,
         TWENTY_FOUR_SECOND_VIOLATION,

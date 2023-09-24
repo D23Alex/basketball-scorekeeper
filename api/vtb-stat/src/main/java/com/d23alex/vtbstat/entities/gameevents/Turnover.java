@@ -19,4 +19,5 @@ public class Turnover {
     Long millisecondsSinceStart;
     @ManyToOne Player player;
     Rules.TurnoverCause cause;
+    @ManyToOne Player stealer; // ссылается на игрока перехватившего мяч, NULL если не было перехвата
 }
