@@ -13,7 +13,9 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Coach {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
     String firstName;
     String lastName;
     Date dateOfBirth;

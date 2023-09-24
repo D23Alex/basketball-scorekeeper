@@ -13,10 +13,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PersonalFoul {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
-    @ManyToOne Game game;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @ManyToOne
+    Game game;
     Long millisecondsSinceStart;
     Boolean isUnsportsmanlike;
-    @ManyToOne Player foulingPlayer;
-    @ManyToOne Player fouledPlayer;
+    @ManyToOne
+    Player foulingPlayer;
+    @ManyToOne
+    Player fouledPlayer;
 }
