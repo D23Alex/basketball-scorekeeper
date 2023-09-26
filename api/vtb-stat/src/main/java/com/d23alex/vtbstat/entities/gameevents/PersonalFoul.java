@@ -20,6 +20,7 @@ public class PersonalFoul {
     Game game;
     Long millisecondsSinceStart;
     Boolean isUnsportsmanlike;
+    Boolean isOffensive;
     @ManyToOne
     Player foulingPlayer;
     @ManyToOne

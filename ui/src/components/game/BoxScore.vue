@@ -15,8 +15,10 @@ import stats from "@/stats";
 export default {
   data() {
     return {
-      header: ["name", "points", "assists", "rebounds"],
-      keys: ["name", "points", "assists", "rebounds"],
+      header: ["name", "timePlayed", "points", "assists", "rebounds", "twoPointersMade", "twoPointersAttempted",
+        "threePointersMade", "threePointersAttempted", "freeThrowsMade", "freeThrowsAttempted"],
+      keys: ["name", "timePlayed", "points", "assists", "rebounds", "twoPointersMade", "twoPointersAttempted",
+        "threePointersMade", "threePointersAttempted", "freeThrowsMade", "freeThrowsAttempted"],
       data: []
     }
   },
