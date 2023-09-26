@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FieldGoalAttempt {
+public class FieldGoalAttempt implements GameClockTimestamped {
     public enum FieldGoalType {
         TWO_POINTER_JUMP_SHOT,
         TWO_POINTER_DRIVE,

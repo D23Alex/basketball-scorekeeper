@@ -28,13 +28,13 @@ public class DatabaseQueries {
     private final CoachTechnicalFoulRepository coachTechnicalFoulRepository;
     private final FieldGoalAttemptRepository fieldGoalAttemptRepository;
     private final FreeThrowAttemptRepository freeThrowAttemptRepository;
-    private final GameEndingRepository gameEndingRepository;
-    private final GameStartRepository gameStartRepository;
+    private final PeriodEndingRepository periodEndingRepository;
+    private final PeriodStartRepository periodStartRepository;
     private final LineupOccurrenceRepository lineupOccurrenceRepository;
     private final PersonalFoulRepository personalFoulRepository;
     private final PlayerEjectionRepository playerEjectionRepository;
     private final PlayerTechnicalFoulRepository playerTechnicalFoulRepository;
-    private final StartingLineupOccurrenceRepository startingLineupOccurrenceRepository;
+    private final PeriodStartingLineupOccurrenceRepository periodStartingLineupOccurrenceRepository;
     private final SubstitutionCallRepository substitutionCallRepository;
     private final SubstitutionInRepository substitutionInRepository;
     private final SubstitutionOutRepository substitutionOutRepository;
@@ -49,13 +49,13 @@ public class DatabaseQueries {
             CoachEjectionRepository coachEjectionRepository,
             CoachTechnicalFoulRepository coachTechnicalFoulRepository,
             FreeThrowAttemptRepository freeThrowAttemptRepository,
-            GameEndingRepository gameEndingRepository,
-            GameStartRepository gameStartRepository,
+            PeriodEndingRepository periodEndingRepository,
+            PeriodStartRepository periodStartRepository,
             LineupOccurrenceRepository lineupOccurrenceRepository,
             PersonalFoulRepository personalFoulRepository,
             PlayerEjectionRepository playerEjectionRepository,
             PlayerTechnicalFoulRepository playerTechnicalFoulRepository,
-            StartingLineupOccurrenceRepository startingLineupOccurrenceRepository,
+            PeriodStartingLineupOccurrenceRepository periodStartingLineupOccurrenceRepository,
             SubstitutionCallRepository substitutionCallRepository,
             SubstitutionInRepository substitutionInRepository,
             SubstitutionOutRepository substitutionOutRepository,
@@ -68,13 +68,13 @@ public class DatabaseQueries {
         this.coachEjectionRepository = coachEjectionRepository;
         this.coachTechnicalFoulRepository = coachTechnicalFoulRepository;
         this.freeThrowAttemptRepository = freeThrowAttemptRepository;
-        this.gameEndingRepository = gameEndingRepository;
-        this.gameStartRepository = gameStartRepository;
+        this.periodEndingRepository = periodEndingRepository;
+        this.periodStartRepository = periodStartRepository;
         this.lineupOccurrenceRepository = lineupOccurrenceRepository;
         this.personalFoulRepository = personalFoulRepository;
         this.playerEjectionRepository = playerEjectionRepository;
         this.playerTechnicalFoulRepository = playerTechnicalFoulRepository;
-        this.startingLineupOccurrenceRepository = startingLineupOccurrenceRepository;
+        this.periodStartingLineupOccurrenceRepository = periodStartingLineupOccurrenceRepository;
         this.substitutionCallRepository = substitutionCallRepository;
         this.substitutionInRepository = substitutionInRepository;
         this.substitutionOutRepository = substitutionOutRepository;
@@ -91,23 +91,23 @@ public class DatabaseQueries {
     }
 
     public GameEventLog gameEventsByGameId(Long gameId) {
-        return new GameEventLog(
-                gameStartRepository.findByGameId(gameId),
-                gameEndingRepository.findByGameId(gameId),
-                lineupOccurrenceRepository.findAllByGameId(gameId),
-                startingLineupOccurrenceRepository.findAllByGameId(gameId),
-                coachEjectionRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
-                coachTechnicalFoulRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
-                fieldGoalAttemptRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
-                freeThrowAttemptRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
-                personalFoulRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
-                playerEjectionRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
-                playerTechnicalFoulRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
-                substitutionCallRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
-                substitutionInRepository.findAllByGameId(gameId),
-                substitutionOutRepository.findAllByGameId(gameId),
-                timeoutRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId),
-                turnoverRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId));
+        return GameEventLog.builder()
+                .periodStarts(periodStartRepository.findAllByGameId(gameId))
+                .periodEndings(periodEndingRepository.findAllByGameId(gameId))
+                .lineupOccurrences(lineupOccurrenceRepository.findAllByGameId(gameId))
+                .periodStartingLineupOccurrences(periodStartingLineupOccurrenceRepository.findAllByGameId(gameId))
+                .coachEjections(coachEjectionRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId))
+                .coachTechnicalFouls(coachTechnicalFoulRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId))
+                .fieldGoalAttempts(fieldGoalAttemptRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId))
+                .freeThrowAttempts(freeThrowAttemptRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId))
+                .personalFouls(personalFoulRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId))
+                .playerEjections(playerEjectionRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId))
+                .playerTechnicalFouls(playerTechnicalFoulRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId))
+                .substitutionCalls(substitutionCallRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId))
+                .substitutionIns(substitutionInRepository.findAllByGameId(gameId))
+                .substitutionOuts(substitutionOutRepository.findAllByGameId(gameId))
+                .timeouts(timeoutRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId))
+                .turnovers(turnoverRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId)).build();
     }
 
     public Optional<Player> playerById(Long id) {

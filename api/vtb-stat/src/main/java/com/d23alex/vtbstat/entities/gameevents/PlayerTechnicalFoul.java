@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlayerTechnicalFoul {
+public class PlayerTechnicalFoul implements GameClockTimestamped {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     @ManyToOne Game game;
     Long millisecondsSinceStart;
