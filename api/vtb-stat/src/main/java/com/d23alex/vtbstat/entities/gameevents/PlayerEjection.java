@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlayerEjection {
+public class PlayerEjection implements GameClockTimestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

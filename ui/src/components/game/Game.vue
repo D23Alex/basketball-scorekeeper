@@ -14,10 +14,10 @@ export default {
       team2Lineup: [],
 
       gameEventLog: {
-        gameStart: null,
-        gameEnding: null,
+        periodStarts: [],
+        periodEndings: [],
         lineupOccurrences: [],
-        startingLineupOccurrences: [],
+        periodStartingLineupOccurrences: [],
         coachEjections: [],
         coachTechnicalFouls: [],
         fieldGoalAttempts: [],
@@ -46,9 +46,10 @@ export default {
   <p>Вся информация о конкретной игре. Тут будут располагаться стартовые составы, box score, графики и т.п.</p>
   <p>ИГРА</p>
   {{game}}
+  <BoxScore/>
   <p>Ивент лог игры</p>
   <p>{{ gameEventLog }}</p>
-  <BoxScore v-if="team1Lineup.length > 0" :game-event-log="this.gameEventLog" :lineup="this.team1Lineup"/>
+
 </template>
 
 <style scoped>

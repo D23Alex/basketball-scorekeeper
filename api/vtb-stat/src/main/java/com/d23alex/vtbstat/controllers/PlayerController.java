@@ -26,5 +26,4 @@ public class PlayerController {
     Iterable<Player> playersOfTeamByDate(@PathVariable Long teamId, @PathVariable Date date) {
         return databaseQueries.teamMembersByDate(teamId, date);
     }
-
 }

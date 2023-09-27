@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CoachEjection {
+
+public class CoachEjection implements GameClockTimestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
