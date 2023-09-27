@@ -14,9 +14,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PeriodStartingLineupOccurrence {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
-    @ManyToOne Player player;
-    @ManyToOne Team team;
-    @ManyToOne Game game;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @ManyToOne
+    Player player;
+    @ManyToOne
+    Team team;
+    @ManyToOne
+    Game game;
     Long period;
 }

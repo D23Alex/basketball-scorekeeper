@@ -13,9 +13,13 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CoachContract {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
-    @ManyToOne Coach coach;
-    @ManyToOne Team team;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @ManyToOne
+    Coach coach;
+    @ManyToOne
+    Team team;
     Date validFrom;
     Date validTo;
 }

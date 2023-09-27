@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FieldGoalAttempt implements GameClockTimestamped {
+
     public enum FieldGoalType {
         TWO_POINTER_JUMP_SHOT,
         TWO_POINTER_DRIVE,
@@ -20,14 +21,22 @@ public class FieldGoalAttempt implements GameClockTimestamped {
         THREE_POINTER,
     }
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
-    @ManyToOne Game game;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @ManyToOne
+    Game game;
     Long millisecondsSinceStart;
     FieldGoalType type;
-    @ManyToOne Player shooter;
+    @ManyToOne
+    Player shooter;
     Boolean isSuccessful;
-    @OneToOne PersonalFoul foulOnShooter; // NULL если фола на броске не было
-    @ManyToOne Player assistant; // NULL если мяч не был забит после передачи
-    @ManyToOne Player blockedBy; // NULL если мяч не был заблокирован
-    @ManyToOne Player reboundedBy; // NULL если никто не совершил успешный подбор этого броска
+    @OneToOne
+    PersonalFoul foulOnShooter; // NULL если фола на броске не было
+    @ManyToOne
+    Player assistant; // NULL если мяч не был забит после передачи
+    @ManyToOne
+    Player blockedBy; // NULL если мяч не был заблокирован
+    @ManyToOne
+    Player reboundedBy; // NULL если никто не совершил успешный подбор этого броска
 }
