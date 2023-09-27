@@ -9,8 +9,12 @@ import java.sql.Date;
 
 @Table(name="players")
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Player {
+
     public enum Position {
         POINT_GUARD,
         SHOOTING_GUARD,
@@ -19,7 +23,9 @@ public class Player {
         CENTER
     }
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
     String firstName;
     String lastName;
     Date dateOfBirth;

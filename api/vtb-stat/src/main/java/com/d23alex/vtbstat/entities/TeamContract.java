@@ -13,8 +13,11 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeamContract {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
-    @ManyToOne Team team;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @ManyToOne
+    Team team;
     Date validFrom;
     Date validTo;
 }

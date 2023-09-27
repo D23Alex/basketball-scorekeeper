@@ -14,9 +14,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LineupOccurrence {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
-    @ManyToOne Player player;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @ManyToOne
+    Player player;
     Long jerseyNumber;
-    @ManyToOne Team team;
-    @ManyToOne Game game;
+    @ManyToOne
+    Team team;
+    @ManyToOne
+    Game game;
 }

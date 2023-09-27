@@ -14,10 +14,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Turnover implements GameClockTimestamped {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
-    @ManyToOne Game game;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @ManyToOne
+    Game game;
     Long millisecondsSinceStart;
-    @ManyToOne Player player;
+    @ManyToOne
+    Player player;
     Rules.TurnoverCause cause;
-    @ManyToOne Player stealer; // ссылается на игрока перехватившего мяч, NULL если не было перехвата
+    @ManyToOne
+    Player stealer; // ссылается на игрока перехватившего мяч, NULL если не было перехвата
 }

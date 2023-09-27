@@ -13,10 +13,17 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Game {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
-    @ManyToOne Arena arena;
-    @ManyToOne Team team1;
-    @ManyToOne Team team2;
-    @ManyToOne Team homeTeam;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @ManyToOne
+    Arena arena;
+    @ManyToOne
+    Team team1;
+    @ManyToOne
+    Team team2;
+    @ManyToOne
+    Team homeTeam;
+
     Timestamp scheduledStartTime;
 }

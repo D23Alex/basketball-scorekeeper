@@ -13,11 +13,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PersonalFoul implements GameClockTimestamped {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
-    @ManyToOne Game game;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @ManyToOne
+    Game game;
     Long millisecondsSinceStart;
     Boolean isUnsportsmanlike;
     Boolean isOffensive;
-    @ManyToOne Player foulingPlayer;
-    @ManyToOne Player fouledPlayer;
+    @ManyToOne
+    Player foulingPlayer;
+    @ManyToOne
+    Player fouledPlayer;
 }

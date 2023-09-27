@@ -14,10 +14,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubstitutionIn {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
     @ManyToOne
     Game game;
     /* Во время какой замены произошёл выход игрока на площадку? */
-    @ManyToOne SubstitutionCall substitutionCall;
-    @ManyToOne Player player;
+    @ManyToOne
+    SubstitutionCall substitutionCall;
+    @ManyToOne
+    Player player;
 }
