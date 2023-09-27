@@ -3,6 +3,7 @@ package com.d23alex.vtbstat.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
@@ -25,10 +26,14 @@ public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Exclude
     Long id;
+
     String firstName;
     String lastName;
-    Date dateOfBirth;
-    String description;
+    Date   dateOfBirth;
+
+    String   profileImagePath;
+    String   description;
     Position position;
 }

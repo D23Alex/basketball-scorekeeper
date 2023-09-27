@@ -3,4 +3,9 @@ package com.d23alex.vtbstat.db.repositories;
 import com.d23alex.vtbstat.entities.Player;
 import org.springframework.data.repository.CrudRepository;
 
-public interface PlayerRepository extends CrudRepository<Player, Long> {}
+import java.util.Optional;
+
+public interface PlayerRepository extends CrudRepository<Player, Long> {
+
+    Optional<Player> findPlayerByFirstNameAndLastName(String firstName, String lastName);
+}
