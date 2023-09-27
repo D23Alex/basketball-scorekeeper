@@ -11,7 +11,7 @@ export default {
     return {
       header: ["name", "timePlayed", "points", "assists", "rebounds", "twoPointersMade", "twoPointersAttempted",
         "threePointersMade", "threePointersAttempted", "freeThrowsMade", "freeThrowsAttempted"],
-      keys: ["name", "timePlayed", "points", "assists", "rebounds", "twoPointersMade", "twoPointersAttempted",
+      keys: ["name", "timePlayedInMillis", "points", "assists", "rebounds", "twoPointersMade", "twoPointersAttempted",
         "threePointersMade", "threePointersAttempted", "freeThrowsMade", "freeThrowsAttempted"],
       data: []
     }

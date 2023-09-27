@@ -34,7 +34,10 @@ public class DatabaseQueries {
     private final PersonalFoulRepository personalFoulRepository;
     private final PlayerEjectionRepository playerEjectionRepository;
     private final PlayerTechnicalFoulRepository playerTechnicalFoulRepository;
-    private final PeriodStartingLineupOccurrenceRepository periodStartingLineupOccurrenceRepository;
+    private final PeriodStarterRepository periodStarterRepository;
+    private final PeriodEnderRepository periodEnderRepository;
+    private final AfterTimeoutCourtAppearanceRepository afterTimeoutCourtAppearanceRepository;
+    private final AfterTimeoutCourtExitRepository afterTimeoutCourtExitRepository;
     private final SubstitutionCallRepository substitutionCallRepository;
     private final SubstitutionInRepository substitutionInRepository;
     private final SubstitutionOutRepository substitutionOutRepository;
@@ -55,7 +58,10 @@ public class DatabaseQueries {
             PersonalFoulRepository personalFoulRepository,
             PlayerEjectionRepository playerEjectionRepository,
             PlayerTechnicalFoulRepository playerTechnicalFoulRepository,
-            PeriodStartingLineupOccurrenceRepository periodStartingLineupOccurrenceRepository,
+            PeriodStarterRepository periodStarterRepository,
+            PeriodEnderRepository periodEnderRepository,
+            AfterTimeoutCourtAppearanceRepository afterTimeoutCourtAppearanceRepository,
+            AfterTimeoutCourtExitRepository afterTimeoutCourtExitRepository,
             SubstitutionCallRepository substitutionCallRepository,
             SubstitutionInRepository substitutionInRepository,
             SubstitutionOutRepository substitutionOutRepository,
@@ -74,7 +80,10 @@ public class DatabaseQueries {
         this.personalFoulRepository = personalFoulRepository;
         this.playerEjectionRepository = playerEjectionRepository;
         this.playerTechnicalFoulRepository = playerTechnicalFoulRepository;
-        this.periodStartingLineupOccurrenceRepository = periodStartingLineupOccurrenceRepository;
+        this.periodStarterRepository = periodStarterRepository;
+        this.periodEnderRepository = periodEnderRepository;
+        this.afterTimeoutCourtAppearanceRepository = afterTimeoutCourtAppearanceRepository;
+        this.afterTimeoutCourtExitRepository = afterTimeoutCourtExitRepository;
         this.substitutionCallRepository = substitutionCallRepository;
         this.substitutionInRepository = substitutionInRepository;
         this.substitutionOutRepository = substitutionOutRepository;
@@ -90,12 +99,19 @@ public class DatabaseQueries {
         return gameRepository.findById(id);
     }
 
-    public GameEventLog gameEventsByGameId(Long gameId) {
-        return GameEventLog.builder()
+    public Optional<GameEventLog> gameEventsByGameId(Long gameId) {
+        Optional<Game> game = gameRepository.findById(gameId);
+        if (game.isEmpty())
+            return Optional.empty();
+        return Optional.of(GameEventLog.builder()
+                .game(game.get())
                 .periodStarts(periodStartRepository.findAllByGameId(gameId))
                 .periodEndings(periodEndingRepository.findAllByGameId(gameId))
                 .lineupOccurrences(lineupOccurrenceRepository.findAllByGameId(gameId))
-                .periodStartingLineupOccurrences(periodStartingLineupOccurrenceRepository.findAllByGameId(gameId))
+                .periodStarters(periodStarterRepository.findAllByGameId(gameId))
+                .periodEnders(periodEnderRepository.findAllByGameId(gameId))
+                .afterTimeoutCourtAppearances(afterTimeoutCourtAppearanceRepository.findAllByGameId(gameId))
+                .afterTimeoutCourtExits(afterTimeoutCourtExitRepository.findAllByGameId(gameId))
                 .coachEjections(coachEjectionRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId))
                 .coachTechnicalFouls(coachTechnicalFoulRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId))
                 .fieldGoalAttempts(fieldGoalAttemptRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId))
@@ -107,7 +123,7 @@ public class DatabaseQueries {
                 .substitutionIns(substitutionInRepository.findAllByGameId(gameId))
                 .substitutionOuts(substitutionOutRepository.findAllByGameId(gameId))
                 .timeouts(timeoutRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId))
-                .turnovers(turnoverRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId)).build();
+                .turnovers(turnoverRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId)).build());
     }
 
     public Optional<Player> playerById(Long id) {
