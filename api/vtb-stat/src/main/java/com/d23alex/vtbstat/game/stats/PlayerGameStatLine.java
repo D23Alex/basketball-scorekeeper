@@ -8,9 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.function.Supplier;
-import java.util.stream.Stream;
-
 import static com.d23alex.vtbstat.entities.gameevents.FieldGoalAttempt.FieldGoalType.*;
 
 @Data
@@ -46,24 +43,26 @@ public class PlayerGameStatLine {
     private long personalFouls;
     private long technicalFouls;
 
+    private long timePlayedInMillis;
+
 
     public PlayerGameStatLine(Player player, GameEventLog gameEventLog) {
-        Supplier<Stream<FieldGoalAttempt>> fgaSupplier = () -> gameEventLog.getFieldGoalAttempts().stream()
-                .filter(fga -> player.equals(fga.getShooter()));
-        Supplier<Stream<FieldGoalAttempt>> twoPointAttemptsSupplier =
-                () -> fgaSupplier.get().filter(fga -> fga.getType() != THREE_POINTER);
-        Supplier<Stream<FieldGoalAttempt>> threePointAttemptsSupplier = () -> fgaSupplier.get().filter(fga -> fga.getType() == THREE_POINTER);
-        Supplier<Stream<FreeThrowAttempt>> freeThrowAttemptsSupplier = () -> gameEventLog.getFreeThrowAttempts().stream()
-                .filter(fta -> player.equals(fta.getShooter()));
+        var fgaSupplier = gameEventLog.getFieldGoalAttempts().stream()
+                .filter(fga -> player.equals(fga.getShooter())).toList();
+        var twoPointAttemptsSupplier =
+                fgaSupplier.stream().filter(fga -> fga.getType() != THREE_POINTER).toList();
+        var threePointAttemptsSupplier = fgaSupplier.stream().filter(fga -> fga.getType() == THREE_POINTER).toList();
+        var freeThrowAttemptsSupplier = gameEventLog.getFreeThrowAttempts().stream()
+                .filter(fta -> player.equals(fta.getShooter())).toList();
 
-        long fieldGoalsAttempted = fgaSupplier.get().count();
-        long twoPointersAttempted = twoPointAttemptsSupplier.get().count();
-        long threePointersAttempted = threePointAttemptsSupplier.get().count();
-        long freeThrowsAttempted = freeThrowAttemptsSupplier.get().count();
-        long fieldGoalsMade = fgaSupplier.get().filter(FieldGoalAttempt::getIsSuccessful).count();
-        long twoPointersMade = twoPointAttemptsSupplier.get().filter(FieldGoalAttempt::getIsSuccessful).count();
-        long threePointersMade = threePointAttemptsSupplier.get().filter(FieldGoalAttempt::getIsSuccessful).count();
-        long freeThrowsMade = freeThrowAttemptsSupplier.get().filter(FreeThrowAttempt::getIsSuccessful).count();
+        long fieldGoalsAttempted = fgaSupplier.size();
+        long twoPointersAttempted = twoPointAttemptsSupplier.size();
+        long threePointersAttempted = threePointAttemptsSupplier.size();
+        long freeThrowsAttempted = freeThrowAttemptsSupplier.size();
+        long fieldGoalsMade = fgaSupplier.stream().filter(FieldGoalAttempt::getIsSuccessful).count();
+        long twoPointersMade = twoPointAttemptsSupplier.stream().filter(FieldGoalAttempt::getIsSuccessful).count();
+        long threePointersMade = threePointAttemptsSupplier.stream().filter(FieldGoalAttempt::getIsSuccessful).count();
+        long freeThrowsMade = freeThrowAttemptsSupplier.stream().filter(FreeThrowAttempt::getIsSuccessful).count();
         long fieldGoalsMissed = fieldGoalsAttempted - fieldGoalsMade;
         long twoPointersMissed = twoPointersAttempted - twoPointersMade;
         long threePointersMissed = threePointersAttempted - threePointersMade;
@@ -90,6 +89,8 @@ public class PlayerGameStatLine {
         long technicalFouls = gameEventLog.getPlayerTechnicalFouls().stream()
                 .filter(personalFoul -> player.equals(personalFoul.getFoulingPlayer())).count();
 
+        long timePlayedInMillis = Time.timePlayedInMillis(player, gameEventLog);
+
         this.fieldGoalsAttempted = fieldGoalsAttempted;
         this.twoPointersAttempted = twoPointersAttempted;
         this.threePointersAttempted = threePointersAttempted;
@@ -114,9 +115,9 @@ public class PlayerGameStatLine {
         this.steals = steals;
         this.personalFouls = personalFouls;
         this.technicalFouls = technicalFouls;
+        this.timePlayedInMillis = timePlayedInMillis;
 
         this.player = player;
     }
-
 
 }

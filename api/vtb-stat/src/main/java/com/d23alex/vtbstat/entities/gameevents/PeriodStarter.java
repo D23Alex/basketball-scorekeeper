@@ -8,13 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table(name="period_starting_lineup_occurrences")
+@Table(name="period_starters")
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PeriodStartingLineupOccurrence {
-    @Id
+public class PeriodStarter {
+    @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @ManyToOne

@@ -14,10 +14,14 @@ export default {
       team2Lineup: [],
 
       gameEventLog: {
+        game: null,
         periodStarts: [],
         periodEndings: [],
         lineupOccurrences: [],
-        periodStartingLineupOccurrences: [],
+        periodStarters: [],
+        periodEnders: [],
+        afterTimeoutCourtAppearances: [],
+        afterTimeoutCourtExits: [],
         coachEjections: [],
         coachTechnicalFouls: [],
         fieldGoalAttempts: [],
