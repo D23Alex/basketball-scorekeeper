@@ -4,8 +4,11 @@ import com.d23alex.vtbstat.Util;
 import com.d23alex.vtbstat.entities.Player;
 import com.d23alex.vtbstat.entities.gameevents.GameClockTimestamped;
 import com.d23alex.vtbstat.game.GameEventLog;
+import com.d23alex.vtbstat.game.Rules;
 
 import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 public class Time {
     public static long timePlayedInMillis(Player player, GameEventLog gameEventLog) {
@@ -40,8 +43,8 @@ public class Time {
                 subOutTimestamps, afterTimeOutCourtExitTimestamps);
 
         var playerStillOnCourt = allEntranceTimestamps.size() > allExitTimestamps.size();
-        return allExitTimestamps.stream().reduce(0L, Long::sum) + (playerStillOnCourt ? lastEventTimestamp(gameEventLog) : 0)
-                - allEntranceTimestamps.stream().reduce(0L, Long::sum);
+        return Util.sum(allExitTimestamps) + (playerStillOnCourt ? lastEventTimestamp(gameEventLog) : 0)
+                - Util.sum(allEntranceTimestamps);
 
     }
 
@@ -58,8 +61,12 @@ public class Time {
                 gameEventLog.getTimeouts(),
                 gameEventLog.getTurnovers()
         );
-        var lastEvent = allEvents.stream().max(Comparator.comparingLong(GameClockTimestamped::getMillisecondsSinceStart));
+        var lastEvent = latest(allEvents);
         return lastEvent.isEmpty() ? 0 : lastEvent.get().getMillisecondsSinceStart();
+    }
+
+    private static Optional<GameClockTimestamped> latest(List<GameClockTimestamped> events) {
+        return events.stream().max(Comparator.comparingLong(GameClockTimestamped::getMillisecondsSinceStart));
     }
 
     private static long millisPassedByPeriodStart(long period) {
@@ -70,7 +77,7 @@ public class Time {
         if (periods < 0)
             return 0;
         if (periods <= 4)
-            return periods * 10 * 60 * 1000;
-        return periods * 10 * 60 * 1000 + (periods - 4) * 5 * 60 * 1000;
+            return periods * Rules.gameQuarterLengthInMillis;
+        return 4 * Rules.gameQuarterLengthInMillis + (periods - 4) * Rules.overtimeLengthInMillis;
     }
 }
