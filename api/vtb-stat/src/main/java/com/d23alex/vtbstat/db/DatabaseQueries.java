@@ -2,15 +2,20 @@ package com.d23alex.vtbstat.db;
 
 import com.d23alex.vtbstat.db.repositories.PlayerContractRepository;
 import com.d23alex.vtbstat.db.repositories.PlayerRepository;
+import com.d23alex.vtbstat.db.repositories.TeamRepository;
 import com.d23alex.vtbstat.db.repositories.gameevents.*;
 import com.d23alex.vtbstat.entities.Game;
 import com.d23alex.vtbstat.entities.Player;
 import com.d23alex.vtbstat.entities.PlayerContract;
+import com.d23alex.vtbstat.entities.Team;
+import com.d23alex.vtbstat.entities.gameevents.LineupOccurrence;
 import com.d23alex.vtbstat.game.GameEventLog;
 import com.d23alex.vtbstat.db.repositories.GameRepository;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,6 +25,7 @@ import java.util.stream.Collectors;
 */
 @Component
 public class DatabaseQueries {
+    private final TeamRepository teamRepository;
     private final GameRepository gameRepository;
     private final PlayerRepository playerRepository;
     private final PlayerContractRepository playerContractRepository;
@@ -45,6 +51,7 @@ public class DatabaseQueries {
     private final TurnoverRepository turnoverRepository;
 
     public DatabaseQueries(
+            TeamRepository teamRepository,
             GameRepository gameRepository,
             PlayerRepository playerRepository,
             PlayerContractRepository playerContractRepository,
@@ -67,6 +74,7 @@ public class DatabaseQueries {
             SubstitutionOutRepository substitutionOutRepository,
             TimeoutRepository timeoutRepository,
             TurnoverRepository turnoverRepository) {
+        this.teamRepository = teamRepository;
         this.gameRepository = gameRepository;
         this.playerRepository = playerRepository;
         this.playerContractRepository = playerContractRepository;
@@ -91,12 +99,33 @@ public class DatabaseQueries {
         this.turnoverRepository = turnoverRepository;
     }
 
+
+    public Optional<Team> teamById(Long id) {
+        return teamRepository.findById(id);
+    }
+
+    public List<Team> allTeams() {
+        return teamRepository.findAll();
+    }
+
     public boolean gameExistsById(Long id) {
         return gameRepository.existsById(id);
     }
 
     public Optional<Game> gameById(Long id) {
         return gameRepository.findById(id);
+    }
+
+    public List<Game> gamesStartedBetweenTimestampsAndParticipatedByPlayer(Player player, Timestamp from, Timestamp to) {
+        return lineupOccurrenceRepository.findAllByPlayerIsAndGameScheduledStartTimeBetween(player, from, to)
+                .stream().map(LineupOccurrence::getGame).toList();
+    }
+
+    public List<Game> gamesStartedBetweenTimestampsAndParticipatedByTeam(Team team, Timestamp from, Timestamp to) {
+        return gameRepository.findAllByTeam1IsOrTeam2Is(team, team).stream()
+                .filter(game -> from.compareTo(game.getScheduledStartTime()) <= 0
+                        && game.getScheduledStartTime().compareTo(to) <= 0)
+                .toList();
     }
 
     public Optional<GameEventLog> gameEventsByGameId(Long gameId) {
@@ -130,10 +159,14 @@ public class DatabaseQueries {
         return playerRepository.findById(id);
     }
 
-
     public Set<Player> teamMembersByDate(Long teamId, Date date) {
         return playerContractRepository.findAllByTeamIdAndValidFromBeforeAndValidToAfter(teamId, date, date)
                 .stream().map(PlayerContract::getPlayer)
                 .collect(Collectors.toSet());
+    }
+
+    public Set<Player> teamLineupInGame(Long teamId, Long gameId) {
+        return lineupOccurrenceRepository.findAllByTeamIdAndGameId(teamId, gameId)
+                .stream().map(LineupOccurrence::getPlayer).collect(Collectors.toSet());
     }
 }
