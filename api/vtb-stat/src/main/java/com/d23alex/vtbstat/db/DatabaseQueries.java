@@ -3,6 +3,7 @@ package com.d23alex.vtbstat.db;
 import com.d23alex.vtbstat.db.repositories.PlayerContractRepository;
 import com.d23alex.vtbstat.db.repositories.PlayerRepository;
 import com.d23alex.vtbstat.db.repositories.gameevents.*;
+import com.d23alex.vtbstat.entities.Arena;
 import com.d23alex.vtbstat.entities.Game;
 import com.d23alex.vtbstat.entities.Player;
 import com.d23alex.vtbstat.entities.PlayerContract;
@@ -11,6 +12,7 @@ import com.d23alex.vtbstat.db.repositories.GameRepository;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -137,5 +139,9 @@ public class DatabaseQueries {
         return playerContractRepository.findAllByTeamIdAndValidFromBeforeAndValidToAfter(teamId, date, date)
                 .stream().map(PlayerContract::getPlayer)
                 .collect(Collectors.toSet());
+    }
+
+    public Optional<Arena> getArenaById(Long id) {
+        return arenaRepository.findById(id);
     }
 }
