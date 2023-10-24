@@ -1,0 +1,2 @@
+INSERT INTO arenas (name, address) VALUES ('СШОР Василеостровского р-на', 'пр-кт Малый, 66, лит. А, Санкт-Петербург');
+INSERT INTO arenas (name, address) VALUES ('С/З "ГМУ им. Павлова"', 'ул. Льва Толстого, д. 6—8');
