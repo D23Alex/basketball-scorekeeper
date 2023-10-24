@@ -8,19 +8,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table(name="starting_lineup_occurrences")
+@Table(name="after_timeout_court_exits")
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StartingLineupOccurrence {
+public class AfterTimeoutCourtExit {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     @ManyToOne
     Player player;
     @ManyToOne
     Team team;
     @ManyToOne
     Game game;
+    @ManyToOne
+    Timeout timeout;
 }

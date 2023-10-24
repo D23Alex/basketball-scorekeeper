@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
-@Table(name="game_endings")
+@Table(name="period_endings")
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GameEnding {
+public class PeriodEnding {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

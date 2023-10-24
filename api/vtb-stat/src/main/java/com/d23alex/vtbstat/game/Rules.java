@@ -1,6 +1,9 @@
 package com.d23alex.vtbstat.game;
 
 public class Rules {
+    public static long gameQuarterLengthInMillis = 10 * 60 * 1000;
+    public static long overtimeLengthInMillis = 5 * 60 * 1000;
+
     public enum EjectionCause {
         FOULS,
         UNSPORTSMANLIKE_BEHAVIOR,

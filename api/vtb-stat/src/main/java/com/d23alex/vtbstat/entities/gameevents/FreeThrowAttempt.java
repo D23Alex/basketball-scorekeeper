@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FreeThrowAttempt {
+public class FreeThrowAttempt implements GameClockTimestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

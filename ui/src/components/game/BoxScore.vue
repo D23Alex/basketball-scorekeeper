@@ -1,40 +1,33 @@
 <script setup>
 import { VueTable  } from "@harv46/vue-table"
 
-
-defineProps({
-  lineup: Array,
-  gameEventLog: Object
-})
 </script>
 
 <script>
-
-import stats from "@/stats";
+import axios from "axios";
 
 export default {
   data() {
     return {
       header: ["name", "timePlayed", "points", "assists", "rebounds", "twoPointersMade", "twoPointersAttempted",
         "threePointersMade", "threePointersAttempted", "freeThrowsMade", "freeThrowsAttempted"],
-      keys: ["name", "timePlayed", "points", "assists", "rebounds", "twoPointersMade", "twoPointersAttempted",
+      keys: ["name", "timePlayedInMillis", "points", "assists", "rebounds", "twoPointersMade", "twoPointersAttempted",
         "threePointersMade", "threePointersAttempted", "freeThrowsMade", "freeThrowsAttempted"],
       data: []
     }
   },
 
-  mounted() {
-    let tableData = this.lineup.map(player => stats.gameStats(player, this.gameEventLog));
-    tableData.forEach(tableRow => tableRow.name = tableRow.player.firstName + " " + tableRow.player.lastName);
-    this.data = tableData;
+  async mounted() {
+    this.data = (await axios.get("http://localhost:8080/api/stats/boxscore/" + this.$route.params.gameId)).data;
+    this.data.forEach(row => row.name = row.player.firstName + " " + row.player.lastName);
   }
 }
 </script>
 
 <template>
-    <div>
-      <VueTable :headers="header" :data="data" :keys="keys" />
-    </div>
+  <div>
+    <VueTable :headers="header" :data="data" :keys="keys" />
+  </div>
 </template>
 
 <style scoped>
