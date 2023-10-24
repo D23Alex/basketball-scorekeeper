@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @Component
 public class DatabaseQueries {
     private final GameRepository gameRepository;
+    private final ArenaRepository arenaRepository;
     private final PlayerRepository playerRepository;
     private final PlayerContractRepository playerContractRepository;
 
@@ -46,6 +47,7 @@ public class DatabaseQueries {
 
     public DatabaseQueries(
             GameRepository gameRepository,
+            ArenaRepository arenaRepository,
             PlayerRepository playerRepository,
             PlayerContractRepository playerContractRepository,
             FieldGoalAttemptRepository fieldGoalAttemptRepository,
@@ -68,6 +70,7 @@ public class DatabaseQueries {
             TimeoutRepository timeoutRepository,
             TurnoverRepository turnoverRepository) {
         this.gameRepository = gameRepository;
+        this.arenaRepository = arenaRepository;
         this.playerRepository = playerRepository;
         this.playerContractRepository = playerContractRepository;
         this.fieldGoalAttemptRepository = fieldGoalAttemptRepository;
@@ -129,7 +132,6 @@ public class DatabaseQueries {
     public Optional<Player> playerById(Long id) {
         return playerRepository.findById(id);
     }
-
 
     public Set<Player> teamMembersByDate(Long teamId, Date date) {
         return playerContractRepository.findAllByTeamIdAndValidFromBeforeAndValidToAfter(teamId, date, date)
