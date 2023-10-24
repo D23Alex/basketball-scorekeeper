@@ -1,4 +1,4 @@
-package com.d23alex.vtbstat.controllers;
+package com.d23alex.vtbstat.restapi.controllers;
 
 import com.d23alex.vtbstat.db.DatabaseQueries;
 import com.d23alex.vtbstat.entities.Player;
