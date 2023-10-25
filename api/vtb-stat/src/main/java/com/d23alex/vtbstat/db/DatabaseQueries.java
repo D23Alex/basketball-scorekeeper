@@ -1,5 +1,6 @@
 package com.d23alex.vtbstat.db;
 
+import com.d23alex.vtbstat.db.repositories.ArenaRepository;
 import com.d23alex.vtbstat.db.repositories.PlayerContractRepository;
 import com.d23alex.vtbstat.db.repositories.PlayerRepository;
 import com.d23alex.vtbstat.db.repositories.gameevents.*;
@@ -12,10 +13,10 @@ import com.d23alex.vtbstat.db.repositories.GameRepository;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /*
 На данном этапе компонент существует главным образом для того, чтобы не прописывать множество зависимостей в контроллерах
@@ -138,6 +139,11 @@ public class DatabaseQueries {
     public Set<Player> teamMembersByDate(Long teamId, Date date) {
         return playerContractRepository.findAllByTeamIdAndValidFromBeforeAndValidToAfter(teamId, date, date)
                 .stream().map(PlayerContract::getPlayer)
+                .collect(Collectors.toSet());
+    }
+
+    public Set<Arena> getAllArenas() {
+        return StreamSupport.stream(arenaRepository.findAll().spliterator(), false)
                 .collect(Collectors.toSet());
     }
 

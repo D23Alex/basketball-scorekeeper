@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 public class ArenaController {
@@ -21,5 +22,11 @@ public class ArenaController {
     public Arena getArenaById(@PathVariable Long id) {
         Optional<Arena> arena = databaseQueries.getArenaById(id);
         return arena.orElseThrow(() -> new NoSuchElementException("Arena with incorrect ID was provided!"));
+    }
+
+    //FIXME: change path!
+    @GetMapping("/api/get_all_arenas")
+    public Set<Arena> getAllArenas() {
+        return databaseQueries.getAllArenas();
     }
 }
