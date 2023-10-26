@@ -45,8 +45,7 @@ public class ArenaController {
         }
     }
 
-    //FIXME: change path!
-    @GetMapping("/api/get_all_arenas")
+    @GetMapping("/api/arenas/get_all")
     public Set<Arena> getAllArenas() {
         return databaseQueries.getAllArenas();
     }
