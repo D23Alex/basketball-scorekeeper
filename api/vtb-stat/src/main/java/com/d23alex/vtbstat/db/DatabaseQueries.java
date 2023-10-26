@@ -13,6 +13,7 @@ import com.d23alex.vtbstat.db.repositories.GameRepository;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -147,7 +148,19 @@ public class DatabaseQueries {
                 .collect(Collectors.toSet());
     }
 
+    public void saveArena(Arena arena) {
+        arenaRepository.save(arena);
+    }
+
     public Optional<Arena> getArenaById(Long id) {
         return arenaRepository.findById(id);
+    }
+
+    public void deleteArenaById(Long id) {
+        if (arenaRepository.existsById(id)) {
+            arenaRepository.deleteById(id);
+        } else {
+            throw new NoSuchElementException("Арены с ID " + id + " не существует!");
+        }
     }
 }
