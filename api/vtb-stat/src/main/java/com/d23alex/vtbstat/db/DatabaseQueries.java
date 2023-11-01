@@ -24,6 +24,7 @@ public class DatabaseQueries {
     private final CoachRepository coachRepository;
     private final CoachContractRepository coachContractRepository;
     private final PlayerContractRepository playerContractRepository;
+    private final TeamRepository teamRepository;
 
     private final CoachEjectionRepository coachEjectionRepository;
     private final CoachTechnicalFoulRepository coachTechnicalFoulRepository;
@@ -52,7 +53,7 @@ public class DatabaseQueries {
             CoachRepository coachRepository,
             CoachContractRepository coachContractRepository,
             PlayerContractRepository playerContractRepository,
-            FieldGoalAttemptRepository fieldGoalAttemptRepository,
+            TeamRepository teamRepository, FieldGoalAttemptRepository fieldGoalAttemptRepository,
             CoachEjectionRepository coachEjectionRepository,
             CoachTechnicalFoulRepository coachTechnicalFoulRepository,
             FreeThrowAttemptRepository freeThrowAttemptRepository,
@@ -77,6 +78,7 @@ public class DatabaseQueries {
         this.coachRepository = coachRepository;
         this.coachContractRepository = coachContractRepository;
         this.playerContractRepository = playerContractRepository;
+        this.teamRepository = teamRepository;
         this.fieldGoalAttemptRepository = fieldGoalAttemptRepository;
         this.coachEjectionRepository = coachEjectionRepository;
         this.coachTechnicalFoulRepository = coachTechnicalFoulRepository;
@@ -343,6 +345,39 @@ public class DatabaseQueries {
 
     public Set<PlayerContract> getAllPlayerContracts() {
         return StreamSupport.stream(playerContractRepository.findAll().spliterator(), false)
+                .collect(Collectors.toSet());
+    }
+
+    public void saveTeam(Team team) {
+        teamRepository.save(team);
+    }
+
+    public Optional<Team> getTeamById(Long id) {
+        return teamRepository.findById(id);
+    }
+
+    public void updateTeamById(Team updatedTeam) {
+        Optional<Team> optionalTeam = teamRepository.findById(updatedTeam.getId());
+        if (optionalTeam.isPresent()) {
+            Team team = optionalTeam.get();
+            team.setName(updatedTeam.getName());
+            team.setCity(updatedTeam.getCity());
+            team.setHomeArena(updatedTeam.getHomeArena());
+        } else {
+            throw new NoSuchElementException("Команды с ID " + updatedTeam.getId() + " не существует!");
+        }
+    }
+
+    public void deleteTeamById(Long id) {
+        if (teamRepository.existsById(id)) {
+            teamRepository.deleteById(id);
+        } else {
+            throw new NoSuchElementException("Команды с ID " + id + " не существует!");
+        }
+    }
+
+    public Set<Team> getAllTeams() {
+        return StreamSupport.stream(teamRepository.findAll().spliterator(), false)
                 .collect(Collectors.toSet());
     }
 }
