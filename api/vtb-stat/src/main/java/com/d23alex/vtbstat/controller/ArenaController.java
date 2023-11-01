@@ -19,7 +19,7 @@ public class ArenaController {
         this.databaseQueries = databaseQueries;
     }
 
-    @PostMapping("/api/arenas")
+    @PostMapping("/api/arenas/create_arena")
     public void createArena(@RequestBody Arena arena) {
         databaseQueries.saveArena(arena);
     }
