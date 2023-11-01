@@ -1,15 +1,9 @@
 package com.d23alex.vtbstat.db;
 
-import com.d23alex.vtbstat.db.repository.ArenaRepository;
-import com.d23alex.vtbstat.db.repository.PlayerContractRepository;
-import com.d23alex.vtbstat.db.repository.PlayerRepository;
+import com.d23alex.vtbstat.db.repository.*;
 import com.d23alex.vtbstat.db.repository.gameevents.*;
-import com.d23alex.vtbstat.entity.Arena;
-import com.d23alex.vtbstat.entity.Game;
-import com.d23alex.vtbstat.entity.Player;
-import com.d23alex.vtbstat.entity.PlayerContract;
+import com.d23alex.vtbstat.entity.*;
 import com.d23alex.vtbstat.game.GameEventLog;
-import com.d23alex.vtbstat.db.repository.GameRepository;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
@@ -27,6 +21,7 @@ public class DatabaseQueries {
     private final GameRepository gameRepository;
     private final ArenaRepository arenaRepository;
     private final PlayerRepository playerRepository;
+    private final CoachRepository coachRepository;
     private final PlayerContractRepository playerContractRepository;
 
     private final CoachEjectionRepository coachEjectionRepository;
@@ -53,6 +48,7 @@ public class DatabaseQueries {
             GameRepository gameRepository,
             ArenaRepository arenaRepository,
             PlayerRepository playerRepository,
+            CoachRepository coachRepository,
             PlayerContractRepository playerContractRepository,
             FieldGoalAttemptRepository fieldGoalAttemptRepository,
             CoachEjectionRepository coachEjectionRepository,
@@ -76,6 +72,7 @@ public class DatabaseQueries {
         this.gameRepository = gameRepository;
         this.arenaRepository = arenaRepository;
         this.playerRepository = playerRepository;
+        this.coachRepository = coachRepository;
         this.playerContractRepository = playerContractRepository;
         this.fieldGoalAttemptRepository = fieldGoalAttemptRepository;
         this.coachEjectionRepository = coachEjectionRepository;
@@ -175,5 +172,9 @@ public class DatabaseQueries {
         } else {
             throw new NoSuchElementException("Арены с ID " + id + " не существует!");
         }
+    }
+
+    public void saveCoach(Coach coach) {
+        coachRepository.save(coach);
     }
 }
