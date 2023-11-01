@@ -1,8 +1,8 @@
 package com.d23alex.vtbstat.game.stats;
 
 import com.d23alex.vtbstat.Util;
-import com.d23alex.vtbstat.entities.Player;
-import com.d23alex.vtbstat.entities.gameevents.GameClockTimestamped;
+import com.d23alex.vtbstat.entity.Player;
+import com.d23alex.vtbstat.entity.gameevents.GameClockTimestamped;
 import com.d23alex.vtbstat.game.GameEventLog;
 import com.d23alex.vtbstat.game.Rules;
 

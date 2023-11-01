@@ -1,14 +1,14 @@
 package com.d23alex.vtbstat.game.stats;
 
-import com.d23alex.vtbstat.entities.Player;
-import com.d23alex.vtbstat.entities.gameevents.FieldGoalAttempt;
-import com.d23alex.vtbstat.entities.gameevents.FreeThrowAttempt;
+import com.d23alex.vtbstat.entity.Player;
+import com.d23alex.vtbstat.entity.gameevents.FieldGoalAttempt;
+import com.d23alex.vtbstat.entity.gameevents.FreeThrowAttempt;
 import com.d23alex.vtbstat.game.GameEventLog;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import static com.d23alex.vtbstat.entities.gameevents.FieldGoalAttempt.FieldGoalType.*;
+import static com.d23alex.vtbstat.entity.gameevents.FieldGoalAttempt.FieldGoalType.*;
 
 @Data
 @Builder

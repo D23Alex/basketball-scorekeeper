@@ -1,7 +1,7 @@
 package com.d23alex.vtbstat.game;
 
-import com.d23alex.vtbstat.entities.Game;
-import com.d23alex.vtbstat.entities.gameevents.*;
+import com.d23alex.vtbstat.entity.Game;
+import com.d23alex.vtbstat.entity.gameevents.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;

@@ -1,15 +1,15 @@
 package com.d23alex.vtbstat.db;
 
-import com.d23alex.vtbstat.db.repositories.ArenaRepository;
-import com.d23alex.vtbstat.db.repositories.PlayerContractRepository;
-import com.d23alex.vtbstat.db.repositories.PlayerRepository;
-import com.d23alex.vtbstat.db.repositories.gameevents.*;
-import com.d23alex.vtbstat.entities.Arena;
-import com.d23alex.vtbstat.entities.Game;
-import com.d23alex.vtbstat.entities.Player;
-import com.d23alex.vtbstat.entities.PlayerContract;
+import com.d23alex.vtbstat.db.repository.ArenaRepository;
+import com.d23alex.vtbstat.db.repository.PlayerContractRepository;
+import com.d23alex.vtbstat.db.repository.PlayerRepository;
+import com.d23alex.vtbstat.db.repository.gameevents.*;
+import com.d23alex.vtbstat.entity.Arena;
+import com.d23alex.vtbstat.entity.Game;
+import com.d23alex.vtbstat.entity.Player;
+import com.d23alex.vtbstat.entity.PlayerContract;
 import com.d23alex.vtbstat.game.GameEventLog;
-import com.d23alex.vtbstat.db.repositories.GameRepository;
+import com.d23alex.vtbstat.db.repository.GameRepository;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
