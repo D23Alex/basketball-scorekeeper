@@ -2,7 +2,6 @@ package com.d23alex.vtbstat.controller;
 
 import com.d23alex.vtbstat.db.DatabaseQueries;
 import com.d23alex.vtbstat.entity.Arena;
-import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
