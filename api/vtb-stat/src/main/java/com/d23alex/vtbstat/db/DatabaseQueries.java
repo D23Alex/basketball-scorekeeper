@@ -156,6 +156,19 @@ public class DatabaseQueries {
         return arenaRepository.findById(id);
     }
 
+    public void updateArenaById(Arena updatedArena) {
+        Optional<Arena> optionalArena = arenaRepository.findById(updatedArena.getId());
+
+        if (optionalArena.isPresent()) {
+            Arena arena = optionalArena.get();
+            arena.setName(updatedArena.getName());
+            arena.setAddress(updatedArena.getAddress());
+            arenaRepository.save(arena);
+        } else {
+            throw new NoSuchElementException("Арены с ID " + updatedArena.getId() + " не существует!");
+        }
+    }
+
     public void deleteArenaById(Long id) {
         if (arenaRepository.existsById(id)) {
             arenaRepository.deleteById(id);
