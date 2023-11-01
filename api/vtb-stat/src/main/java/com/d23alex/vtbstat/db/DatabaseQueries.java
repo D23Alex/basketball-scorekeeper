@@ -102,10 +102,6 @@ public class DatabaseQueries {
         return gameRepository.existsById(id);
     }
 
-    public Optional<Game> gameById(Long id) {
-        return gameRepository.findById(id);
-    }
-
     public Optional<GameEventLog> gameEventsByGameId(Long gameId) {
         Optional<Game> game = gameRepository.findById(gameId);
         if (game.isEmpty())
@@ -244,6 +240,42 @@ public class DatabaseQueries {
 
     public Set<CoachContract> getAllCoachContracts() {
         return StreamSupport.stream(coachContractRepository.findAll().spliterator(), false)
+                .collect(Collectors.toSet());
+    }
+
+    public void saveGame(Game game) {
+        gameRepository.save(game);
+    }
+
+    public Optional<Game> getGameById(Long id) {
+        return gameRepository.findById(id);
+    }
+
+    public void updateGameById(Game updatedGame) {
+        Optional<Game> optionalGame = gameRepository.findById(updatedGame.getId());
+
+        if (optionalGame.isPresent()) {
+            Game game = optionalGame.get();
+            game.setArena(updatedGame.getArena());
+            game.setTeam1(updatedGame.getTeam1());
+            game.setTeam2(updatedGame.getTeam2());
+            game.setHomeTeam(updatedGame.getHomeTeam());
+            game.setScheduledStartTime(updatedGame.getScheduledStartTime());
+        } else {
+            throw new NoSuchElementException("Игры с ID " + updatedGame.getId() + " не существует!");
+        }
+    }
+
+    public void deleteGameById(Long id) {
+        if (gameRepository.existsById(id)) {
+            gameRepository.deleteById(id);
+        } else {
+            throw new NoSuchElementException("Игры с ID " + id + " не существует!");
+        }
+    }
+
+    public Set<Game> getAllGames() {
+        return StreamSupport.stream(gameRepository.findAll().spliterator(), false)
                 .collect(Collectors.toSet());
     }
 }
