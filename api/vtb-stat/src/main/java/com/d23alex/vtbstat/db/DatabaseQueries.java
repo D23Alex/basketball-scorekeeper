@@ -192,7 +192,15 @@ public class DatabaseQueries {
             coach.setDateOfBirth(updatedCoach.getDateOfBirth());
             coach.setDescription(updatedCoach.getDescription());
         } else {
-            throw new NoSuchElementException("Арены с ID " + updatedCoach.getId() + " не существует!");
+            throw new NoSuchElementException("Тренера с ID " + updatedCoach.getId() + " не существует!");
+        }
+    }
+
+    public void deleteCoachById(Long id) {
+        if (coachRepository.existsById(id)) {
+            coachRepository.deleteById(id);
+        } else {
+            throw new NoSuchElementException("Тренера с ID " + id + " не существует!");
         }
     }
 }

@@ -38,6 +38,14 @@ public class CoachController {
         }
     }
 
-
+    @DeleteMapping("/api/coaches/{id}")
+    public ResponseEntity<String> deleteCoachById(@PathVariable Long id) {
+        try {
+            databaseQueries.deleteCoachById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }
