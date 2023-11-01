@@ -1,6 +1,7 @@
 package com.d23alex.vtbstat.controller;
 
 import com.d23alex.vtbstat.db.DatabaseQueries;
+import com.d23alex.vtbstat.entity.Arena;
 import com.d23alex.vtbstat.entity.Coach;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 public class CoachController {
@@ -48,4 +50,8 @@ public class CoachController {
         }
     }
 
+    @GetMapping("/api/coaches/get_all")
+    public Set<Coach> getAllArenas() {
+        return databaseQueries.getAllCoaches();
+    }
 }

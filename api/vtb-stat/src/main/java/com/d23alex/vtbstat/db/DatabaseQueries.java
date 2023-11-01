@@ -203,4 +203,9 @@ public class DatabaseQueries {
             throw new NoSuchElementException("Тренера с ID " + id + " не существует!");
         }
     }
+
+    public Set<Coach> getAllCoaches() {
+        return StreamSupport.stream(coachRepository.findAll().spliterator(), false)
+                .collect(Collectors.toSet());
+    }
 }
