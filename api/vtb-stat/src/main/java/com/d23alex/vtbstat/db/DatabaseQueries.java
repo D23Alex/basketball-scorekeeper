@@ -129,10 +129,6 @@ public class DatabaseQueries {
                 .turnovers(turnoverRepository.findAllByGameIdOrderByMillisecondsSinceStart(gameId)).build());
     }
 
-    public Optional<Player> playerById(Long id) {
-        return playerRepository.findById(id);
-    }
-
     public Set<Player> teamMembersByDate(Long teamId, Date date) {
         return playerContractRepository.findAllByTeamIdAndValidFromBeforeAndValidToAfter(teamId, date, date)
                 .stream().map(PlayerContract::getPlayer)
@@ -276,6 +272,43 @@ public class DatabaseQueries {
 
     public Set<Game> getAllGames() {
         return StreamSupport.stream(gameRepository.findAll().spliterator(), false)
+                .collect(Collectors.toSet());
+    }
+
+    public void savePlayer(Player player) {
+        playerRepository.save(player);
+    }
+
+    public Optional<Player> getPlayerById(Long id) {
+        return playerRepository.findById(id);
+    }
+
+    public void updatePlayerById(Player updatedPlayer) {
+        Optional<Player> optionalPlayer = playerRepository.findById(updatedPlayer.getId());
+
+        if (optionalPlayer.isPresent()) {
+            Player player = optionalPlayer.get();
+            player.setFirstName(updatedPlayer.getFirstName());
+            player.setLastName(updatedPlayer.getLastName());
+            player.setDateOfBirth(updatedPlayer.getDateOfBirth());
+            player.setProfileImagePath(updatedPlayer.getProfileImagePath());
+            player.setDescription(updatedPlayer.getDescription());
+            player.setPosition(updatedPlayer.getPosition());
+        } else {
+            throw new NoSuchElementException("Игрока с ID " + updatedPlayer.getId() + " не существует!");
+        }
+    }
+
+    public void deletePlayerById(Long id) {
+        if (playerRepository.existsById(id)) {
+            playerRepository.deleteById(id);
+        } else {
+            throw new NoSuchElementException("Игрока с ID " + id + " не существует!");
+        }
+    }
+
+    public Set<Player> getAllPlayers() {
+        return StreamSupport.stream(playerRepository.findAll().spliterator(), false)
                 .collect(Collectors.toSet());
     }
 }

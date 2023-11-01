@@ -22,7 +22,7 @@ public class StatController {
 
     @GetMapping("/api/stats/playergamestats/{playerId}/{gameId}")
     Optional<PlayerGameStatLine> playerGameStatLine(@PathVariable Long playerId, @PathVariable Long gameId) {
-        Optional<Player> player = databaseQueries.playerById(playerId);
+        Optional<Player> player = databaseQueries.getPlayerById(playerId);
         if (player.isEmpty())
             return Optional.empty();
         Optional<GameEventLog> gameEventLog = databaseQueries.gameEventsByGameId(gameId);
