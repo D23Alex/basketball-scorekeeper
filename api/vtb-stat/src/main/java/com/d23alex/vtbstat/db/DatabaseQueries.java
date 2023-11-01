@@ -25,6 +25,7 @@ public class DatabaseQueries {
     private final CoachContractRepository coachContractRepository;
     private final PlayerContractRepository playerContractRepository;
     private final TeamRepository teamRepository;
+    private final TeamContractRepository teamContractRepository;
 
     private final CoachEjectionRepository coachEjectionRepository;
     private final CoachTechnicalFoulRepository coachTechnicalFoulRepository;
@@ -53,7 +54,9 @@ public class DatabaseQueries {
             CoachRepository coachRepository,
             CoachContractRepository coachContractRepository,
             PlayerContractRepository playerContractRepository,
-            TeamRepository teamRepository, FieldGoalAttemptRepository fieldGoalAttemptRepository,
+            TeamRepository teamRepository,
+            TeamContractRepository teamContractRepository,
+            FieldGoalAttemptRepository fieldGoalAttemptRepository,
             CoachEjectionRepository coachEjectionRepository,
             CoachTechnicalFoulRepository coachTechnicalFoulRepository,
             FreeThrowAttemptRepository freeThrowAttemptRepository,
@@ -79,6 +82,7 @@ public class DatabaseQueries {
         this.coachContractRepository = coachContractRepository;
         this.playerContractRepository = playerContractRepository;
         this.teamRepository = teamRepository;
+        this.teamContractRepository = teamContractRepository;
         this.fieldGoalAttemptRepository = fieldGoalAttemptRepository;
         this.coachEjectionRepository = coachEjectionRepository;
         this.coachTechnicalFoulRepository = coachTechnicalFoulRepository;
@@ -378,6 +382,39 @@ public class DatabaseQueries {
 
     public Set<Team> getAllTeams() {
         return StreamSupport.stream(teamRepository.findAll().spliterator(), false)
+                .collect(Collectors.toSet());
+    }
+
+    public void saveTeamContract(TeamContract teamContract) {
+        teamContractRepository.save(teamContract);
+    }
+
+    public Optional<TeamContract> getTeamContractById(Long id) {
+        return teamContractRepository.findById(id);
+    }
+
+    public void updateTeamContractById(TeamContract updatedTeamContract) {
+        Optional<TeamContract> optionalTeamContract = teamContractRepository.findById(updatedTeamContract.getId());
+        if (optionalTeamContract.isPresent()) {
+            TeamContract teamContract = optionalTeamContract.get();
+            teamContract.setTeam(updatedTeamContract.getTeam());
+            teamContract.setValidFrom(updatedTeamContract.getValidFrom());
+            teamContract.setValidTo(updatedTeamContract.getValidTo());
+        } else {
+            throw new NoSuchElementException("Контракта с ID " + updatedTeamContract.getId() + " не существует!");
+        }
+    }
+
+    public void deleteTeamContractById(Long id) {
+        if (teamContractRepository.existsById(id)) {
+            teamContractRepository.deleteById(id);
+        } else {
+            throw new NoSuchElementException("Контракта с ID " + id + " не существует!");
+        }
+    }
+
+    public Set<TeamContract> getAllTeamContracts() {
+        return StreamSupport.stream(teamContractRepository.findAll().spliterator(), false)
                 .collect(Collectors.toSet());
     }
 }
