@@ -22,6 +22,7 @@ public class DatabaseQueries {
     private final ArenaRepository arenaRepository;
     private final PlayerRepository playerRepository;
     private final CoachRepository coachRepository;
+    private final CoachContractRepository coachContractRepository;
     private final PlayerContractRepository playerContractRepository;
 
     private final CoachEjectionRepository coachEjectionRepository;
@@ -49,6 +50,7 @@ public class DatabaseQueries {
             ArenaRepository arenaRepository,
             PlayerRepository playerRepository,
             CoachRepository coachRepository,
+            CoachContractRepository coachContractRepository,
             PlayerContractRepository playerContractRepository,
             FieldGoalAttemptRepository fieldGoalAttemptRepository,
             CoachEjectionRepository coachEjectionRepository,
@@ -73,6 +75,7 @@ public class DatabaseQueries {
         this.arenaRepository = arenaRepository;
         this.playerRepository = playerRepository;
         this.coachRepository = coachRepository;
+        this.coachContractRepository = coachContractRepository;
         this.playerContractRepository = playerContractRepository;
         this.fieldGoalAttemptRepository = fieldGoalAttemptRepository;
         this.coachEjectionRepository = coachEjectionRepository;
@@ -206,6 +209,41 @@ public class DatabaseQueries {
 
     public Set<Coach> getAllCoaches() {
         return StreamSupport.stream(coachRepository.findAll().spliterator(), false)
+                .collect(Collectors.toSet());
+    }
+
+    public void saveCoachContract(CoachContract coachContract) {
+        coachContractRepository.save(coachContract);
+    }
+
+    public Optional<CoachContract> getCoachContractById(Long id) {
+        return coachContractRepository.findById(id);
+    }
+
+    public void updateCoachContractById(CoachContract updatedCoachContract) {
+        Optional<CoachContract> optionalCoachContract = coachContractRepository.findById(updatedCoachContract.getId());
+
+        if (optionalCoachContract.isPresent()) {
+            CoachContract coachContract = optionalCoachContract.get();
+            coachContract.setCoach(updatedCoachContract.getCoach());
+            coachContract.setTeam(updatedCoachContract.getTeam());
+            coachContract.setValidFrom(updatedCoachContract.getValidFrom());
+            coachContract.setValidTo(updatedCoachContract.getValidTo());
+        } else {
+            throw new NoSuchElementException("Контракта с ID " + updatedCoachContract.getId() + " не существует!");
+        }
+    }
+
+    public void deleteCoachContractById(Long id) {
+        if (coachContractRepository.existsById(id)) {
+            coachContractRepository.deleteById(id);
+        } else {
+            throw new NoSuchElementException("Контракта с ID " + id + " не существует!");
+        }
+    }
+
+    public Set<CoachContract> getAllCoachContracts() {
+        return StreamSupport.stream(coachContractRepository.findAll().spliterator(), false)
                 .collect(Collectors.toSet());
     }
 }

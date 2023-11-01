@@ -1,7 +1,6 @@
 package com.d23alex.vtbstat.controller;
 
 import com.d23alex.vtbstat.db.DatabaseQueries;
-import com.d23alex.vtbstat.entity.Arena;
 import com.d23alex.vtbstat.entity.Coach;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
