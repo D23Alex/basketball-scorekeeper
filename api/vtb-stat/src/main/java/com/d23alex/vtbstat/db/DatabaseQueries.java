@@ -311,4 +311,38 @@ public class DatabaseQueries {
         return StreamSupport.stream(playerRepository.findAll().spliterator(), false)
                 .collect(Collectors.toSet());
     }
+
+    public void savePlayerContract(PlayerContract playerContract) {
+        playerContractRepository.save(playerContract);
+    }
+
+    public Optional<PlayerContract> getPlayerContractById(Long id) {
+        return playerContractRepository.findById(id);
+    }
+
+    public void updatePlayerContractById(PlayerContract updatedPlayerContract) {
+        Optional<PlayerContract> optionalPlayerContract = playerContractRepository.findById(updatedPlayerContract.getId());
+        if (optionalPlayerContract.isPresent()) {
+            PlayerContract playerContract = optionalPlayerContract.get();
+            playerContract.setPlayer(updatedPlayerContract.getPlayer());
+            playerContract.setTeam(updatedPlayerContract.getTeam());
+            playerContract.setValidFrom(updatedPlayerContract.getValidFrom());
+            playerContract.setValidTo(updatedPlayerContract.getValidTo());
+        } else {
+            throw new NoSuchElementException("Контракта с ID " + updatedPlayerContract.getId() + " не существует!");
+        }
+    }
+
+    public void deletePlayerContractById(Long id) {
+        if (playerContractRepository.existsById(id)) {
+            playerContractRepository.deleteById(id);
+        } else {
+            throw new NoSuchElementException("Контракта с ID " + id + " не существует!");
+        }
+    }
+
+    public Set<PlayerContract> getAllPlayerContracts() {
+        return StreamSupport.stream(playerContractRepository.findAll().spliterator(), false)
+                .collect(Collectors.toSet());
+    }
 }
