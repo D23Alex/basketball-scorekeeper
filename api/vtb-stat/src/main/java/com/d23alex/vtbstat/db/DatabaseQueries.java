@@ -177,4 +177,8 @@ public class DatabaseQueries {
     public void saveCoach(Coach coach) {
         coachRepository.save(coach);
     }
+
+    public Optional<Coach> getCoachById(Long id) {
+        return coachRepository.findById(id);
+    }
 }
