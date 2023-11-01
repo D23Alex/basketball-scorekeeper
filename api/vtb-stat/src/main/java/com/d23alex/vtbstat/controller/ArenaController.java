@@ -29,7 +29,6 @@ public class ArenaController {
         return arena.orElseThrow(() -> new NoSuchElementException("Arena with incorrect ID was provided!"));
     }
 
-
     @PutMapping("/api/arenas/update")
     public ResponseEntity<String> updateArena(@RequestBody Arena arena) {
         try {

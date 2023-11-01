@@ -181,4 +181,18 @@ public class DatabaseQueries {
     public Optional<Coach> getCoachById(Long id) {
         return coachRepository.findById(id);
     }
+
+    public void updateCoachById(Coach updatedCoach) {
+        Optional<Coach> optionalCoach = coachRepository.findById(updatedCoach.getId());
+
+        if (optionalCoach.isPresent()) {
+            Coach coach = optionalCoach.get();
+            coach.setFirstName(updatedCoach.getFirstName());
+            coach.setLastName(updatedCoach.getLastName());
+            coach.setDateOfBirth(updatedCoach.getDateOfBirth());
+            coach.setDescription(updatedCoach.getDescription());
+        } else {
+            throw new NoSuchElementException("Арены с ID " + updatedCoach.getId() + " не существует!");
+        }
+    }
 }
