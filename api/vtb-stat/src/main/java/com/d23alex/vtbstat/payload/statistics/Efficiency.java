@@ -16,14 +16,13 @@ public class Efficiency {
     private double freeThrowEfficiency = 0;
 
     public Efficiency(Totals totals) {
-        if (totals.getFieldGoalsAttempted() == 0 ||
-                totals.getTwoPointersAttempted() == 0 ||
-                totals.getThreePointersAttempted() == 0 ||
-                totals.getFreeThrowsAttempted() == 0)
-            return;
-        this.fieldGoalEfficiency = (double) totals.getFieldGoalsMade() / totals.getFieldGoalsAttempted();
-        this.twoPointEfficiency = (double) totals.getTwoPointersMade() / totals.getTwoPointersAttempted();
-        this.threePointEfficiency = (double) totals.getThreePointersMade() / totals.getThreePointersAttempted();
-        this.freeThrowEfficiency = (double) totals.getFreeThrowsMade() / totals.getFreeThrowsAttempted();
+        this.fieldGoalEfficiency = totals.getFieldGoalsAttempted() == 0 ? 0 :
+            (double) totals.getFieldGoalsMade() / totals.getFieldGoalsAttempted();
+        this.twoPointEfficiency = totals.getTwoPointersAttempted() == 0 ? 0 :
+                (double) totals.getTwoPointersMade() / totals.getTwoPointersAttempted();
+        this.threePointEfficiency = totals.getThreePointersAttempted() == 0 ? 0 :
+                (double) totals.getThreePointersMade() / totals.getThreePointersAttempted();
+        this.freeThrowEfficiency = totals.getFreeThrowsMade() == 0 ? 0 :
+                (double) totals.getFreeThrowsMade() / totals.getFreeThrowsAttempted();
     }
 }

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Table(name="player_contracts")
 @Entity
@@ -22,4 +22,6 @@ public class PlayerContract {
     Team team;
     Date validFrom;
     Date validTo;
+    Date terminated;
+    Integer jerseyNumber;
 }

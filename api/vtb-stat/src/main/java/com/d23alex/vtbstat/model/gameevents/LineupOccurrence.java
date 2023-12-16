@@ -19,6 +19,7 @@ public class LineupOccurrence {
     Long id;
     @ManyToOne
     Player player;
+    // TODO: might want to remove it from here, as the jersey number is specified in player's contract
     Long jerseyNumber;
     @ManyToOne
     Team team;

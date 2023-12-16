@@ -1,17 +1,15 @@
 package com.d23alex.vtbstat.repository;
 
+import com.d23alex.vtbstat.LeagueSchedule;
 import com.d23alex.vtbstat.model.*;
 import com.d23alex.vtbstat.payload.statistics.GameEventLog;
 import com.d23alex.vtbstat.repository.gameevents.*;
 import com.d23alex.vtbstat.model.gameevents.LineupOccurrence;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -106,7 +104,7 @@ public class DatabaseQueries {
         this.turnoverRepository = turnoverRepository;
     }
 
-    public List<Game> gamesStartedBetweenTimestampsAndParticipatedByPlayer(Player player, Timestamp from, Timestamp to) {
+    public List<Game> gamesStartedBetweenTimestampsAndParticipatedByPlayer(Player player, Date from, Date to) {
         return lineupOccurrenceRepository.findAllByPlayerIsAndGameScheduledStartTimeBetween(player, from, to)
                 .stream().map(LineupOccurrence::getGame).toList();
     }
@@ -369,6 +367,16 @@ public class DatabaseQueries {
     public Set<PlayerContract> getAllPlayerContracts() {
         return StreamSupport.stream(playerContractRepository.findAll().spliterator(), false)
                 .collect(Collectors.toSet());
+    }
+
+    public Set<PlayerContract> getAllPlayerContractsByPlayerId(Long playerId) {
+        return playerContractRepository.findAllByPlayerId(playerId);
+    }
+
+    // список контрактов определённого игрока, которые действовали хотя бы какое-то время из заданного
+    public List<PlayerContract> allPlayerContractsValidWithinTime(Long playerId, Date from, Date to) {
+        return playerContractRepository.findAllByPlayerIdAndValidFromBeforeAndValidToAfterOrderByValidFrom(playerId, to, from).stream()
+                .filter(c -> c.getTerminated() == null || c.getTerminated().after(from)).toList();
     }
 
     public void saveTeam(Team team) {

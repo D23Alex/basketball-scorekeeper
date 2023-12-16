@@ -9,10 +9,22 @@ import axios from "axios";
 export default {
   data() {
     return {
-      header: ["name", "timePlayed", "points", "assists", "rebounds", "twoPointersMade", "twoPointersAttempted",
-        "threePointersMade", "threePointersAttempted", "freeThrowsMade", "freeThrowsAttempted"],
-      keys: ["name", "timePlayedInMillis", "points", "assists", "rebounds", "twoPointersMade", "twoPointersAttempted",
-        "threePointersMade", "threePointersAttempted", "freeThrowsMade", "freeThrowsAttempted"],
+      header: ["name", "T", "PTS", "AST", "REB", "BLK", "2PM", "2PA", "2P%", "3PM", "3PA", "3P%", "FTM", "FTA", "FT%"],
+      keys: ["name",
+        ["performance", "totals", "timePlayedInMillis"],
+        ["performance", "totals", "points"],
+        ["performance", "totals", "assists"],
+        ["performance", "totals", "rebounds"],
+        ["performance", "totals", "blocks"],
+        ["performance", "totals", "twoPointersMade"],
+        ["performance", "totals", "twoPointersAttempted"],
+        ["performance", "efficiency", "twoPointEfficiency"],
+        ["performance", "totals", "threePointersMade"],
+        ["performance", "totals", "threePointersAttempted"],
+        ["performance", "efficiency", "threePointEfficiency"],
+        ["performance", "totals", "freeThrowsMade"],
+        ["performance", "totals", "freeThrowsAttempted"],
+        ["performance", "efficiency", "freeThrowEfficiency"]],
       data: []
     }
   },
