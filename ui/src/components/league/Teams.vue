@@ -1,17 +1,18 @@
 <script>
 import axios from "axios";
-import TeamShortInfo from "@/components/league/TeamShortInfo.vue";
+import TeamPreview from "@/components/league/TeamPreview.vue";
 
 export default {
-  components: {TeamShortInfo},
+  components: {TeamPreview},
   data() {
     return {
       teams: [],
+      season: 2023 // hardcoded for now
     }
   },
 
   async mounted() {
-    this.teams = (await axios.get("http://localhost:8080/api/teams")).data;
+    this.teams = (await axios.get("http://localhost:8080/api/teams/get_all")).data;
   }
 }
 </script>
@@ -19,7 +20,7 @@ export default {
 <template>
 <p>Команды лиги:</p>
   <li v-for="team in teams">
-    <TeamShortInfo :team="team"/>
+    <TeamPreview :season="this.season" :team-id="team.id" :team-city="team.city" :team-name="team.name"/>
   </li>
 </template>
 

@@ -24,7 +24,7 @@ public class Time {
 
         var periodEndingTimestamps = gameEventLog.getPeriodEnders()
                 .stream().filter(periodEnder -> player.equals(periodEnder.getPlayer()))
-                .map(periodEnder -> millisPassedByPeriodStart(periodEnder.getPeriod())).toList();
+                .map(periodEnder -> millisInPeriods(periodEnder.getPeriod())).toList();
 
         var subOutTimestamps = gameEventLog.getSubstitutionOuts()
                 .stream().filter(subOut -> player.equals(subOut.getPlayer()))

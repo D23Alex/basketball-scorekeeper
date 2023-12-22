@@ -8,6 +8,7 @@ import Auth from "@/components/Auth.vue";
 import Welcome from "@/components/Welcome.vue";
 import Error from "@/components/Error.vue";
 import Game from "@/components/game/Game.vue";
+import PlayerPage from "@/components/player/PlayerPage.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -26,6 +27,11 @@ const router = createRouter({
             path: "/game/:gameId",
             name: "game",
             component: Game,
+        },
+        {
+            path: "/player/:playerId",
+            name: "player",
+            component: PlayerPage,
         },
         {
             path: "/",

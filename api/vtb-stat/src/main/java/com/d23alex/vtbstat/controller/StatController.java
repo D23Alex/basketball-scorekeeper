@@ -1,5 +1,9 @@
 package com.d23alex.vtbstat.controller;
 
+import com.d23alex.vtbstat.LeagueSchedule;
+import com.d23alex.vtbstat.Util;
+import com.d23alex.vtbstat.model.PlayerContract;
+import com.d23alex.vtbstat.payload.performance.*;
 import com.d23alex.vtbstat.repository.DatabaseQueries;
 import com.d23alex.vtbstat.model.Game;
 import com.d23alex.vtbstat.model.Player;
@@ -8,19 +12,13 @@ import com.d23alex.vtbstat.model.gameevents.LineupOccurrence;
 import com.d23alex.vtbstat.payload.statistics.GameEventLog;
 import com.d23alex.vtbstat.payload.statistics.Performance;
 import com.d23alex.vtbstat.payload.statistics.PlayerGameStatLine;
-import com.d23alex.vtbstat.payload.performance.PlayerOverTimePerformance;
-import com.d23alex.vtbstat.payload.performance.PlayerSingleGamePerformance;
-import com.d23alex.vtbstat.payload.performance.TeamOverTimePerformance;
-import com.d23alex.vtbstat.payload.performance.TeamSingleGamePerformance;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 public class StatController {
@@ -86,21 +84,17 @@ public class StatController {
     }
 
     @GetMapping("/api/stats/player-over-time-performance/{playerId}/{from}/{to}")
-    Optional<PlayerOverTimePerformance> playerOverTimePerformance(@PathVariable Long playerId, @PathVariable Timestamp from, @PathVariable Timestamp to) {
+    Optional<PlayerOverTimePerformance> playerOverTimePerformance(@PathVariable Long playerId, @PathVariable Date from, @PathVariable Date to) {
         Optional<Player> player = databaseQueries.getPlayerById(playerId);
         if (player.isEmpty())
             return Optional.empty();
         var games = databaseQueries.gamesStartedBetweenTimestampsAndParticipatedByPlayer(player.get(), from, to);
-        if (games.isEmpty())
-            return Optional.empty();
         var gameEventLogs = games.stream().map(game ->  databaseQueries.gameEventsByGameId(game.getId()))
                 .filter(Optional::isPresent).map(Optional::get).toList();
-        if (gameEventLogs.isEmpty())
-            return Optional.empty();
         return Optional.of(PlayerOverTimePerformance.builder()
                 .player(player.get())
-                .from(from)
-                .to(to)
+                .from(new Timestamp(from.getTime()))
+                .to(new Timestamp(to.getTime()))
                 .games(games)
                 .performance(new Performance(player.get(), gameEventLogs)).build());
     }
@@ -128,6 +122,18 @@ public class StatController {
                 .performance(new Performance(allWhoPlayedForTeamInPeriod, gameEventLogs)).build());
     }
 
+    @GetMapping("/api/stats/season-performance/{playerId}/{season}")
+    List<PlayerInTeamOverTimePerformance> playerSeasonPerformance(@PathVariable Long playerId, @PathVariable Integer season) {
+        List<PlayerContract> allContractsValidWithinSeason = databaseQueries.allPlayerContractsValidWithinTime(
+                playerId, LeagueSchedule.seasonStart.get(season), LeagueSchedule.seasonEnd.get(season));
+
+        return allContractsValidWithinSeason.stream().map(contract -> new PlayerInTeamOverTimePerformance(
+                playerOverTimePerformance(playerId,
+                        Util.laterDate(contract.getValidFrom(), LeagueSchedule.seasonStart.get(season)),
+                        Util.earlierDate(contract.getValidTo(), LeagueSchedule.seasonEnd.get(season))).get(),
+                contract.getTeam())).toList();
+    }
+
     @GetMapping("/api/stats/boxscore/{gameId}")
     Optional<List<PlayerSingleGamePerformance>> gameBoxScore(@PathVariable Long gameId) {
         var game = databaseQueries.getGameById(gameId);
@@ -141,5 +147,12 @@ public class StatController {
                 .player(player)
                 .game(game.get())
                 .performance(new Performance(player, gameEventLog.get())).build()).toList());
+    }
+
+    @GetMapping("api/stats/seasons-participated/{playerId}")
+    List<Integer> seasonsParticipatedByPlayer(@PathVariable Long playerId) {
+        return databaseQueries.getAllPlayerContractsByPlayerId(playerId).stream()
+                .map(contract -> LeagueSchedule.seasonsInRange(contract.getValidFrom(), contract.getValidTo()))
+                .flatMap(Set::stream).distinct().sorted().toList();
     }
 }
