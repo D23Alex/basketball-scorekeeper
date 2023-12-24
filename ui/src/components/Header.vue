@@ -15,8 +15,12 @@
 
 <style>
    .itmo-logo {
-       width: 125px;
-       height: 75px;
-       float: left; 
+       width: 8%;
+       height: 8%;
+
+       vertical-align: middle;
+       position: relative;
+       top: -5px;
+       /* justify-content: center; */
    } 
 </style>

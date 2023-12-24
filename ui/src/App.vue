@@ -19,26 +19,26 @@ import Footer from "./components/Footer.vue";
   }
 
   header {
-    padding: 20px;
-    margin: 0;
+    padding: 10px;
+    margin: 0; 
+
     background-color: #004777;
     
-    height: 2.5vh;
+    height: 10%;
     width: 100%;
-    
-
-    /* position: sticky; */
+    justify-content: center;
   }
 
-  header a {
-    float: left;
+  header a { 
+    /* кнопки в header */
     text-align: center;
     padding: 12px;
-
+    
     color: #FFF;
     text-decoration: none;
     font-size: 18px;
     line-height: 25px;
     border-radius: 4px;
   }
+
 </style>
