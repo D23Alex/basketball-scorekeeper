@@ -39,7 +39,7 @@ const router = createRouter({
             component: Welcome
         },
         {
-            path: "/*",
+            path: "/basketball-scorekeeper/*",
             name: "error-page",
             component: Error,
             props: {
