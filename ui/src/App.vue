@@ -7,9 +7,38 @@ import Footer from "./components/Footer.vue";
 <template>
   <Header/>
   <router-view></router-view>
-  <Footer/>
+  <!-- <Footer/> -->
 </template>
 
-<style scoped>
+<style>
+  
+  body {
+    background-color: #ECE2D0;
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+    padding: 10px;
+    margin: 0; 
+
+    background-color: #004777;
+    
+    height: 10%;
+    width: 100%;
+    justify-content: center;
+  }
+
+  header a { 
+    /* кнопки в header */
+    text-align: center;
+    padding: 12px;
+    
+    color: #FFF;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 25px;
+    border-radius: 4px;
+  }
 
 </style>
