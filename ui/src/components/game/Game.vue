@@ -43,13 +43,13 @@ export default {
   },
 
   async mounted() {
-    this.gameEventLog = (await axios.get("http://158.160.137.233:8080/api/events/game/" + this.$route.params.gameId)).data;
-    this.game = (await axios.get("http://158.160.137.233:8080/api/games/" + this.$route.params.gameId)).data;
+    this.gameEventLog = (await axios.get("https://158.160.137.233:8080/api/events/game/" + this.$route.params.gameId)).data;
+    this.game = (await axios.get("https://158.160.137.233:8080/api/games/" + this.$route.params.gameId)).data;
     this.team1Lineup = this.gameEventLog.lineupOccurrences.map(occurrence => occurrence.player); //TODO: filter that
-    this.team1Performance = (await axios.get("http://158.160.137.233:8080/api/stats/team-single-game-performance/"
+    this.team1Performance = (await axios.get("https://158.160.137.233:8080/api/stats/team-single-game-performance/"
         + this.game.team1.id + "/" + this.$route.params.gameId)).data.performance;
     console.log(this.team1Performance);
-    this.team2Performance = (await axios.get("http://158.160.137.233:8080/api/stats/team-single-game-performance/"
+    this.team2Performance = (await axios.get("https://158.160.137.233:8080/api/stats/team-single-game-performance/"
         + this.game.team2.id + "/" + this.$route.params.gameId)).data.performance;
     this.allLoaded = true;
   }

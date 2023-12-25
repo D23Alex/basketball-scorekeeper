@@ -30,7 +30,7 @@ export default {
   },
 
   async mounted() {
-    this.data = (await axios.get("http://158.160.137.233:8080/api/stats/boxscore/" + this.$route.params.gameId)).data;
+    this.data = (await axios.get("https://158.160.137.233:8080/api/stats/boxscore/" + this.$route.params.gameId)).data;
     this.data.forEach(row => row.name = row.player.firstName + " " + row.player.lastName);
   }
 }

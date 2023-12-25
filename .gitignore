@@ -33,6 +33,6 @@ build/
 ### VS Code ###
 .vscode/
 
-### Node modules ###
+### Node modules and vue stuff ###
 **/node_modules
-
+**/dist
