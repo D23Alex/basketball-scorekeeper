@@ -11,7 +11,7 @@ import Game from "@/components/game/Game.vue";
 import PlayerPage from "@/components/player/PlayerPage.vue";
 
 const router = createRouter({
-    history: createWebHistory('/basketball-scorekeeper/'),
+    history: createWebHistory(),
     routes : [
         {
             path: "/auth",
@@ -19,7 +19,7 @@ const router = createRouter({
             component: Auth
         },
         {
-            path: "/teams",
+            path: "/basketball-scorekeeper/teams",
             name: "teams",
             component: Teams
         },
