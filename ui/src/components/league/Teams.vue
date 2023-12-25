@@ -12,7 +12,7 @@ export default {
   },
 
   async mounted() {
-    this.teams = (await axios.get("http://localhost:8080/api/teams/get_all")).data;
+    this.teams = (await axios.get("http://158.160.137.233:8080/api/teams/get_all")).data;
   }
 }
 </script>
