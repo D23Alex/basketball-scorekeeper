@@ -17,7 +17,7 @@ export default {
       allLoaded: false,
       performancesForEachContractInSeason: [],
       header: [
-        "team",
+        "TEAM",
         "T-TOTAL", "PTS-TOTAL", "AST-TOTAL", "REB-TOTAL", "BLK-TOTAL", "2PM-TOTAL", "2PA-TOTAL",
         "T-AVG", "PTS-AVG", "AST-AVG", "REB-AVG", "BLK-AVG", "2PM-AVG", "2PA-AVG",
         "2P%", "3PM", "3PA", "3P%", "FTM", "FTA", "FT%"
