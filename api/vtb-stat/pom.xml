@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.d23alex</groupId>
     <artifactId>vtb-stat</artifactId>
-    <version>1.0</version>
+    <version>0.0.1-SNAPSHOT</version>
     <name>vtb-stat</name>
     <description>vtb-stat</description>
     <repositories>
