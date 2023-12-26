@@ -8,9 +8,9 @@ INSERT INTO coaches (first_name, last_name, date_of_birth, description) VALUES (
 INSERT INTO coaches (first_name, last_name, date_of_birth, description) VALUES ('Петя', 'Покупкин', '1995-10-12', 'Это еще один тренер!');
 INSERT INTO coaches (first_name, last_name, date_of_birth, description) VALUES ('Саша', 'Печкин', '1971-03-05', 'Почтальон?!');
 
-INSERT INTO teams (name, city, home_arena_id) VALUES ('Зенит', 'Санкт-Петербург', 3);
-INSERT INTO teams (name, city, home_arena_id) VALUES ('ЦСКА', 'Москва', 4);
-INSERT INTO teams (name, city, home_arena_id) VALUES ('Пари НН', 'Пари НН', 5);
+INSERT INTO teams (name, city, description, home_arena_id) VALUES ('Зенит', 'Санкт-Петербург', 'Супер подробное описание', 3);
+INSERT INTO teams (name, city, description, home_arena_id) VALUES ('ЦСКА', 'Москва', 'Еще одно очень подробное описание', 4);
+INSERT INTO teams (name, city, description, home_arena_id) VALUES ('Пари НН', 'Пари НН', 'Да я мастер описаний!' , 5);
 
 INSERT INTO players (first_name, last_name, date_of_birth, description, position) VALUES ('Сергей', 'Карасев', '1971-03-05', 'Описание игрока Сергей Карасев', 1);
 INSERT INTO players (first_name, last_name, date_of_birth, description, position) VALUES ('Денис', 'Захаров', '1971-03-05', 'Описание игрока Денис Захаров', 1);
