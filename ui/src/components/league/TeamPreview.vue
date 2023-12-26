@@ -14,7 +14,7 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
 <template>
   <div class="team-preview">
     <div class="team-image">
-      <img v-bind:src="'basketball-scorekeeper/images/teams/' + season + '/' + teamId + '.png'" alt="team image" style="width: 200px; height: 200px; border-radius: 150px;"/>
+      <img v-bind:src="'images/teams/' + season + '/' + teamId + '.png'" alt="team image" style="width: 200px; height: 200px; border-radius: 150px;"/>
     </div>
     <div>{{ teamName }}</div>
     <div>{{ teamCity }}</div>
