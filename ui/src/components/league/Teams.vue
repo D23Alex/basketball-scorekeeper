@@ -1,6 +1,7 @@
 <script>
 import axios from "axios";
 import TeamPreview from "@/components/league/TeamPreview.vue";
+import {API} from "@/constants";
 
 export default {
   components: {TeamPreview},
@@ -12,7 +13,7 @@ export default {
   },
 
   async mounted() {
-    this.teams = (await axios.get("https://158.160.137.233:8080/api/teams/get_all")).data;
+    this.teams = (await axios.get(API + "/teams/get_all")).data;
   }
 }
 </script>

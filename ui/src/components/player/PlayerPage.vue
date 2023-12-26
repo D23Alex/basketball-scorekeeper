@@ -4,6 +4,7 @@ import ContractPreview from "@/components/ContractPreview.vue"
 
 import axios from "axios";
 import {VueTable} from "@harv46/vue-table";
+import {API} from "@/constants";
 
 export default {
   components: {VueTable, PlayerPreview, ContractPreview},
@@ -55,18 +56,18 @@ export default {
 
   methods: {
     async loadSeasonDependentInfo() {
-      this.displayedContract = (await axios.get("https://158.160.137.233:8080/api/player-contracts/" + this.playerId
+      this.displayedContract = (await axios.get(API + "/player-contracts/" + this.playerId
           + "/last-in-season/" + this.season)).data;
-      this.performancesForEachContractInSeason = (await axios.get("https://158.160.137.233:8080/api/stats/season-performance/"
+      this.performancesForEachContractInSeason = (await axios.get(API + "/stats/season-performance/"
           + this.playerId + "/" + this.season)).data;
     },
   },
 
   async mounted() {
-    this.playerInfo = (await axios.get("https://158.160.137.233:8080/api/players/" + this.playerId)).data;
-    this.contractHistory = (await axios.get("https://158.160.137.233:8080/api/player-contracts/get-all-by-player/"
+    this.playerInfo = (await axios.get(API + "/players/" + this.playerId)).data;
+    this.contractHistory = (await axios.get(API + "/player-contracts/get-all-by-player/"
         + this.playerId)).data;
-    (await axios.get("https://158.160.137.233:8080/api/stats/seasons-participated/" + this.playerId)).data
+    (await axios.get(API + "/stats/seasons-participated/" + this.playerId)).data
         .forEach(season => this.availableSeasons.push({text: season, value: season}));
     await this.loadSeasonDependentInfo();
 

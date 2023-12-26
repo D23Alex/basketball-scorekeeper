@@ -5,6 +5,7 @@ import { VueTable  } from "@harv46/vue-table"
 
 <script>
 import axios from "axios";
+import {API} from "@/constants";
 
 export default {
   data() {
@@ -30,7 +31,7 @@ export default {
   },
 
   async mounted() {
-    this.data = (await axios.get("https://158.160.137.233:8080/api/stats/boxscore/" + this.$route.params.gameId)).data;
+    this.data = (await axios.get(API + "/stats/boxscore/" + this.$route.params.gameId)).data;
     this.data.forEach(row => row.name = row.player.firstName + " " + row.player.lastName);
   }
 }
