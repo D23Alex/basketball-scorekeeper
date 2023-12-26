@@ -1,5 +1,5 @@
 import {createApp} from "vue";
-import {createRouter, createWebHistory} from "vue-router";
+import {createRouter, createWebHashHistory, createWebHistory} from "vue-router";
 import App from './App.vue'
 
 import './assets/main.css'
@@ -11,7 +11,7 @@ import Game from "@/components/game/Game.vue";
 import PlayerPage from "@/components/player/PlayerPage.vue";
 
 const router = createRouter({
-    history: createWebHistory('/basketball-scorekeeper/'),
+    history: createWebHashHistory('/basketball-scorekeeper/'),
     routes : [
         {
             path: "/auth",
