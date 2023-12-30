@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
+@CrossOrigin
 @RestController
 public class TeamController {
     private final DatabaseQueries databaseQueries;
@@ -49,7 +50,6 @@ public class TeamController {
         }
     }
 
-    @CrossOrigin
     @GetMapping("/api/teams/get_all")
     public Set<Team> getAllTeams() {
         return databaseQueries.getAllTeams();

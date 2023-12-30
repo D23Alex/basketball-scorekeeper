@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
+@CrossOrigin
 @RestController
 public class PlayerController {
     private final DatabaseQueries databaseQueries;

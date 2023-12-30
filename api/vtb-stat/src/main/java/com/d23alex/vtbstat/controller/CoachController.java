@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
+@CrossOrigin
 @RestController
 public class CoachController {
     private final DatabaseQueries databaseQueries;

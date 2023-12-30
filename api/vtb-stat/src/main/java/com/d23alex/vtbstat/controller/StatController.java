@@ -12,6 +12,7 @@ import com.d23alex.vtbstat.model.gameevents.LineupOccurrence;
 import com.d23alex.vtbstat.payload.statistics.GameEventLog;
 import com.d23alex.vtbstat.payload.statistics.Performance;
 import com.d23alex.vtbstat.payload.statistics.PlayerGameStatLine;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 public class StatController {
     private final DatabaseQueries databaseQueries;
