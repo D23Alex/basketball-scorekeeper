@@ -1,4 +1,6 @@
 <script setup>
+import {IMAGES_PATH} from "@/constants";
+
 let props = defineProps({
   playerId: Number,
   season: Number,
@@ -14,9 +16,9 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
 </script>
 
 <template>
-<div class="player-preview">
+<div class="player-preview" @click="$router.push({path: '/player/' + playerId})">
   <div class="player-preview-image">
-    <img v-bind:src="'images/players/' + season + '/' + playerId + '.jpg'" alt="player image" style="width: 300px; height: 300px; border-radius: 150px;"/>
+    <img v-bind:src=" IMAGES_PATH + '/players/' + season + '/' + playerId + '.jpg'" alt="player image" style="width: 300px; height: 300px; border-radius: 150px;"/>
   </div>
   <div>
     {{ firstName + " " + lastName }}
@@ -36,5 +38,6 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
 }
 .player-preview:hover {
   background-color: v-bind(TEAM_MAIN_COLOR_BY_ID[teamId]);
+  cursor: pointer;
 }
 </style>

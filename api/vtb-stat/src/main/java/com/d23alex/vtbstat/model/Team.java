@@ -16,6 +16,7 @@ public class Team {
     Long id;
     String name;
     String city;
+    String description;
     @ManyToOne
     Arena HomeArena;
 }

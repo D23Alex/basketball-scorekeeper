@@ -3,10 +3,11 @@ import axios from "axios";
 import BoxScore from "@/components/game/BoxScore.vue";
 import TeamPreview from "@/components/league/TeamPreview.vue";
 import {API} from "@/constants";
+import GamePreview from "@/components/game/GamePreview.vue";
 
 
 export default {
-  components: {TeamPreview, BoxScore},
+  components: {GamePreview, TeamPreview, BoxScore},
   data() {
     return {
       allLoaded: false,
@@ -60,14 +61,11 @@ export default {
 <template>
   <div>Вся информация о конкретной игре. Тут будут располагаться стартовые составы, box score, графики и т.п.</div>
   <template v-if="allLoaded">
-    <div>ИГРА</div>
-    <div style="display: flex; flex-direction: row">
-      <TeamPreview :season="this.season" :team-id="this.game.team1.id"
-                   :team-city="this.game.team1.city" :team-name="this.game.team1.name"/>
-      <div> {{ this.team1Performance.totals.points }} - {{ this.team2Performance.totals.points }}</div>
-      <TeamPreview :season="this.season" :team-id="this.game.team2.id"
-                   :team-city="this.game.team2.city" :team-name="this.game.team2.name"/>
-    </div>
+    <GamePreview :season="this.season" :team1-score="this.team1Performance.totals.points"
+                 :team2-score="this.team2Performance.totals.points" :game-status="'TODO: статус игры'"
+                 :team1-info="this.game.team1" :team2-info="this.game.team2"
+                 :game-scheduled-start="this.game.scheduledStartTime"
+                 :game-id="this.game.id"/>
     <BoxScore/>
     <div>//TODO: Ивент лог игры ЗДЕСЬ</div>
   </template>

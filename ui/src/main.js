@@ -9,6 +9,8 @@ import Welcome from "@/components/Welcome.vue";
 import Error from "@/components/Error.vue";
 import Game from "@/components/game/Game.vue";
 import PlayerPage from "@/components/player/PlayerPage.vue";
+import TeamPage from "@/components/league/TeamPage.vue";
+import Calendar from "@/components/Calendar.vue";
 
 const router = createRouter({
     history: createWebHashHistory('/basketball-scorekeeper/'),
@@ -24,6 +26,11 @@ const router = createRouter({
             component: Teams
         },
         {
+            path: "/team/:teamId",
+            name: "team",
+            component: TeamPage,
+        },
+        {
             path: "/game/:gameId",
             name: "game",
             component: Game,
@@ -32,6 +39,11 @@ const router = createRouter({
             path: "/player/:playerId",
             name: "player",
             component: PlayerPage,
+        },
+        {
+            path: "/calendar",
+            name: "calendar",
+            component: Calendar
         },
         {
             path: "/",

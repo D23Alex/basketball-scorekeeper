@@ -8,9 +8,9 @@ INSERT INTO coaches (first_name, last_name, date_of_birth, description) VALUES (
 INSERT INTO coaches (first_name, last_name, date_of_birth, description) VALUES ('Петя', 'Покупкин', '1995-10-12', 'Это еще один тренер!');
 INSERT INTO coaches (first_name, last_name, date_of_birth, description) VALUES ('Саша', 'Печкин', '1971-03-05', 'Почтальон?!');
 
-INSERT INTO teams (name, city, home_arena_id) VALUES ('Зенит', 'Санкт-Петербург', 3);
-INSERT INTO teams (name, city, home_arena_id) VALUES ('ЦСКА', 'Москва', 4);
-INSERT INTO teams (name, city, home_arena_id) VALUES ('Пари НН', 'Пари НН', 5);
+INSERT INTO teams (name, city, description, home_arena_id) VALUES ('Зенит', 'Санкт-Петербург', '//TODO ОПИСАНИЕ КОМАНДЫ Зенит', 3);
+INSERT INTO teams (name, city, description, home_arena_id) VALUES ('ЦСКА', 'Москва', '//TODO ОПИСАНИЕ КОМАНДЫ ЦСКА', 4);
+INSERT INTO teams (name, city, description, home_arena_id) VALUES ('Пари НН', 'Пари НН', '//TODO ОПИСАНИЕ КОМАНДЫ Пари НН', 5);
 
 INSERT INTO players (first_name, last_name, date_of_birth, description, position) VALUES ('Сергей', 'Карасев', '1971-03-05', 'Описание игрока Сергей Карасев', 1);
 INSERT INTO players (first_name, last_name, date_of_birth, description, position) VALUES ('Денис', 'Захаров', '1971-03-05', 'Описание игрока Денис Захаров', 1);
@@ -111,3 +111,22 @@ INSERT INTO after_timeout_court_appearances (game_id, player_id, team_id, timeou
 
 INSERT INTO field_goal_attempts (is_successful, type, game_id, milliseconds_since_start, shooter_id, rebounded_by_id) VALUES (false, 1, 1, 16000, 2, 1);
 INSERT INTO field_goal_attempts (is_successful, type, game_id, milliseconds_since_start, shooter_id, assistant_id) VALUES (true, 1, 1, 17000, 2, 1);
+
+
+-- игры ЦСКА против зенита в спб, пока без событий, просто для теста
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2023-12-18 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2023-12-19 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2023-12-20 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2023-12-21 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2023-12-22 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2023-12-23 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2023-12-24 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2023-12-25 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-01-24 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-01-25 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-01-26 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-01-27 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-01-28 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-01-29 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-01-30 19:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-01-31 19:00:00', 1, 2);

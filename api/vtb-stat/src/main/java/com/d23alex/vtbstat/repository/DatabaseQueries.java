@@ -1,6 +1,5 @@
 package com.d23alex.vtbstat.repository;
 
-import com.d23alex.vtbstat.LeagueSchedule;
 import com.d23alex.vtbstat.model.*;
 import com.d23alex.vtbstat.payload.statistics.GameEventLog;
 import com.d23alex.vtbstat.repository.gameevents.*;
@@ -102,6 +101,10 @@ public class DatabaseQueries {
         this.substitutionOutRepository = substitutionOutRepository;
         this.timeoutRepository = timeoutRepository;
         this.turnoverRepository = turnoverRepository;
+    }
+
+    public List<Game> gamesScheduledBetweenTimestamps(Date from, Date to) {
+        return gameRepository.findAllByScheduledStartTimeAfterAndScheduledStartTimeBeforeOrderByScheduledStartTime(from, to);
     }
 
     public List<Game> gamesStartedBetweenTimestampsAndParticipatedByPlayer(Player player, Date from, Date to) {
@@ -296,6 +299,14 @@ public class DatabaseQueries {
     public Set<Game> getAllGames() {
         return StreamSupport.stream(gameRepository.findAll().spliterator(), false)
                 .collect(Collectors.toSet());
+    }
+
+    public List<Game> nUpcomingGames(Long n) {
+        return gameRepository.findNUpcoming(new Date(), n);
+    }
+
+    public List<Game> nMostRecentGames(Long n) {
+        return gameRepository.findNMostRecent(new Date(), n);
     }
 
     public void savePlayer(Player player) {

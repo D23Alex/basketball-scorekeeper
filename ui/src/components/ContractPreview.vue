@@ -1,4 +1,6 @@
 <script setup>
+import {IMAGES_PATH} from "@/constants";
+
 let props = defineProps({
   season: Number,
   teamId: Number,
@@ -15,8 +17,8 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
 
 <template>
 <div class="contract-preview">
-  <div class="team-image">
-    <img v-bind:src="'/images/teams/' + season + '/' + teamId + '.png'" alt="team image" style="width: 300px; height: 300px; border-radius: 150px;"/>
+  <div class="team-image" @click="$router.push({path: '/team/' + teamId})">
+    <img v-bind:src="IMAGES_PATH +  '/teams/' + season + '/' + teamId + '.png'" alt="team image" style="width: 300px; height: 300px; border-radius: 150px;"/>
   </div>
   <div>
     {{ teamName}}
@@ -38,5 +40,9 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
 }
 .contract-preview:hover {
   background-color: v-bind(TEAM_MAIN_COLOR_BY_ID[teamId]);
+}
+
+.team-image:hover {
+  cursor: pointer;
 }
 </style>
