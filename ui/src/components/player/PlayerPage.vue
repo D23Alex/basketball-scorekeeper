@@ -84,43 +84,115 @@ export default {
 </script>
 
 <template>
-<div>
-  Страница игрока
-  <template v-if="allLoaded">
-    <div style="display: flex; flex-direction: row;">
-      <PlayerPreview :playerId="this.playerId" :season="this.season" :first-name="this.playerInfo.firstName"
-                     :last-name="this.playerInfo.lastName"
-                     :team-id="displayedContract.team.id" :position="this.playerInfo.position" />
-      <ContractPreview :season="this.season" :team-id="displayedContract.team.id"
-                       :team-name = displayedContract.team.name
-                       :jersey-number="displayedContract.jerseyNumber" :from="displayedContract.validFrom"
-                       :to="displayedContract.validTo" />
-      <div>{{ this.playerInfo.description }}</div>
+  <div class="outer">
+    <template v-if="allLoaded">
+      <div class="general-player-info">
+        <PlayerPreview
+          :playerId="this.playerId"
+          :season="this.season"
+          :first-name="this.playerInfo.firstName"
+          :last-name="this.playerInfo.lastName"
+          :team-id="displayedContract.team.id"
+          :position="this.playerInfo.position"
+        />
+        <ContractPreview
+          :season="this.season"
+          :team-id="displayedContract.team.id"
+          :team-name="displayedContract.team.name"
+          :jersey-number="displayedContract.jerseyNumber"
+          :from="displayedContract.validFrom"
+          :to="displayedContract.validTo"
+        />
+      </div>
+
       <select v-model="season" style="height: 50px;">
         <option v-for="season in availableSeasons" v-bind:value="season.value">
           {{ season.text }}
         </option>
       </select>
-      <span>Сезон: {{ season }}</span>
-    </div>
-    <div>Статистика игрока</div>
-    <div>
-      <VueTable :headers="header" :data="performancesForEachContractInSeason" :keys="keys" />
-    </div>
-    <div>Карьера игрока</div>
-    <div>
-      <!-- //TODO: season is always this.season, not the actual starting season of the contract, fix it later -->
-      <li v-for="contract in contractHistory">
-        <ContractPreview :season="this.season" :team-id="contract.team.id"
-                         :team-name = contract.team.name
-                         :jersey-number="contract.jerseyNumber" :from="contract.validFrom"
-                         :to="contract.validTo" />
-      </li>
-    </div>
-  </template>
-</div>
+
+      <div style="padding-top: 40px;">
+        <div class="section-title">
+          <strong>Статистика игрока</strong>
+        </div>
+        <div>
+          <VueTable :headers="header" :data="performancesForEachContractInSeason" :keys="keys" />
+        </div>
+      </div>
+
+      <div style="padding-top: 60px;">
+        <div class="section-title"><strong>Карьера игрока</strong></div>
+        <div style="padding-top: 60px;">
+          <ul class="contract-list">
+            <li v-for="contract in contractHistory" class="contract-item">
+              <ContractPreview
+                :season="this.season"
+                :team-id="contract.team.id"
+                :team-name="contract.team.name"
+                :jersey-number="contract.jerseyNumber"
+                :from="contract.validFrom"
+                :to="contract.validTo"
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </template>
+  </div>
 </template>
 
-<style scoped>
 
+<style scoped>
+  .general-player-info {
+    display: flex;
+    align-items: center; /* Центрирование элементов по вертикали */
+    justify-content: space-between;
+  }
+
+  .outer {
+    background-color: #D9D9D9;
+    height: 480px;
+    width: 1200px;
+    padding: 50px;
+    overflow: auto;
+  }
+
+  /* Расположение PlayerPreview слева */
+  .player-preview {
+    margin-right: 10px; /* Добавить отступ справа для визуального разделения */
+  }
+
+  /* Расположение ContractPreview справа */
+  .contract-preview {
+    margin-left: 10px;
+  }
+
+  /* Расположение select между PlayerPreview и ContractPreview */
+  select {
+    margin-right: 10px; /* Добавить отступ справа для визуального разделения */
+  }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+  }
+
+  .contract-list {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрирование по горизонтали */
+  }
+
+  .contract-item {
+    margin-bottom: 60px;
+  }
+
+  /* Убедитесь, что изображения внутри ContractPreview не превышают высоты контейнера */
+  .contract-item img {
+    max-height: 100%; /* Примените максимальную высоту к изображению */
+    width: auto; /* Автоматическая ширина для сохранения соотношения сторон */
+  }
 </style>

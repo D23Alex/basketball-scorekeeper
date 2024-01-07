@@ -50,6 +50,7 @@ public class TeamController {
         }
     }
 
+    @CrossOrigin
     @GetMapping("/api/teams/get_all")
     public Set<Team> getAllTeams() {
         return databaseQueries.getAllTeams();
