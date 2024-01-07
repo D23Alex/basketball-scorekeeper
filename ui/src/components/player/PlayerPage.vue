@@ -145,7 +145,7 @@ export default {
 <style scoped>
   .general-player-info {
     display: flex;
-    align-items: center; /* Центрирование элементов по вертикали */
+    align-items: center; 
     justify-content: space-between;
   }
 
@@ -157,19 +157,19 @@ export default {
     overflow: auto;
   }
 
-  /* Расположение PlayerPreview слева */
+  
   .player-preview {
-    margin-right: 10px; /* Добавить отступ справа для визуального разделения */
+    margin-right: 10px; 
   }
 
-  /* Расположение ContractPreview справа */
+  
   .contract-preview {
     margin-left: 10px;
   }
 
-  /* Расположение select между PlayerPreview и ContractPreview */
+
   select {
-    margin-right: 10px; /* Добавить отступ справа для визуального разделения */
+    margin-right: 10px; 
   }
 
   .section-title {
@@ -183,16 +183,16 @@ export default {
     list-style: none;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Центрирование по горизонтали */
+    align-items: center; 
   }
 
   .contract-item {
     margin-bottom: 60px;
   }
 
-  /* Убедитесь, что изображения внутри ContractPreview не превышают высоты контейнера */
+  
   .contract-item img {
-    max-height: 100%; /* Примените максимальную высоту к изображению */
-    width: auto; /* Автоматическая ширина для сохранения соотношения сторон */
+    max-height: 100%;
+    width: auto; 
   }
 </style>
