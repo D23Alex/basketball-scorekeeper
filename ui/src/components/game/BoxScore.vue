@@ -1,11 +1,10 @@
 <script setup>
-import { VueTable  } from "@harv46/vue-table"
-
+import { VueTable } from "@harv46/vue-table";
 </script>
 
 <script>
 import axios from "axios";
-import {API} from "@/constants";
+import { API } from "@/constants";
 
 export default {
   data() {
@@ -27,7 +26,7 @@ export default {
         ["performance", "totals", "freeThrowsAttempted"],
         ["performance", "efficiency", "freeThrowEfficiency"]],
       data: []
-    }
+    };
   },
 
   async mounted() {
@@ -39,10 +38,20 @@ export default {
 
 <template>
   <div>
-    <VueTable :headers="header" :data="data" :keys="keys" />
+    <VueTable :headers="header" :data="data" :keys="keys" class="custom-vue-table" />
   </div>
 </template>
 
 <style scoped>
+/* Стили VueTable */
+.custom-vue-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: 'Arial', sans-serif;
+  background-color: #fff; /* Белый фон */
+  border: 2px solid #333; /* Границы таблицы */
+  border-radius: 8px;
+  overflow: hidden;
+}
 
 </style>

@@ -58,22 +58,49 @@ export default {
 </script>
 
 <template>
-  <div>Вся информация о конкретной игре. Тут будут располагаться стартовые составы, box score, графики и т.п.</div>
   <template v-if="allLoaded">
-    <div>ИГРА</div>
-    <div style="display: flex; flex-direction: row">
+    <div class="outer">
+      <div class="game-container">
       <TeamPreview :season="this.season" :team-id="this.game.team1.id"
                    :team-city="this.game.team1.city" :team-name="this.game.team1.name"/>
-      <div> {{ this.team1Performance.totals.points }} - {{ this.team2Performance.totals.points }}</div>
+      <div class="score-container">
+        {{ this.team1Performance.totals.points }} - {{ this.team2Performance.totals.points }}
+      </div>
       <TeamPreview :season="this.season" :team-id="this.game.team2.id"
                    :team-city="this.game.team2.city" :team-name="this.game.team2.name"/>
     </div>
-    <BoxScore/>
+    <BoxScore class="box-score"/>
     <div>//TODO: Ивент лог игры ЗДЕСЬ</div>
+    </div>
   </template>
-
 </template>
 
 <style scoped>
+
+.box-score {
+  margin-top: 70px; /* Отступ сверху в 40px */
+}
+.game-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.score-container {
+  background-color: #3498db;
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 12px;
+}
+
+.outer {
+    background-color: #D9D9D9;
+    height: 480px;
+    width: 1200px;
+    padding: 50px;
+    overflow: auto;
+  }
 
 </style>
