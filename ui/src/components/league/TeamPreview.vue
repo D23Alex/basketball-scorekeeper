@@ -37,7 +37,6 @@ import { TEAM_MAIN_COLOR_BY_ID } from "@/constants"
 }
 
 .team-container {
-  background-color: #DD8484;
   border-radius: 10px;
   padding: 10px;
   text-align: center;
