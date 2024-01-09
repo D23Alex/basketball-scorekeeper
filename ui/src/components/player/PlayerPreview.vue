@@ -16,22 +16,16 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
 </script>
 
 <template>
-<<<<<<< HEAD
-  <div class="player-preview">
+  <div class="player-preview" @click="$router.push({path: '/player/' + playerId})">
     <div class="player-preview-content">
       <div class="player-preview-image">
-        <img v-bind:src="'images/players/' + season + '/' + playerId + '.jpg'" alt="player image" style="width: 200px; height: 200px; border-radius: 180px;"/>
+        <img v-bind:src=" IMAGES_PATH + '/players/' + season + '/' + playerId + '.jpg'" alt="player image" style="width: 200px; height: 200px; border-radius: 180px;"/> 
       </div>
       <div class="player-info">
         <div class="player-name">{{ firstName + " " + lastName }}</div>
         <div class="player-position">{{ position }}</div>
       </div>
     </div>
-=======
-<div class="player-preview" @click="$router.push({path: '/player/' + playerId})">
-  <div class="player-preview-image">
-    <img v-bind:src=" IMAGES_PATH + '/players/' + season + '/' + playerId + '.jpg'" alt="player image" style="width: 300px; height: 300px; border-radius: 150px;"/>
->>>>>>> b21af35eae7fa4d115bd0b4dd199fccff954c360
   </div>
 </template>
 
@@ -40,16 +34,10 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
   display: flex;
   align-items: center;
 }
-<<<<<<< HEAD
 
 .player-preview-content {
   display: flex;
   align-items: center;
-=======
-.player-preview:hover {
-  background-color: v-bind(TEAM_MAIN_COLOR_BY_ID[teamId]);
-  cursor: pointer;
->>>>>>> b21af35eae7fa4d115bd0b4dd199fccff954c360
 }
 
 .player-preview-image {
