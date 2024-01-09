@@ -39,6 +39,11 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
   display: flex;
   align-items: center;
 }
+.player-preview:hover {
+  background-color: v-bind(TEAM_MAIN_COLOR_BY_ID[teamId]);
+  cursor: pointer;
+
+}
 
 .player-preview-image {
   margin-right: 10px; /* Просто для отступа между изображением и информацией */
