@@ -47,7 +47,12 @@ export default {
   async mounted() {
     this.gameEventLog = (await axios.get(API + "/events/game/" + this.$route.params.gameId)).data;
     this.game = (await axios.get(API + "/games/" + this.$route.params.gameId)).data;
-    this.team1Lineup = this.gameEventLog.lineupOccurrences.map(occurrence => occurrence.player); //TODO: filter that
+    this.team1Lineup = this.gameEventLog.lineupOccurrences
+        .filter(occurrence => occurrence.team.id === this.game.team1.id)
+        .map(occurrence => occurrence.player);
+    this.team2Lineup = this.gameEventLog.lineupOccurrences
+        .filter(occurrence => occurrence.team.id === this.game.team2.id)
+        .map(occurrence => occurrence.player);
     this.team1Performance = (await axios.get(API + "/stats/team-single-game-performance/"
         + this.game.team1.id + "/" + this.$route.params.gameId)).data.performance;
     console.log(this.team1Performance);
