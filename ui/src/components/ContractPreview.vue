@@ -55,7 +55,6 @@ import { TEAM_MAIN_COLOR_BY_ID } from "@/constants";
   /* background-color: v-bind(TEAM_MAIN_COLOR_BY_ID[teamId]); */
 }
 
-<<<<<<< HEAD
 .contract-details {
   display: flex;
   justify-content: space-between;
