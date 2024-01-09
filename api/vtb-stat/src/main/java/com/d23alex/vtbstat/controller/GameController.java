@@ -1,14 +1,13 @@
 package com.d23alex.vtbstat.controller;
 
+import com.d23alex.vtbstat.LeagueSchedule;
 import com.d23alex.vtbstat.repository.DatabaseQueries;
 import com.d23alex.vtbstat.model.Game;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -48,6 +47,23 @@ public class GameController {
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    //FIXME: show upcoming and most recent games in season!!!
+    @GetMapping("/api/games/upcoming/{n}")
+    public List<Game> nUpcomingGames(@PathVariable Long n) {
+        return databaseQueries.nUpcomingGames(n);
+    }
+
+    @GetMapping("/api/games/most-recent/{n}")
+    public List<Game> nMostRecentGames(@PathVariable Long n) {
+        return databaseQueries.nMostRecentGames(n);
+    }
+
+    @GetMapping("/api/games/all-in-season/{season}")
+    public List<Game> allGamesInSeason(@PathVariable Integer season) {
+        return databaseQueries.gamesScheduledBetweenTimestamps(LeagueSchedule.seasonStart.get(season),
+                LeagueSchedule.seasonEnd.get(season));
     }
 
     @GetMapping("/api/games/get_all")

@@ -3,10 +3,11 @@ import axios from "axios";
 import BoxScore from "@/components/game/BoxScore.vue";
 import TeamPreview from "@/components/league/TeamPreview.vue";
 import {API} from "@/constants";
+import GamePreview from "@/components/game/GamePreview.vue";
 
 
 export default {
-  components: {TeamPreview, BoxScore},
+  components: {GamePreview, TeamPreview, BoxScore},
   data() {
     return {
       allLoaded: false,

@@ -1,4 +1,6 @@
 <script setup>
+import {IMAGES_PATH} from "@/constants";
+
 let props = defineProps({
   season: Number,
   teamId: Number,
@@ -14,6 +16,7 @@ import { TEAM_MAIN_COLOR_BY_ID } from "@/constants";
 </script>
 
 <template>
+<<<<<<< HEAD
   <div class="contract-preview">
     <div class="contract-details">
       <div class="team-info">
@@ -37,6 +40,11 @@ import { TEAM_MAIN_COLOR_BY_ID } from "@/constants";
         </div>
       </div>
     </div>
+=======
+<div class="contract-preview">
+  <div class="team-image" @click="$router.push({path: '/team/' + teamId})">
+    <img v-bind:src="IMAGES_PATH +  '/teams/' + season + '/' + teamId + '.png'" alt="team image" style="width: 300px; height: 300px; border-radius: 150px;"/>
+>>>>>>> b21af35eae7fa4d115bd0b4dd199fccff954c360
   </div>
 </template>
 
@@ -53,6 +61,7 @@ import { TEAM_MAIN_COLOR_BY_ID } from "@/constants";
   /* background-color: v-bind(TEAM_MAIN_COLOR_BY_ID[teamId]); */
 }
 
+<<<<<<< HEAD
 .contract-details {
   display: flex;
   justify-content: space-between;
@@ -79,3 +88,9 @@ import { TEAM_MAIN_COLOR_BY_ID } from "@/constants";
   background-color: #DD8484; /* Цвет фона */
 }
 </style>
+=======
+.team-image:hover {
+  cursor: pointer;
+}
+</style>
+>>>>>>> b21af35eae7fa4d115bd0b4dd199fccff954c360

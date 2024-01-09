@@ -1,5 +1,6 @@
 package com.d23alex.vtbstat.controller;
 
+import com.d23alex.vtbstat.LeagueSchedule;
 import com.d23alex.vtbstat.repository.DatabaseQueries;
 import com.d23alex.vtbstat.model.Player;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,11 @@ public class PlayerController {
     @GetMapping("/api/players/by_team/{teamId}/{date}")
     Iterable<Player> playersOfTeamByDate(@PathVariable Long teamId, @PathVariable Date date) {
         return databaseQueries.teamMembersByDate(teamId, date);
+    }
+
+    @GetMapping("/api/players/by_team-season-end/{teamId}/{season}")
+    Iterable<Player> playersOfTeamBySeasonEnd(@PathVariable Long teamId, @PathVariable Integer season) {
+        return databaseQueries.teamMembersByDate(teamId, LeagueSchedule.seasonEnd.get(season));
     }
 
     @PostMapping("/api/players/create_player")

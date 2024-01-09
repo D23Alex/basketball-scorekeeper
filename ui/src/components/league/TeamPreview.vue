@@ -1,4 +1,6 @@
 <script setup>
+import {IMAGES_PATH} from "@/constants";
+
 defineProps({
   teamId: Number,
   teamName: String,
