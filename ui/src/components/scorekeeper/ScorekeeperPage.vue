@@ -4,12 +4,15 @@ import GameEvent from "@/components/scorekeeper/GameEvent.vue";
 import PlayerPreview from "@/components/scorekeeper/PlayerPreview.vue";
 import axios from "axios";
 import {API} from "@/constants";
+import Timer from "@/components/scorekeeper/Timer.vue";
 
 export default {
-  components: {GameEvent, GamePreview, PlayerPreview},
+  components: {Timer, GameEvent, GamePreview, PlayerPreview},
   data() {
     return {
       allLoaded: false,
+      currentGameTimeInSeconds: 0,
+      eventsWithTypesOrderedByMillisSinceStart: [],
       eventOptions: [
         {name: "Бросок с игры", slug: "field-goal-attempt"},
         {name: "Штрафной бросок", slug: "free-throw-attempt"}],
@@ -19,7 +22,6 @@ export default {
       team2Performance: {},
       team1Lineup: [],
       team2Lineup: [],
-      gameClock: Number,
       eventsNotSaved: [],
       gameEventLog: {
         periodStarts: [],
@@ -58,13 +60,18 @@ export default {
     this.team2Lineup = this.gameEventLog.lineupOccurrences
         .filter(occurrence => occurrence.team.id === this.game.team2.id)
         .map(occurrence => occurrence.player);
+    this.updateEventsWithTypesOrderedByMillisSinceStart();
     this.allLoaded = true;
-    console.log(this.gameEventLog.fieldGoalAttempts);
   },
 
   methods: {
-    eventsWithTypesOrderedByMillisSinceStart() {
-      return this.gameEventLog.fieldGoalAttempts.map(ev => ({type: "field-goal-attempt", ev: ev}))
+    updateGameTime(timeIsSeconds) {
+      this.currentGameTimeInSeconds = timeIsSeconds;
+      console.log('updated');
+    },
+
+    updateEventsWithTypesOrderedByMillisSinceStart() {
+      this.eventsWithTypesOrderedByMillisSinceStart = this.gameEventLog.fieldGoalAttempts.map(ev => ({type: "field-goal-attempt", ev: ev}))
         .concat(this.gameEventLog.freeThrowAttempts.map(ev => ({type: "free-throw-attempt", ev: ev})))
         .sort((a, b) => a.ev.millisecondsSinceStart - b.ev.millisecondsSinceStart);
     },
@@ -76,7 +83,7 @@ export default {
           assistant: null,
           blockedBy: null,
           reboundedBy: null,
-          millisecondsSinceStart: 0,
+          millisecondsSinceStart: this.currentGameTimeInSeconds * 1000,
           isSuccessful: false,
           type: 0,
           game: this.game
@@ -97,7 +104,7 @@ export default {
 
 <template>
 Тут страница матча для секретаря
-  <div>TODO: сделать таймер</div>
+  <Timer @selectedtimechanged="updateGameTime"/>
   <template v-if="allLoaded">
     <GamePreview :season="this.season" :team1-score="this.team1Performance.totals.points"
                  :team2-score="this.team2Performance.totals.points" :game-status="'TODO: статус игры'"
@@ -134,10 +141,10 @@ export default {
     </div>
     <div>
       Ивенты уже имеющиеся в базе
-      <div v-for="eventAndType in this.eventsWithTypesOrderedByMillisSinceStart()">
+      <div v-for="eventAndType in this.eventsWithTypesOrderedByMillisSinceStart">
         <GameEvent :type="eventAndType.type" :ev="eventAndType.ev" :players="team1Lineup.concat(team2Lineup)"/>
       </div>
-      Несохранённые ивенты
+      Новые ивенты
       <div v-for="eventAndType in this.eventsNotSaved">
         <GameEvent unsaved-by-default="true" :type="eventAndType.type" :ev="eventAndType.ev"
                    :players="team1Lineup.concat(team2Lineup)"/>

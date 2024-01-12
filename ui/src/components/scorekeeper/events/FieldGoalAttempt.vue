@@ -3,12 +3,16 @@ import SelectPlayer from "@/components/scorekeeper/event-editing/SelectPlayer.vu
 import SelectBoolean from "@/components/scorekeeper/event-editing/SelectBoolean.vue";
 defineProps({
   fieldGoalAttempt: {},
-  players: []
+  players: Array,
+  initialGameTimeInSeconds: Number,
 })
 </script>
 
 <script>
+import Timer from "@/components/scorekeeper/Timer.vue";
+
 export default {
+  components: {Timer},
   methods: {
     updateShooter(player) {
       this.fieldGoalAttempt.shooter = player;
@@ -29,6 +33,10 @@ export default {
     updateIsSuccessful(isSuccessful) {
       this.fieldGoalAttempt.isSuccessful = isSuccessful;
       this.$emit('fieldgoalattemptchanged', this.fieldGoalAttempt);
+    },
+    updateTime(timeInSeconds) {
+      this.fieldGoalAttempt.millisecondsSinceStart = timeInSeconds * 1000;
+      this.$emit('fieldgoalattemptchanged', this.fieldGoalAttempt);
     }
   },
 }
@@ -46,6 +54,8 @@ export default {
                 :label="'блок'" :selected-player="fieldGoalAttempt.blockedBy" :players="players"/>
   <SelectBoolean @selectedplayerchanged="updateIsSuccessful"
                  :label="'попадание'" :selected-value="fieldGoalAttempt.isSuccessful"/>
+  <Timer @selectedtimechanged="updateTime"
+         :initial-time="Math.floor(fieldGoalAttempt.millisecondsSinceStart / 1000)"/>
 </div>
 </template>
 

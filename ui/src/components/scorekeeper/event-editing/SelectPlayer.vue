@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
   label: String,
-  players: [],
+  players: Array,
   selectedPlayer: {}
 })
 </script>
