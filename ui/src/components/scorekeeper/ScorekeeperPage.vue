@@ -139,7 +139,8 @@ export default {
       </div>
       Несохранённые ивенты
       <div v-for="eventAndType in this.eventsNotSaved">
-        <GameEvent unsaved-by-default="true" :type="eventAndType.type" :ev="eventAndType.ev" :players="team1Lineup.concat(team2Lineup)"/>
+        <GameEvent unsaved-by-default="true" :type="eventAndType.type" :ev="eventAndType.ev"
+                   :players="team1Lineup.concat(team2Lineup)"/>
       </div>
     </div>
   </template>

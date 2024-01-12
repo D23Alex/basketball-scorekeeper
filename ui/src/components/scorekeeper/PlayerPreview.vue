@@ -18,7 +18,8 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
 <div class="player-preview">
   <div class="player-preview-image">
     <!-- FIXME: 2023 is hardcoded atm -->
-    <img v-bind:src=" IMAGES_PATH + '/players/' + 2023 + '/' + playerId + '.jpg'" alt="player image" style="width: 150px; height: 150px;"/>
+    <img v-bind:src=" IMAGES_PATH + '/players/' + 2023 + '/' + playerId + '.jpg'"
+         alt="player image" style="width: 150px; height: 150px;"/>
   </div>
   <div> {{ this.jerseyNumber }} </div>
   <div> {{ this.firstName + ' ' + this.lastName }} </div>

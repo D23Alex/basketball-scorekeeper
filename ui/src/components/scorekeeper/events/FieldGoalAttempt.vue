@@ -36,11 +36,16 @@ export default {
 
 <template>
 <div class="field-goal-attempt">
-  <SelectPlayer @selectedplayerchanged="updateShooter" :label="'бросил'" :selected-player="fieldGoalAttempt.shooter" :players="players"/>
-  <SelectPlayer @selectedplayerchanged="updateAssistant" v-if="fieldGoalAttempt.assistant" :label="'результативная передача'" :selected-player="fieldGoalAttempt.assistant" :players="players"/>
-  <SelectPlayer @selectedplayerchanged="updateReboundedBy" v-if="fieldGoalAttempt.reboundedBy" :label="'подобрал'" :selected-player="fieldGoalAttempt.reboundedBy" :players="players"/>
-  <SelectPlayer @selectedplayerchanged="updateBlockedBy" v-if="fieldGoalAttempt.blockedBy" :label="'блок'" :selected-player="fieldGoalAttempt.blockedBy" :players="players"/>
-  <SelectBoolean @selectedplayerchanged="updateIsSuccessful" :label="'попадание'" :selected-value="fieldGoalAttempt.isSuccessful"/>
+  <SelectPlayer @selectedplayerchanged="updateShooter"
+                :label="'бросил'" :selected-player="fieldGoalAttempt.shooter" :players="players"/>
+  <SelectPlayer v-if="fieldGoalAttempt.assistant" @selectedplayerchanged="updateAssistant"
+                :label="'результативная передача'" :selected-player="fieldGoalAttempt.assistant" :players="players"/>
+  <SelectPlayer v-if="fieldGoalAttempt.reboundedBy" @selectedplayerchanged="updateReboundedBy"
+                :label="'подобрал'" :selected-player="fieldGoalAttempt.reboundedBy" :players="players"/>
+  <SelectPlayer v-if="fieldGoalAttempt.blockedBy" @selectedplayerchanged="updateBlockedBy"
+                :label="'блок'" :selected-player="fieldGoalAttempt.blockedBy" :players="players"/>
+  <SelectBoolean @selectedplayerchanged="updateIsSuccessful"
+                 :label="'попадание'" :selected-value="fieldGoalAttempt.isSuccessful"/>
 </div>
 </template>
 

@@ -18,7 +18,8 @@ export default {
     return {
       currentEvent: this.ev,
       color: 'green',
-      hasUnsavedChanges: this.unsavedByDefault !== false && this.unsavedByDefault !== null && this.unsavedByDefault !== undefined,
+      hasUnsavedChanges: this.unsavedByDefault !== false && this.unsavedByDefault !== null
+          && this.unsavedByDefault !== undefined,
       deleted: false
     }
   },
