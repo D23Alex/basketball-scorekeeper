@@ -2,6 +2,9 @@ import {createApp} from "vue";
 import {createRouter, createWebHashHistory, createWebHistory} from "vue-router";
 import App from './App.vue'
 
+import VueSimpleContextMenu from 'vue-simple-context-menu';
+import 'vue-simple-context-menu/dist/vue-simple-context-menu.css';
+
 import './assets/main.css'
 import Teams from "@/components/league/Teams.vue";
 import Auth from "@/components/Auth.vue";
@@ -11,6 +14,7 @@ import Game from "@/components/game/Game.vue";
 import PlayerPage from "@/components/player/PlayerPage.vue";
 import TeamPage from "@/components/league/TeamPage.vue";
 import Calendar from "@/components/Calendar.vue";
+import ScorekeeperPage from "@/components/scorekeeper/ScorekeeperPage.vue";
 
 const router = createRouter({
     history: createWebHashHistory('/basketball-scorekeeper/'),
@@ -51,6 +55,11 @@ const router = createRouter({
             component: Welcome
         },
         {
+            path: "/scorekeeper/:gameId",
+            name: "scorekeeper",
+            component: ScorekeeperPage,
+        },
+        {
             path: "/*",
             name: "error-page",
             component: Error,
@@ -61,4 +70,4 @@ const router = createRouter({
         }
     ]
 })
-createApp(App).use(router).mount('#app')
+createApp(App).component('vue-simple-context-menu', VueSimpleContextMenu).use(router).mount('#app');
