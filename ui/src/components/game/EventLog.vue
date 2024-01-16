@@ -35,7 +35,7 @@ defineProps({
 
 <template>
   <div>Ивент лог</div>
-  <div v-if="this.eventsWithTypesOrderedByMillisSinceStart" v-for="eventAndType in this.eventsWithTypesOrderedByMillisSinceStart">
+  <div v-for="eventAndType in eventsWithTypesOrderedByMillisSinceStart">
     1
   </div>
 </template>
