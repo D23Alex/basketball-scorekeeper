@@ -21,8 +21,8 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
     <img v-bind:src=" IMAGES_PATH + '/players/' + 2023 + '/' + playerId + '.jpg'"
          alt="player image" style="width: 150px; height: 150px;"/>
   </div>
-  <div> {{ this.jerseyNumber }} </div>
-  <div> {{ this.firstName + ' ' + this.lastName }} </div>
+  <div> {{ jerseyNumber }} </div>
+  <div> {{ firstName + ' ' + lastName }} </div>
 </div>
 </template>
 

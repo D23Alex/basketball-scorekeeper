@@ -58,10 +58,10 @@ export default {
 <template>
   <div class="timer">
     <div class="display">
-      {{ prettyGameTimestampBySecondsSinceStart(this.secondsSinceStart()) }}
+      {{ prettyGameTimestampBySecondsSinceStart(secondsSinceStart()) }}
     </div>
     <div class="controls">
-      <div @click="rewind(periodsInSeconds(this.secondsSinceStart()) <= RULES.mainPeriods + 1 ?
+      <div @click="rewind(periodsInSeconds(secondsSinceStart()) <= RULES.mainPeriods + 1 ?
         RULES.mainPeriodInSeconds : RULES.overtimePeriodInSeconds)">
         |&lt;
       </div>
@@ -74,7 +74,7 @@ export default {
       <div @click="rewind(1)">
         -
       </div>
-      <div @click="toggleTimer()">{{this.stopwatch.isRunning ? 'stop' : 'go'}}</div>
+      <div @click="toggleTimer()">{{stopwatch.isRunning ? 'stop' : 'go'}}</div>
       <div @click="forward(1)">
         +
       </div>

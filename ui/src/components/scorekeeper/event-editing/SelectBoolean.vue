@@ -25,8 +25,8 @@ export default {
 <div class="select-boolean">
   <div>{{ label }}</div>
   <div>
-    <input type="checkbox" id="checkbox" v-model="this.selected">
-    <label for="checkbox">{{ this.selected }}</label>
+    <input type="checkbox" id="checkbox" v-model="selected">
+    <label for="checkbox">{{ selected }}</label>
   </div>
 </div>
 </template>

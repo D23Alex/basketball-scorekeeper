@@ -59,15 +59,15 @@ export default {
 </script>
 
 <template>
-  <div v-if="!this.deleted" class="game-event">
+  <div v-if="!deleted" class="game-event">
     <div>Ивент</div>
-    <div>{{ this.type }}</div>
-    <div class="clickable" @click="this.deleteEvent()">удалить</div>
-    <div class="clickable" v-if="hasUnsavedChanges" @click="this.saveEvent()">сохранить</div>
+    <div>{{ type }}</div>
+    <div class="clickable" @click="deleteEvent()">удалить</div>
+    <div class="clickable" v-if="hasUnsavedChanges" @click="saveEvent()">сохранить</div>
     <template v-if="type === 'field-goal-attempt'">
       <FieldGoalAttempt @fieldgoalattemptchanged="updateEventLocally"
                         :field-goal-attempt="ev"
-                        :players="players" :initial-game-time-in-seconds="this.initialGameTimeInSeconds"/>
+                        :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
     </template>
   </div>
 </template>
