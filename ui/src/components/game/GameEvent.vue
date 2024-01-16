@@ -16,9 +16,7 @@ defineProps({
   <div v-if="ev.millisecondsSinceStart">
     {{ prettyGameTimestampBySecondsSinceStart(ev.millisecondsSinceStart / 1000) }}
   </div>
-  <template v-if="type === 'field-goal-attempt'">
-    <FieldGoalAttempt :field-goal-attempt="ev"/>
-  </template>
+
 </div>
 </template>
 
