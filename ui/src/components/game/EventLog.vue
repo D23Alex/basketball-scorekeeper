@@ -40,10 +40,12 @@ defineProps({
 
     methods: {
       updateEventsWithTypesOrderedByMillisSinceStart() {
+        console.log(this.eventsWithTypesOrderedByMillisSinceStart);
         let eventLog = this.gameEventLog;
         this.eventsWithTypesOrderedByMillisSinceStart = this.gameEventLog.fieldGoalAttempts.map(ev => ({type: "field-goal-attempt", ev: ev}))
             .concat(eventLog.freeThrowAttempts.map(ev => ({type: "free-throw-attempt", ev: ev})))
             .sort((a, b) => a.ev.millisecondsSinceStart - b.ev.millisecondsSinceStart);
+        console.log(this.eventsWithTypesOrderedByMillisSinceStart);
       },
     }
   }
