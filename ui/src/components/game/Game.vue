@@ -47,7 +47,7 @@ export default {
   },
 
   async mounted() {
-    await this.updateGameEventLog();
+    this.gameEventLog = (await axios.get(API + "/events/game/" + this.$route.params.gameId)).data;
     this.game = (await axios.get(API + "/games/" + this.$route.params.gameId)).data;
     this.team1Lineup = this.gameEventLog.lineupOccurrences
         .filter(occurrence => occurrence.team.id === this.game.team1.id)
