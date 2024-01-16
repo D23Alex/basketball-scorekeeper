@@ -5,7 +5,8 @@ defineProps({
   unsavedByDefault: Boolean,
   type: String,
   ev: Object,
-  players: [],
+  players: Array,
+  initialGameTimeInSeconds: Number,
 })
 </script>
 
@@ -16,6 +17,7 @@ import {API} from "@/constants";
 export default {
   data() {
     return {
+      neverChanged: true,
       currentEvent: this.ev,
       color: 'green',
       hasUnsavedChanges: this.unsavedByDefault !== false && this.unsavedByDefault !== null
@@ -25,7 +27,9 @@ export default {
   },
   methods: {
     setColor() {
-      this.color = this.hasUnsavedChanges ? "yellow" : "green";
+      // есть несохранённые изменения - жёлтый, есть сохранённые изменения - синий,
+      // не было изменений после загрузки из базы - зелёный. //TODO: цвета
+      this.color = this.hasUnsavedChanges ? "yellow" : (this.neverChanged ? "green" : "blue");
     },
 
     async deleteEvent() {
@@ -35,12 +39,13 @@ export default {
     },
 
     async saveEvent() {
-      await axios.post(API + "/events/" + this.type, this.ev);
+      this.ev.id = (await axios.post(API + "/events/" + this.type, this.ev)).data.id;
       this.hasUnsavedChanges = false;
       this.setColor();
     },
 
     updateEventLocally(newEv) {
+      this.neverChanged = false;
       this.currentEvent = newEv;
       this.hasUnsavedChanges = true;
       this.setColor();
@@ -57,10 +62,12 @@ export default {
   <div v-if="!this.deleted" class="game-event">
     <div>Ивент</div>
     <div>{{ this.type }}</div>
-    <div @click="this.deleteEvent()">удалить</div>
-    <div v-if="hasUnsavedChanges" @click="this.saveEvent()">сохранить</div>
+    <div class="clickable" @click="this.deleteEvent()">удалить</div>
+    <div class="clickable" v-if="hasUnsavedChanges" @click="this.saveEvent()">сохранить</div>
     <template v-if="type === 'field-goal-attempt'">
-      <FieldGoalAttempt @fieldgoalattemptchanged="updateEventLocally" :field-goal-attempt="ev" :players="players"/>
+      <FieldGoalAttempt @fieldgoalattemptchanged="updateEventLocally"
+                        :field-goal-attempt="ev"
+                        :players="players" :initial-game-time-in-seconds="this.initialGameTimeInSeconds"/>
     </template>
   </div>
 </template>
@@ -70,5 +77,13 @@ export default {
   border-style: solid;
   border-width: 5px;
   border-color: v-bind(color)
+}
+
+.game-event:hover {
+  background-color:rgba(0, 0, 0, 0.2);
+}
+
+.clickable {
+  cursor: pointer;
 }
 </style>
