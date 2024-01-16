@@ -51,7 +51,7 @@ defineProps({
 <template>
   <div>Ивент лог</div>
   <div v-for="eventAndType in eventsWithTypesOrderedByMillisSinceStart">
-    {{ eventAndType }}
+    <GameEvent :type="eventAndType.type" :ev="eventAndType.ev"/>
   </div>
 </template>
 
