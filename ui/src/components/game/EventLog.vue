@@ -40,8 +40,9 @@ defineProps({
 
     methods: {
       updateEventsWithTypesOrderedByMillisSinceStart() {
+        let eventLog = this.gameEventLog;
         this.eventsWithTypesOrderedByMillisSinceStart = this.gameEventLog.fieldGoalAttempts.map(ev => ({type: "field-goal-attempt", ev: ev}))
-            .concat(this.gameEventLog.freeThrowAttempts.map(ev => ({type: "free-throw-attempt", ev: ev})))
+            .concat(eventLog.freeThrowAttempts.map(ev => ({type: "free-throw-attempt", ev: ev})))
             .sort((a, b) => a.ev.millisecondsSinceStart - b.ev.millisecondsSinceStart);
       },
     }
@@ -50,7 +51,7 @@ defineProps({
 
 <template>
   <div>Ивент лог</div>
-  <div v-if="this.eventsWithTypesOrderedByMillisSinceStart" v-for="eventAndType in this.eventsWithTypesOrderedByMillisSinceStart">
+  <div v-for="eventAndType in this.eventsWithTypesOrderedByMillisSinceStart">
     <GameEvent :type="eventAndType.type" :ev="eventAndType.ev"/>
   </div>
 </template>
