@@ -31,11 +31,13 @@ defineProps({
     data() {
       return {
         eventsWithTypesOrderedByMillisSinceStart: [],
+        allLoaded: false,
       }
     },
 
     mounted() {
       this.updateEventsWithTypesOrderedByMillisSinceStart();
+      this.allLoaded = true;
     },
 
     methods: {
@@ -53,10 +55,10 @@ defineProps({
 
 <template>
   <div>Ивент лог</div>
-  <div v-for="eventAndType in this.eventsWithTypesOrderedByMillisSinceStart">
+  <div v-if="this.allLoaded" v-for="eventAndType in this.eventsWithTypesOrderedByMillisSinceStart">
     {{ this.eventsWithTypesOrderedByMillisSinceStart }}
   </div>
-  <div v-for="eventAndType in this.eventsWithTypesOrderedByMillisSinceStart">
+  <div v-if="this.allLoaded" v-for="eventAndType in this.eventsWithTypesOrderedByMillisSinceStart">
     <GameEvent :type="eventAndType.type" :ev="eventAndType.ev"/>
   </div>
 </template>
