@@ -1,4 +1,7 @@
 <script setup>
+import {RULES} from "@/constants";
+import {periodsInSeconds, prettyGameTimestampBySecondsSinceStart} from "@/util";
+
 defineProps({
   initialTime: Number
 });
@@ -6,13 +9,12 @@ defineProps({
 
 <script>
 import { useStopwatch } from 'vue-timer-hook';
+import {RULES} from "@/constants";
+import {periodsInSeconds} from "@/util";
 
 export default {
   data() {
     return {
-      mainPeriodInSeconds: 600,
-      overtimePeriodInSeconds: 300,
-      mainTimeInSeconds: 2400,
       stopwatch: useStopwatch(this.initialTime !== undefined ? this.initialTime : 0, false),
     }
   },
@@ -40,33 +42,6 @@ export default {
     secondsSinceStart() {
       return (this.stopwatch.minutes) * 60 + this.stopwatch.seconds;
     },
-
-    period() {
-      let beforeOverTime = this.secondsSinceStart() < this.mainTimeInSeconds;
-      if (beforeOverTime)
-        return 1 + Math.floor(this.secondsSinceStart() / this.mainPeriodInSeconds);
-      return 5 + Math.floor((this.secondsSinceStart() - this.mainTimeInSeconds) / this.overtimePeriodInSeconds);
-    },
-
-    secondsInPeriods(periods) {
-      if (periods <= 4)
-        return this.mainPeriodInSeconds * periods;
-      return this.mainTimeInSeconds + this.overtimePeriodInSeconds * (periods - 4);
-    },
-
-    minute() {
-      return Math.floor((this.secondsSinceStart() - this.secondsInPeriods(this.period() - 1)) / 60);
-    },
-
-    second() {
-      return this.secondsSinceStart() % 60;
-    },
-
-    periodAsText(period) {
-      if (period <= 4)
-        return period + ' четверть';
-      return period - 4 + 'ОТ';
-    }
   },
 
   watch: {
@@ -83,10 +58,11 @@ export default {
 <template>
   <div class="timer">
     <div class="display">
-      {{this.periodAsText(this.period()) + ' 0' + this.minute() + ':' + (this.second() >= 10 ? '' : '0') + this.second()}}
+      {{ prettyGameTimestampBySecondsSinceStart(this.secondsSinceStart()) }}
     </div>
     <div class="controls">
-      <div @click="rewind(period() <= 5 ? this.mainPeriodInSeconds : this.overtimePeriodInSeconds)">
+      <div @click="rewind(periodsInSeconds(this.secondsSinceStart()) <= RULES.mainPeriods + 1 ?
+        RULES.mainPeriodInSeconds : RULES.overtimePeriodInSeconds)">
         |&lt;
       </div>
       <div @click="rewind(60)">
@@ -108,7 +84,7 @@ export default {
       <div @click="forward(60)">
         >>
       </div>
-      <div @click="forward(secondsSinceStart() < 2100 ? this.mainPeriodInSeconds : this.overtimePeriodInSeconds)">
+      <div @click="forward(secondsSinceStart() < 2100 ? RULES.mainPeriodInSeconds : RULES.overtimePeriodInSeconds)">
         >|
       </div>
     </div>

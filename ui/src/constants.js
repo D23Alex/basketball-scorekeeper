@@ -9,3 +9,10 @@ export const IMAGES_PATH = 'images'
 export const API_HOST = "localhost";
 export const API_PORT = "8080";
 export const API = "https://" + API_HOST + ":" + API_PORT + "/api";
+
+export const RULES = {
+    mainPeriodInSeconds: 600,
+    overtimePeriodInSeconds: 300,
+    mainTimeInSeconds: 2400,
+    mainPeriods: 4
+}
