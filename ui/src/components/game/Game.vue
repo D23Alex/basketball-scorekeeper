@@ -4,13 +4,15 @@ import BoxScore from "@/components/game/BoxScore.vue";
 import TeamPreview from "@/components/league/TeamPreview.vue";
 import {API} from "@/constants";
 import GamePreview from "@/components/game/GamePreview.vue";
+import EventLog from "@/components/game/EventLog.vue";
 
 
 export default {
-  components: {GamePreview, TeamPreview, BoxScore},
+  components: {GamePreview, TeamPreview, BoxScore, EventLog},
   data() {
     return {
       allLoaded: false,
+      timer: null,
       game: null,
       season: 2023, //TODO: season is hardcoded atm, deal with it later
 
@@ -45,7 +47,7 @@ export default {
   },
 
   async mounted() {
-    this.gameEventLog = (await axios.get(API + "/events/game/" + this.$route.params.gameId)).data;
+    await this.updateGameEventLog();
     this.game = (await axios.get(API + "/games/" + this.$route.params.gameId)).data;
     this.team1Lineup = this.gameEventLog.lineupOccurrences
         .filter(occurrence => occurrence.team.id === this.game.team1.id)
@@ -53,12 +55,36 @@ export default {
     this.team2Lineup = this.gameEventLog.lineupOccurrences
         .filter(occurrence => occurrence.team.id === this.game.team2.id)
         .map(occurrence => occurrence.player);
-    this.team1Performance = (await axios.get(API + "/stats/team-single-game-performance/"
-        + this.game.team1.id + "/" + this.$route.params.gameId)).data.performance;
-    console.log(this.team1Performance);
-    this.team2Performance = (await axios.get(API + "/stats/team-single-game-performance/"
-        + this.game.team2.id + "/" + this.$route.params.gameId)).data.performance;
+    await this.updatePerformance();
+
+    this.timer = setInterval(() => {
+      this.updateGameEventLog();
+    }, 10000) // TODO: only do regular updates on a game that is online at the moment
+
     this.allLoaded = true;
+  },
+
+  beforeDestroy() {
+    clearInterval(this.timer)
+  },
+
+  methods: {
+    async updatePerformance() {
+      this.team1Performance = (await axios.get(API + "/stats/team-single-game-performance/"
+          + this.game.team1.id + "/" + this.$route.params.gameId)).data.performance;
+      console.log(this.team1Performance);
+      this.team2Performance = (await axios.get(API + "/stats/team-single-game-performance/"
+          + this.game.team2.id + "/" + this.$route.params.gameId)).data.performance;
+    },
+
+    async updateGameEventLog() {
+      let newEventLog = (await axios.get(API + "/events/game/" + this.$route.params.gameId)).data;
+      if (JSON.stringify(this.gameEventLog) !== JSON.stringify(newEventLog)) {
+        this.gameEventLog = newEventLog;
+        if (this.game !== null)
+          await this.updatePerformance();
+      }
+    }
   }
 }
 </script>
@@ -75,8 +101,8 @@ export default {
       <TeamPreview :season="this.season" :team-id="this.game.team2.id"
                    :team-city="this.game.team2.city" :team-name="this.game.team2.name"/>
     </div>
-    <BoxScore class="box-score"/>
-    <div>//TODO: Ивент лог игры ЗДЕСЬ</div>
+    <BoxScore :key="this.gameEventLog" class="box-score"/>
+    <EventLog :key="this.gameEventLog" :game-event-log="this.gameEventLog"/>
     </div>
   </template>
 </template>
