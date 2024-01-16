@@ -2,7 +2,27 @@
 import GameEvent from "@/components/game/GameEvent.vue";
 
 defineProps({
-  gameEventLog: {}
+  gameEventLog: {
+    periodStarts: [],
+    periodEndings: [],
+    lineupOccurrences: [],
+    periodStarters: [],
+    periodEnders: [],
+    afterTimeoutCourtAppearances: [],
+    afterTimeoutCourtExits: [],
+    coachEjections: [],
+    coachTechnicalFouls: [],
+    fieldGoalAttempts: [],
+    freeThrowAttempts: [],
+    personalFouls: [],
+    playerEjections: [],
+    playerTechnicalFouls: [],
+    substitutionCalls: [],
+    substitutionIns: [],
+    substitutionOuts: [],
+    timeouts: [],
+    turnovers: []
+  }
 })
 </script>
 
@@ -11,23 +31,18 @@ defineProps({
     data() {
       return {
         eventsWithTypesOrderedByMillisSinceStart: [],
-        allLoaded: false,
       }
     },
 
     mounted() {
       this.updateEventsWithTypesOrderedByMillisSinceStart();
-      this.allLoaded = true;
     },
 
     methods: {
       updateEventsWithTypesOrderedByMillisSinceStart() {
-        console.log(this.eventsWithTypesOrderedByMillisSinceStart);
-        let eventLog = this.gameEventLog;
-        //this.eventsWithTypesOrderedByMillisSinceStart = this.gameEventLog.fieldGoalAttempts.map(ev => ({type: "field-goal-attempt", ev: ev}))
-            //.concat(eventLog.freeThrowAttempts.map(ev => ({type: "free-throw-attempt", ev: ev})))
-            //.sort((a, b) => a.ev.millisecondsSinceStart - b.ev.millisecondsSinceStart);
-        console.log(this.eventsWithTypesOrderedByMillisSinceStart);
+        this.eventsWithTypesOrderedByMillisSinceStart = this.gameEventLog.fieldGoalAttempts.map(ev => ({type: "field-goal-attempt", ev: ev}))
+            .concat(this.gameEventLog.freeThrowAttempts.map(ev => ({type: "free-throw-attempt", ev: ev})))
+            .sort((a, b) => a.ev.millisecondsSinceStart - b.ev.millisecondsSinceStart);
       },
     }
   }
@@ -36,7 +51,7 @@ defineProps({
 <template>
   <div>Ивент лог</div>
   <div v-for="eventAndType in eventsWithTypesOrderedByMillisSinceStart">
-    1
+    <GameEvent :type="eventAndType.type" :ev="eventAndType.ev"/>
   </div>
 </template>
 
