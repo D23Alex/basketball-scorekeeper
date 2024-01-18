@@ -10,7 +10,7 @@ defineProps({
 
 <template>
   <div class="game-event">
-    <div class="event-type">{{ this.type }}</div>
+    <div class="event-type">{{ type }}</div>
     <div v-if="ev.millisecondsSinceStart" class="event-timestamp">
       {{ prettyGameTimestampBySecondsSinceStart(ev.millisecondsSinceStart / 1000) }}
     </div>

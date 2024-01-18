@@ -93,16 +93,16 @@ export default {
   <template v-if="allLoaded">
     <div class="outer">
       <div class="game-container">
-      <TeamPreview :season="this.season" :team-id="this.game.team1.id"
-                   :team-city="this.game.team1.city" :team-name="this.game.team1.name"/>
+      <TeamPreview :season="season" :team-id="game.team1.id"
+                   :team-city="game.team1.city" :team-name="game.team1.name"/>
       <div class="score-container">
-        {{ this.team1Performance.totals.points }} - {{ this.team2Performance.totals.points }}
+        {{ team1Performance.totals.points }} - {{ team2Performance.totals.points }}
       </div>
-      <TeamPreview :season="this.season" :team-id="this.game.team2.id"
-                   :team-city="this.game.team2.city" :team-name="this.game.team2.name"/>
+      <TeamPreview :season="season" :team-id="game.team2.id"
+                   :team-city="game.team2.city" :team-name="game.team2.name"/>
     </div>
-    <BoxScore :key="this.gameEventLog" class="box-score"/>
-    <EventLog :key="this.gameEventLog" :game-event-log="this.gameEventLog"/>
+    <BoxScore :key="gameEventLog" class="box-score"/>
+    <EventLog :key="gameEventLog" :game-event-log="gameEventLog"/>
     </div>
   </template>
 </template>
