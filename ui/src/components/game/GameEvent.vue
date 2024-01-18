@@ -33,7 +33,7 @@ defineProps({
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Центрирование по горизонтали */
+  align-items: center; 
 }
 
 .event-type {
@@ -49,8 +49,8 @@ defineProps({
 
 .field-goal-attempt-wrapper {
   display: flex;
-  justify-content: center; /* Центрирование по горизонтали */
-  align-items: center; /* Центрирование по вертикали */
-  width: 100%; /* Ширина 100% родительского элемента */
+  justify-content: center; 
+  align-items: center; 
+  width: 100%; 
 }
 </style>

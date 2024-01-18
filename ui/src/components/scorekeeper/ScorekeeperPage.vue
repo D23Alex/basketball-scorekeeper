@@ -106,46 +106,46 @@ export default {
 Тут страница матча для секретаря
   <Timer @selectedtimechanged="updateGameTime"/>
   <template v-if="allLoaded">
-    <GamePreview :season="this.season" :team1-score="this.team1Performance.totals.points"
-                 :team2-score="this.team2Performance.totals.points" :game-status="'TODO: статус игры'"
-                 :team1-info="this.game.team1" :team2-info="this.game.team2"
-                 :game-scheduled-start="this.game.scheduledStartTime"
-                 :game-id="this.game.id"/>
+    <GamePreview :season="season" :team1-score="team1Performance.totals.points"
+                 :team2-score="team2Performance.totals.points" :game-status="'TODO: статус игры'"
+                 :team1-info="game.team1" :team2-info="game.team2"
+                 :game-scheduled-start="game.scheduledStartTime"
+                 :game-id="game.id"/>
     <div class="lineups">
       Игроки
       <div class="lineup">
         <div v-for="player in team1Lineup"
-             @click.prevent.stop="this.handleClick($event, player)">
+             @click.prevent.stop="handleClick($event, player)">
           <PlayerPreview :player-id="player.id"
                          :jersey-number="1"
-                         :teamId="this.game.team1.id"
+                         :teamId="game.team1.id"
                          :first-name="player.firstName"
                          :last-name="player.lastName"/>
         </div>
       </div>
       <div class="lineup">
         <div v-for="player in team2Lineup"
-             @click.prevent.stop="this.handleClick($event, player)">
+             @click.prevent.stop="handleClick($event, player)">
           <PlayerPreview :player-id="player.id"
                          :jersey-number="1"
-                         :teamId="this.game.team2.id"
+                         :teamId="game.team2.id"
                          :first-name="player.firstName"
                          :last-name="player.lastName"/>
         </div>
       </div>
       <vue-simple-context-menu element-id="myUniqueId"
-                               :options="this.eventOptions"
+                               :options="eventOptions"
                                ref="vueSimpleContextMenu"
                                @option-clicked="optionClicked">
       </vue-simple-context-menu>
     </div>
     <div>
       Ивенты уже имеющиеся в базе
-      <div v-for="eventAndType in this.eventsWithTypesOrderedByMillisSinceStart">
+      <div v-for="eventAndType in eventsWithTypesOrderedByMillisSinceStart">
         <GameEvent :type="eventAndType.type" :ev="eventAndType.ev" :players="team1Lineup.concat(team2Lineup)"/>
       </div>
       Новые ивенты
-      <div v-for="eventAndType in this.eventsNotSaved">
+      <div v-for="eventAndType in eventsNotSaved">
         <GameEvent unsaved-by-default="true" :type="eventAndType.type" :ev="eventAndType.ev"
                    :players="team1Lineup.concat(team2Lineup)"/>
       </div>

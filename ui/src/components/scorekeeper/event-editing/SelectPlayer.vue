@@ -27,9 +27,9 @@ export default {
 <template>
   <div class="select-player">
     <div>{{ label }}</div>
-    <PlayerPreview :player-id="this.selected.id"
-                   :firstName="this.selected.firstName"
-                   :lastName="this.selected.lastName"
+    <PlayerPreview :player-id="selected.id"
+                   :firstName="selected.firstName"
+                   :lastName="selected.lastName"
                    :teamId="1"
                    :jerseyNumber="1"/>
     <select v-model="selected" style="height: 50px;">
