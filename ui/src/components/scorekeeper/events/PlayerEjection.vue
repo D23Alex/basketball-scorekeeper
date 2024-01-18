@@ -37,7 +37,9 @@ export default {
   <SelectPlayer @selectedplayerchanged="updateEjectedPlayer"
                 :label="'удалён'" :selected-player="playerEjection.ejectedPlayer" :players="players"/>
   <SelectFromEnum @selectedoptionchanged="updateEjectionCause"
-                  :label="'причина'" :selected-option="['OTHER', 'другое']" :options="EJECTION_CAUSE_TRANSLATION"/>
+                  :label="'причина'" :selected-option="playerEjection.ejectionCause === null? ['OTHER', 'другое']
+                    : [playerEjection.ejectionCause, EJECTION_CAUSE_TRANSLATION[playerEjection.ejectionCause]]"
+                  :options="EJECTION_CAUSE_TRANSLATION"/>
   <Timer @selectedtimechanged="updateTime"
          :initial-time="Math.floor(playerEjection.millisecondsSinceStart / 1000)"/>
 </div>

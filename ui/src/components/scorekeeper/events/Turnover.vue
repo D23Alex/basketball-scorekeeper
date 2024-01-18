@@ -44,7 +44,9 @@ export default {
   <SelectPlayer @selectedplayerchanged="updateStealer"
                 :label="'перехват'" :selected-player="turnover.stealer" :players="players"/>
   <SelectFromEnum @selectedoptionchanged="updateCause"
-                  :label="'причина'" :selected-option="['OTHER', 'другое']" :options="TURNOVER_CAUSE_TRANSLATION"/>
+                  :label="'причина'" :selected-option="turnover.cause === null? ['OTHER', 'другое']
+                    : [turnover.cause, TURNOVER_CAUSE_TRANSLATION[turnover.cause]]"
+                  :options="TURNOVER_CAUSE_TRANSLATION"/>
   <Timer @selectedtimechanged="updateTime"
          :initial-time="Math.floor(turnover.millisecondsSinceStart / 1000)"/>
 </div>
