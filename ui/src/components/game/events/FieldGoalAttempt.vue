@@ -44,22 +44,52 @@ export default {
                      :label="'блок'"/>
     </div>
     <div class="info">
-      <div>{{ fieldGoalAttempt.type }}</div>
-      <div>{{ fieldGoalAttempt.isSuccessful ? 'попадание' : 'промах' }}</div>
+      <div class="type">{{ fieldGoalAttempt.type }}</div>
+      <div class="result" v-if="fieldGoalAttempt.isSuccessful">Попадание</div>
+      <div class="result-error" v-else>Промах</div>
     </div>
-
-
   </div>
 </template>
 
 <style scoped>
-.field-goal-attempt, .players {
+.field-goal-attempt {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.players {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .info {
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.info div {
+  margin-bottom: 8px;
+  font-size: 18px;
+  color: #333;
+}
+
+.info .type {
+  font-weight: bold;
+}
+
+.info .result {
+  color: #4CAF50; /* Зеленый цвет для успешного попадания */
+}
+
+.info .result-error {
+  color: #FF0000; /* Красный цвет для неудачного попадания */
 }
 </style>

@@ -49,12 +49,53 @@ defineProps({
 </script>
 
 <template>
-  <div>Ивент лог</div>
+  <!-- <div>Ивент лог</div> -->
   <div v-for="eventAndType in this.eventsWithTypesOrderedByMillisSinceStart">
     <GameEvent :type="eventAndType.type" :ev="eventAndType.ev"/>
   </div>
 </template>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
 
+.event-list {
+  display: grid;
+  gap: 20px;
+}
+
+/* GameEvent Component Styling */
+.game-event {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.game-event img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.game-event-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-event-info div {
+  margin-bottom: 8px;
+}
+
+/* Additional Styling, Adjust as Needed */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
+}
 </style>

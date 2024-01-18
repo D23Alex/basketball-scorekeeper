@@ -22,7 +22,7 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
       <div class="player-preview-image">
         <img v-bind:src=" IMAGES_PATH + '/players/' + season + '/' + playerId + '.jpg'" alt="player image" style="width: 200px; height: 200px; border-radius: 180px;"/> 
       </div>
-      <div v-if="label">{{ label }}</div>
+      <div class="label" v-if="label">{{ label }}</div>
       <div class="player-info">
         <div class="player-name">{{ firstName + " " + lastName }}</div>
         <div class="player-position">{{ position }}</div>
@@ -62,5 +62,15 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
 .player-name,
 .player-position {
   margin: 5px 0;
+}
+
+.label {
+  font-weight: bold;
+  margin-right: 10px;
+  color: white;
+  background-color: #333;
+  padding: 5px;
+  border-radius: 5px;
+  display: inline-block; /* Чтобы элементы вокруг него выстраивались в ряд */
 }
 </style>
