@@ -15,7 +15,7 @@ export default {
 
   watch: {
     selected: function(val) {
-      this.$emit('selectedplayerchanged', this.selected);
+      this.$emit('selectedbooleanchanged', this.selected);
     }
   }
 }
@@ -26,7 +26,7 @@ export default {
   <div>{{ label }}</div>
   <div>
     <input type="checkbox" id="checkbox" v-model="selected">
-    <label for="checkbox">{{ selected }}</label>
+    <div>{{ selected }}</div>
   </div>
 </div>
 </template>

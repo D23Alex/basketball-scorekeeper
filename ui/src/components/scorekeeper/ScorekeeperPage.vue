@@ -15,7 +15,11 @@ export default {
       eventsWithTypesOrderedByMillisSinceStart: [],
       eventOptions: [
         {name: "Бросок с игры", slug: "field-goal-attempt"},
-        {name: "Штрафной бросок", slug: "free-throw-attempt"}],
+        {name: "Штрафной бросок", slug: "free-throw-attempt"},
+        {name: "Фол", slug: "personal-foul"},
+        {name: "Удаление", slug: "player-ejection"},
+        {name: "Технический фол", slug: "player-technical-foul"},
+        {name: "Потеря", slug: "turnover"},],
       season: 2023, //TODO: hardcoded atm
       game: {},
       team1Performance: {},
@@ -71,9 +75,14 @@ export default {
     },
 
     updateEventsWithTypesOrderedByMillisSinceStart() {
-      this.eventsWithTypesOrderedByMillisSinceStart = this.gameEventLog.fieldGoalAttempts.map(ev => ({type: "field-goal-attempt", ev: ev}))
-        .concat(this.gameEventLog.freeThrowAttempts.map(ev => ({type: "free-throw-attempt", ev: ev})))
-        .sort((a, b) => a.ev.millisecondsSinceStart - b.ev.millisecondsSinceStart);
+      this.eventsWithTypesOrderedByMillisSinceStart =
+          this.gameEventLog.fieldGoalAttempts.map(ev => ({type: "field-goal-attempt", ev: ev}))
+              .concat(this.gameEventLog.freeThrowAttempts.map(ev => ({type: "free-throw-attempt", ev: ev})))
+              .concat(this.gameEventLog.personalFouls.map(ev => ({type: "personal-foul", ev: ev})))
+              .concat(this.gameEventLog.playerEjections.map(ev => ({type: "player-ejection", ev: ev})))
+              .concat(this.gameEventLog.playerTechnicalFouls.map(ev => ({type: "player-technical-foul", ev: ev})))
+              .concat(this.gameEventLog.turnovers.map(ev => ({type: "turnover", ev: ev})))
+              .sort((a, b) => a.ev.millisecondsSinceStart - b.ev.millisecondsSinceStart);
     },
 
     eventByPlayerClicked(eventSlug, player) {
@@ -87,7 +96,44 @@ export default {
           isSuccessful: false,
           type: 0,
           game: this.game
-      }
+        }
+      if (eventSlug === "free-throw-attempt")
+        return {
+          shooter: player,
+          millisecondsSinceStart: this.currentGameTimeInSeconds * 1000,
+          isSuccessful: false,
+          game: this.game
+        }
+      if (eventSlug === "player-technical-foul")
+        return {
+          foulingPlayer: player,
+          millisecondsSinceStart: this.currentGameTimeInSeconds * 1000,
+          game: this.game
+        }
+      if (eventSlug === "personal-foul")
+        return {
+          foulingPlayer: player,
+          fouledPlayer: null,
+          isUnsportsmanlike: false,
+          isOffensive: false,
+          millisecondsSinceStart: this.currentGameTimeInSeconds * 1000,
+          game: this.game
+        }
+      if (eventSlug === "player-ejection")
+        return {
+          ejectedPlayer: player,
+          ejectionCause: null,
+          millisecondsSinceStart: this.currentGameTimeInSeconds * 1000,
+          game: this.game
+        }
+      if (eventSlug === "turnover")
+        return {
+          player: player,
+          stealer: null,
+          cause: null,
+          millisecondsSinceStart: this.currentGameTimeInSeconds * 1000,
+          game: this.game
+        }
     },
 
     handleClick(event, item) {

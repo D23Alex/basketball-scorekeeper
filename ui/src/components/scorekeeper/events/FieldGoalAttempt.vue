@@ -1,6 +1,7 @@
 <script setup>
 import SelectPlayer from "@/components/scorekeeper/event-editing/SelectPlayer.vue";
 import SelectBoolean from "@/components/scorekeeper/event-editing/SelectBoolean.vue";
+
 defineProps({
   fieldGoalAttempt: {},
   players: Array,
@@ -46,13 +47,13 @@ export default {
 <div class="field-goal-attempt">
   <SelectPlayer @selectedplayerchanged="updateShooter"
                 :label="'бросил'" :selected-player="fieldGoalAttempt.shooter" :players="players"/>
-  <SelectPlayer v-if="fieldGoalAttempt.assistant" @selectedplayerchanged="updateAssistant"
+  <SelectPlayer @selectedplayerchanged="updateAssistant"
                 :label="'результативная передача'" :selected-player="fieldGoalAttempt.assistant" :players="players"/>
-  <SelectPlayer v-if="fieldGoalAttempt.reboundedBy" @selectedplayerchanged="updateReboundedBy"
+  <SelectPlayer @selectedplayerchanged="updateReboundedBy"
                 :label="'подобрал'" :selected-player="fieldGoalAttempt.reboundedBy" :players="players"/>
-  <SelectPlayer v-if="fieldGoalAttempt.blockedBy" @selectedplayerchanged="updateBlockedBy"
+  <SelectPlayer @selectedplayerchanged="updateBlockedBy"
                 :label="'блок'" :selected-player="fieldGoalAttempt.blockedBy" :players="players"/>
-  <SelectBoolean @selectedplayerchanged="updateIsSuccessful"
+  <SelectBoolean @selectedbooleanchanged="updateIsSuccessful"
                  :label="'попадание'" :selected-value="fieldGoalAttempt.isSuccessful"/>
   <Timer @selectedtimechanged="updateTime"
          :initial-time="Math.floor(fieldGoalAttempt.millisecondsSinceStart / 1000)"/>

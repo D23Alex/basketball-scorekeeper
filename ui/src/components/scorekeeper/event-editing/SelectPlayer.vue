@@ -27,14 +27,14 @@ export default {
 <template>
   <div class="select-player">
     <div>{{ label }}</div>
-    <PlayerPreview :player-id="selected.id"
+    <PlayerPreview v-if="selected !== null" :player-id="selected.id"
                    :firstName="selected.firstName"
                    :lastName="selected.lastName"
                    :teamId="1"
                    :jerseyNumber="1"/>
     <select v-model="selected" style="height: 50px;">
-      <option v-for="player in players" v-bind:value="player">
-        {{ player.firstName + " " + player.lastName }}
+      <option v-for="player in players.concat(null)" v-bind:value="player">
+        {{ player !== null ? player.firstName + " " + player.lastName : "никто" }}
       </option>
     </select>
   </div>
