@@ -111,6 +111,7 @@ INSERT INTO after_timeout_court_appearances (game_id, player_id, team_id, timeou
 
 INSERT INTO field_goal_attempts (is_successful, type, game_id, milliseconds_since_start, shooter_id, rebounded_by_id) VALUES (false, 1, 1, 16000, 2, 1);
 INSERT INTO field_goal_attempts (is_successful, type, game_id, milliseconds_since_start, shooter_id, assistant_id) VALUES (true, 1, 1, 17000, 2, 1);
+INSERT INTO turnovers (cause, game_id, milliseconds_since_start, player_id) VALUES (1, 1, 18000, 2);
 
 
 -- игры ЦСКА против зенита в спб, пока без событий, просто для теста

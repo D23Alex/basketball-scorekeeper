@@ -1,5 +1,10 @@
 <script setup>
 import FieldGoalAttempt from "@/components/scorekeeper/events/FieldGoalAttempt.vue";
+import FreeThrowAttempt from "@/components/scorekeeper/events/FreeThrowAttempt.vue";
+import PersonalFoul from "@/components/scorekeeper/events/PersonalFoul.vue";
+import PlayerEjection from "@/components/scorekeeper/events/PlayerEjection.vue";
+import PlayerTechnicalFoul from "@/components/scorekeeper/events/PlayerTechnicalFoul.vue";
+import Turnover from "@/components/scorekeeper/events/Turnover.vue";
 
 defineProps({
   unsavedByDefault: Boolean,
@@ -64,11 +69,24 @@ export default {
     <div>{{ type }}</div>
     <div class="clickable" @click="deleteEvent()">удалить</div>
     <div class="clickable" v-if="hasUnsavedChanges" @click="saveEvent()">сохранить</div>
-    <template v-if="type === 'field-goal-attempt'">
-      <FieldGoalAttempt @fieldgoalattemptchanged="updateEventLocally"
-                        :field-goal-attempt="ev"
-                        :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
-    </template>
+    <FieldGoalAttempt v-if="type === 'field-goal-attempt'" @fieldgoalattemptchanged="updateEventLocally"
+                      :field-goal-attempt="ev"
+                      :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
+    <FreeThrowAttempt v-if="type === 'free-throw-attempt'" @freethrowattemptchanged="updateEventLocally"
+                      :free-throw-attempt="ev"
+                      :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
+    <PersonalFoul v-if="type === 'personal-foul'" @personalfoulchanged="updateEventLocally"
+                      :personal-foul="ev"
+                      :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
+    <PlayerEjection v-if="type === 'player-ejection'" @playerejectionchanged="updateEventLocally"
+                      :player-ejection="ev"
+                      :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
+    <PlayerTechnicalFoul v-if="type === 'player-technical-foul'" @playertechnicalfoulchanged="updateEventLocally"
+                    :player-technical-foul="ev"
+                    :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
+    <Turnover v-if="type === 'turnover'" @turnoverchanged="updateEventLocally"
+                         :turnover="ev"
+                         :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
   </div>
 </template>
 

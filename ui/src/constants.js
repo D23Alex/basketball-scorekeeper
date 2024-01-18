@@ -16,3 +16,21 @@ export const RULES = {
     mainTimeInSeconds: 2400,
     mainPeriods: 4
 }
+
+export const TURNOVER_CAUSE_TRANSLATION = {
+    "OTHER": "другое",
+    "STOLEN_BY_OPPONENT": "перехвачено",
+    "FIVE_SECOND_VIOLATION": "правило 5 секунд",
+    "EIGHT_SECOND_VIOLATION": "правило 8 секунд",
+    "TWENTY_FOUR_SECOND_VIOLATION": "правило 24 секунд",
+    "ZONE_VIOLATION": "нарушение правила зоны(!)",
+    "OUT_OF_BOUNDS": "мяч вне площадки",
+    "TRAVEL" : "пробежка",
+    "LEG_PLAY": "игра ногой",
+}
+
+export const EJECTION_CAUSE_TRANSLATION = {
+    "OTHER": "другое",
+    "FOULS": "перебор замечаний",
+    "UNSPORTSMANLIKE_BEHAVIOR": "неспортивное поведение"
+}
