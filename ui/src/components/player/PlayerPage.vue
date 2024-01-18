@@ -5,6 +5,7 @@ import ContractPreview from "@/components/ContractPreview.vue"
 import axios from "axios";
 import {VueTable} from "@harv46/vue-table";
 import {API} from "@/constants";
+import {timePlayedInMinutesAndSeconds} from "@/util";
 
 export default {
   components: {VueTable, PlayerPreview, ContractPreview},
@@ -17,37 +18,57 @@ export default {
       contractHistory: [],
       allLoaded: false,
       performancesForEachContractInSeason: [],
-      header: [
+      totalsHeader: [
         "TEAM",
         "T-TOTAL", "PTS-TOTAL", "AST-TOTAL", "REB-TOTAL", "BLK-TOTAL", "2PM-TOTAL", "2PA-TOTAL",
-        "T-AVG", "PTS-AVG", "AST-AVG", "REB-AVG", "BLK-AVG", "2PM-AVG", "2PA-AVG",
-        "2P%", "3PM", "3PA", "3P%", "FTM", "FTA", "FT%"
+        "3PM", "3PA", "FTM", "FTA"
       ],
-      keys: [
+      totalsKeys: [
         ["team", "name"],
-        ["playerOverTimePerformance", "performance", "totals", "timePlayedInMillis"],
+
+        "totalTime",
         ["playerOverTimePerformance", "performance", "totals", "points"],
         ["playerOverTimePerformance", "performance", "totals", "assists"],
         ["playerOverTimePerformance", "performance", "totals", "rebounds"],
         ["playerOverTimePerformance", "performance", "totals", "blocks"],
         ["playerOverTimePerformance", "performance", "totals", "twoPointersMade"],
         ["playerOverTimePerformance", "performance", "totals", "twoPointersAttempted"],
-
-        ["playerOverTimePerformance", "performance", "averages", "timePlayedInMillis"],
-        ["playerOverTimePerformance", "performance", "averages", "points"],
-        ["playerOverTimePerformance", "performance", "averages", "assists"],
-        ["playerOverTimePerformance", "performance", "averages", "rebounds"],
-        ["playerOverTimePerformance", "performance", "averages", "blocks"],
-        ["playerOverTimePerformance", "performance", "averages", "twoPointersMade"],
-        ["playerOverTimePerformance", "performance", "averages", "twoPointersAttempted"],
-
-        ["playerOverTimePerformance", "performance", "efficiency", "twoPointEfficiency"],
         ["playerOverTimePerformance", "performance", "totals", "threePointersMade"],
         ["playerOverTimePerformance", "performance", "totals", "threePointersAttempted"],
-        ["playerOverTimePerformance", "performance", "efficiency", "threePointEfficiency"],
         ["playerOverTimePerformance", "performance", "totals", "freeThrowsMade"],
         ["playerOverTimePerformance", "performance", "totals", "freeThrowsAttempted"],
-        ["playerOverTimePerformance", "performance", "efficiency", "freeThrowEfficiency"]
+      ],
+
+      averagesHeader: [
+        "TEAM",
+        "T-AVG", "PTS-AVG", "AST-AVG", "REB-AVG", "BLK-AVG", "2PM-AVG", "2PA-AVG", "3PM-AVG", "3PA-AVG", "FTM-AVG", "FTA-AVG"
+      ],
+      averagesKeys: [
+        ["team", "name"],
+
+        "averageTime",
+        "averagePoints",
+        "averageAssists",
+        "averageRebounds",
+        "averageBlocks",
+        "averageTwoPointersMade",
+        "averageTwoPointersAttempted",
+        "averageThreePointersMade",
+        "averageThreePointersAttempted",
+        "averageFreeThrowsMade",
+        "averageFreeThrowsAttempted",
+      ],
+
+      efficiencyHeader: [
+        "TEAM",
+        "FG%", "2P%", "3P%", "FT%"
+      ],
+      efficiencyKeys: [
+        ["team", "name"],
+        "fieldGoalEfficiency",
+        "twoPointEfficiency",
+        "threePointEfficiency",
+        "freeThrowEfficiency"
       ],
 
       availableSeasons: [],
@@ -60,6 +81,58 @@ export default {
           + "/last-in-season/" + this.season)).data;
       this.performancesForEachContractInSeason = (await axios.get(API + "/stats/season-performance/"
           + this.playerId + "/" + this.season)).data;
+
+      this.performancesForEachContractInSeason.forEach(row => row.totalTime = timePlayedInMinutesAndSeconds(
+          Math.floor(row.playerOverTimePerformance.performance.totals.timePlayedInMillis / 1000)));
+
+      this.performancesForEachContractInSeason.forEach(row => row.averageTime = timePlayedInMinutesAndSeconds(
+          Math.floor(row.playerOverTimePerformance.performance.averages.timePlayedInMillis / 1000)));
+
+      this.performancesForEachContractInSeason.forEach(row => row.averagePoints
+          = row.playerOverTimePerformance.performance.averages.points.toFixed(1));
+
+      this.performancesForEachContractInSeason.forEach(row => row.averageRebounds
+          = row.playerOverTimePerformance.performance.averages.rebounds.toFixed(1));
+
+      this.performancesForEachContractInSeason.forEach(row => row.averageBlocks
+          = row.playerOverTimePerformance.performance.averages.blocks.toFixed(1));
+
+      this.performancesForEachContractInSeason.forEach(row => row.averageAssists
+          = row.playerOverTimePerformance.performance.averages.assists.toFixed(1));
+
+      this.performancesForEachContractInSeason.forEach(row => row.averagePoints
+          = row.playerOverTimePerformance.performance.averages.points.toFixed(1));
+
+      this.performancesForEachContractInSeason.forEach(row => row.averageTwoPointersMade
+          = row.playerOverTimePerformance.performance.averages.twoPointersMade.toFixed(1));
+
+      this.performancesForEachContractInSeason.forEach(row => row.averageThreePointersMade
+          = row.playerOverTimePerformance.performance.averages.threePointersMade.toFixed(1));
+
+      this.performancesForEachContractInSeason.forEach(row => row.averageFreeThrowsMade
+          = row.playerOverTimePerformance.performance.averages.freeThrowsMade.toFixed(1));
+
+      this.performancesForEachContractInSeason.forEach(row => row.averageTwoPointersAttempted
+          = row.playerOverTimePerformance.performance.averages.twoPointersAttempted.toFixed(1));
+
+      this.performancesForEachContractInSeason.forEach(row => row.averageThreePointersAttempted
+          = row.playerOverTimePerformance.performance.averages.threePointersAttempted.toFixed(1));
+
+      this.performancesForEachContractInSeason.forEach(row => row.averageFreeThrowsAttempted
+          = row.playerOverTimePerformance.performance.averages.freeThrowsAttempted.toFixed(1));
+
+      this.performancesForEachContractInSeason.forEach(row => row.fieldGoalEfficiency
+          = (row.playerOverTimePerformance.performance.efficiency.fieldGoalEfficiency * 100).toFixed(1));
+
+      this.performancesForEachContractInSeason.forEach(row => row.twoPointEfficiency
+          = (row.playerOverTimePerformance.performance.efficiency.twoPointEfficiency * 100).toFixed(1));
+
+      this.performancesForEachContractInSeason.forEach(row => row.threePointEfficiency
+          = (row.playerOverTimePerformance.performance.efficiency.threePointEfficiency * 100).toFixed(1));
+
+      this.performancesForEachContractInSeason.forEach(row => row.freeThrowEfficiency
+          = (row.playerOverTimePerformance.performance.efficiency.freeThrowEfficiency * 100).toFixed(1));
+
     },
   },
 
@@ -116,7 +189,18 @@ export default {
           <strong>Статистика игрока</strong>
         </div>
         <div>
-          <VueTable :headers="header" :data="performancesForEachContractInSeason" :keys="keys" />
+          Всего
+          <VueTable :headers="totalsHeader" :data="performancesForEachContractInSeason" :keys="totalsKeys" />
+        </div>
+        <br>
+        <div>
+          В среднем
+          <VueTable :headers="averagesHeader" :data="performancesForEachContractInSeason" :keys="averagesKeys" />
+        </div>
+        <br>
+        <div>
+          Эффективность
+          <VueTable :headers="efficiencyHeader" :data="performancesForEachContractInSeason" :keys="efficiencyKeys" />
         </div>
       </div>
 

@@ -25,3 +25,9 @@ export function prettyGameTimestampBySecondsSinceStart(timeInSeconds) {
     let s = timeInSeconds % 60;
     return periodAsText(periodsInSeconds(timeInSeconds)) + ' 0' + m + ':' + (s >= 10 ? '' : '0') + s;
 }
+
+export function timePlayedInMinutesAndSeconds(secondsPlayed) {
+    let m = Math.floor(secondsPlayed / 60);
+    let s = secondsPlayed % 60;
+    return (m >= 10 ? "" : "0") + m + ":" + (s >= 10 ? "" : "0") + s;
+}
