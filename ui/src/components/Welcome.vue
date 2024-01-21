@@ -40,6 +40,7 @@ export default {
     <div class="relevant-games">
       <template v-if="allLoaded">
         <div v-for="preview in gamePreviews" :key="preview.game.id">
+          <!-- TODO: make it beutiful -->
           <GamePreview
             :season="season"
             :team1-score="preview.team1Performance.totals.points"
@@ -65,13 +66,13 @@ export default {
 
   .main-photo-placeholder {
     overflow: hidden;
-    width: 1300px;
+    width: 100%;
     height: 300px;
   }
 
   .main-page-photo {
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     object-fit: cover;
   }
 
@@ -82,4 +83,5 @@ export default {
     justify-content: center; 
     margin-top: 40px; 
   }
+  
 </style>

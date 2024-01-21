@@ -129,8 +129,9 @@ export default {
 
 .outer {
     background-color: #D9D9D9;
-    height: 480px;
-    width: 1200px;
+    /* FIXME: in percents */
+    height: 595px; 
+    width: 100%;
     padding: 50px;
     overflow: auto;
   }

@@ -24,6 +24,7 @@ defineProps({
 
 <style scoped>
 .game-event {
+  /* FIXME */
   text-align: center;
   padding: 15px;
   border: 1px solid #ccc;
