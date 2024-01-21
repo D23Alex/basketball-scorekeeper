@@ -14,7 +14,7 @@ import { TEAM_MAIN_COLOR_BY_ID } from "@/constants"
 </script>
 
 <template>
-  <div class="team-preview">
+  <div class="team-preview" @click="$router.push({path: '/team/' + teamId})">
     <div class="team-container">
       <div class="team-image">
         <img v-bind:src="'images/teams/' + season + '/' + teamId + '.png'" alt="team image" style="width: 120px; height: 120px; border-radius: 150px;"/>
@@ -36,6 +36,12 @@ import { TEAM_MAIN_COLOR_BY_ID } from "@/constants"
   height: 200px;
 }
 
+.team-preview:hover {
+  border-radius: 10px;
+  border: 3px solid v-bind(TEAM_MAIN_COLOR_BY_ID[teamId]);
+  cursor: pointer;
+}
+
 .team-container {
   border-radius: 10px;
   padding: 10px;
@@ -54,5 +60,10 @@ import { TEAM_MAIN_COLOR_BY_ID } from "@/constants"
 .team-city {
   color: #fff;
   font-weight: bold;
+}
+
+.team-details {
+  background-color: v-bind(TEAM_MAIN_COLOR_BY_ID[teamId]);
+  border-radius: 10px;
 }
 </style>

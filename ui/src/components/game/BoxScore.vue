@@ -11,7 +11,7 @@ import {timePlayedInMinutesAndSeconds} from "@/util";
 export default {
   data() {
     return {
-      header: ["name", "T", "PTS", "AST", "REB", "BLK", "2PM", "2PA", "2P%", "3PM", "3PA", "3P%", "FTM", "FTA", "FT%"],
+      header: ["name", "время", "очки", "AST", "REB", "BLK", "2PM", "2PA", "2P%", "3PM", "3PA", "3P%", "FTM", "FTA", "FT%"],
       keys: ["name",
         "time",
         ["performance", "totals", "points"],

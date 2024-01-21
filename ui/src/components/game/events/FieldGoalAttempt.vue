@@ -1,4 +1,6 @@
 <script setup>
+import {SHOT_TYPE_TRANSLATION} from "../../../constants";
+
 defineProps({
   fieldGoalAttempt: {},
 })
@@ -44,7 +46,7 @@ export default {
                      :label="'блок'"/>
     </div>
     <div class="info">
-      <div class="type">{{ fieldGoalAttempt.type }}</div>
+      <div class="type">{{ SHOT_TYPE_TRANSLATION[fieldGoalAttempt.type] }}</div>
       <div class="result" v-if="fieldGoalAttempt.isSuccessful">Попадание</div>
       <div class="result-error" v-else>Промах</div>
     </div>

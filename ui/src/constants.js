@@ -1,7 +1,10 @@
 export const TEAM_MAIN_COLOR_BY_ID = {
-    1: "blue",
+    1: "#add8e6",
     2: "red",
-    3: "orange"
+    3: "#487b71",
+    4: "grey",
+    5: "#d67315",
+    6: "#4338ac",
 };
 
 export const IMAGES_PATH = 'images'
@@ -34,3 +37,29 @@ export const EJECTION_CAUSE_TRANSLATION = {
     "FOULS": "перебор замечаний",
     "UNSPORTSMANLIKE_BEHAVIOR": "неспортивное поведение"
 }
+
+export const PLAYER_POSITION_TRANSLATION = {
+    "SHOOTING_GUARD": "атакующий защитник",
+    "POINT_GUARD": "разыгрывающий защитник",
+    "CENTER": "центровой",
+    "SMALL_FORWARD": "легкий форвард",
+    "POWER_FORWARD": "тяжелый форвард",
+    "UNKNOWN": "неизвестно",
+}
+
+export const SHOT_TYPE_TRANSLATION = {
+    "TWO_POINTER_JUMP_SHOT": "2 очка в прыжке",
+    "TWO_POINTER_DRIVE": "2 очка в проходе",
+    "TWO_POINTER_DUNK": "2 очка в сверху",
+    "THREE_POINTER": "3 очка",
+}
+
+export const EVENT_NAME_BY_SLUG = {
+    "field-goal-attempt": "бросок",
+    "free-throw-attempt": "штрафной бросок",
+    "player-technical-foul": "технический фол",
+    "personal-foul": "нарушение",
+    "player-ejection": "удаление игрока",
+    "turnover": "потеря",
+}
+
