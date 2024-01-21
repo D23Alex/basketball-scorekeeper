@@ -13,19 +13,17 @@ let props = defineProps({
 
 <script>
 import { TEAM_MAIN_COLOR_BY_ID } from "@/constants";
+import TeamPreview from "@/components/league/TeamPreview.vue"
+export default {
+  components: {TeamPreview}
+}
 </script>
 
 <template>
   <div class="contract-preview">
     <div class="contract-details">
       <div class="team-info">
-        <div class="team-image" @click="$router.push({path: '/team/' + teamId})">
-          <img
-            v-bind:src="IMAGES_PATH +  '/teams/' + season + '/' + teamId + '.png'"
-            alt="team image"
-            style="width: 200px; height: 200px; border-radius: 180px;"
-          />
-        </div>
+        <TeamPreview :team-id="teamId" :team-name="teamName" :season="season"/>
         <div class="text-info">
           <div class="contract-number">
             {{ "#" + jerseyNumber }}

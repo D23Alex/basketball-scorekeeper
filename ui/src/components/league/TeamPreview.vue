@@ -14,14 +14,14 @@ import { TEAM_MAIN_COLOR_BY_ID } from "@/constants"
 </script>
 
 <template>
-  <div class="team-preview" @click="$router.push({path: '/team/' + teamId})">
+  <div class="team-preview" v-on:click.stop @click="$router.push({path: '/team/' + teamId})">
     <div class="team-container">
       <div class="team-image">
         <img v-bind:src="'images/teams/' + season + '/' + teamId + '.png'" alt="team image" style="width: 120px; height: 120px; border-radius: 150px;"/>
       </div>
       <div class="team-details">
         <div class="team-name">{{ teamName }}</div>
-        <div class="team-city">{{ teamCity }}</div>
+        <div v-if="teamCity" class="team-city">{{ teamCity }}</div>
       </div>
     </div>
   </div>
@@ -34,12 +34,14 @@ import { TEAM_MAIN_COLOR_BY_ID } from "@/constants"
   align-items: center;
   width: 200px;
   height: 200px;
+  transition: background-color 0.3s;
 }
 
 .team-preview:hover {
   border-radius: 10px;
-  border: 3px solid v-bind(TEAM_MAIN_COLOR_BY_ID[teamId]);
+  box-shadow: inset 0px 0px 0px 3px v-bind(TEAM_MAIN_COLOR_BY_ID[teamId]);
   cursor: pointer;
+  background-color: rgba(52, 152, 219, 0.1);
 }
 
 .team-container {
