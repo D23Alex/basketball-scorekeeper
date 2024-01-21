@@ -34,7 +34,7 @@ import { TEAM_MAIN_COLOR_BY_ID } from "@/constants";
             {{ teamName }}
           </div>
           <div class="contract-duration">
-            {{ from + " - " + to }}
+            {{ from.split('T')[0] + " - " + to.split('T')[0] }}
           </div>
         </div>
       </div>
@@ -51,8 +51,11 @@ import { TEAM_MAIN_COLOR_BY_ID } from "@/constants";
   height: 150px;
 }
 
-.contract-preview:hover {
-  /* background-color: v-bind(TEAM_MAIN_COLOR_BY_ID[teamId]); */
+.team-image:hover {
+  box-sizing: border-box;
+  box-shadow: inset 0px 0px 0px 3px v-bind(TEAM_MAIN_COLOR_BY_ID[teamId]);
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .contract-details {

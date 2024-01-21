@@ -1,6 +1,7 @@
 <script setup>
 import FieldGoalAttempt from "@/components/game/events/FieldGoalAttempt.vue";
 import { prettyGameTimestampBySecondsSinceStart } from "@/util";
+import {EVENT_NAME_BY_SLUG} from "../../constants";
 
 defineProps({
   type: String,
@@ -10,7 +11,7 @@ defineProps({
 
 <template>
   <div class="game-event">
-    <div class="event-type">{{ type }}</div>
+    <div class="event-type">{{ EVENT_NAME_BY_SLUG[type] }}</div>
     <div v-if="ev.millisecondsSinceStart" class="event-timestamp">
       {{ prettyGameTimestampBySecondsSinceStart(ev.millisecondsSinceStart / 1000) }}
     </div>

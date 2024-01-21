@@ -17,6 +17,7 @@ import java.sql.Date;
 public class Player {
 
     public enum Position {
+        UNKNOWN,
         POINT_GUARD,
         SHOOTING_GUARD,
         SMALL_FORWARD,

@@ -1,5 +1,5 @@
 <script setup>
-import {IMAGES_PATH} from "@/constants";
+import {IMAGES_PATH, PLAYER_POSITION_TRANSLATION} from "@/constants";
 
 let props = defineProps({
   playerId: Number,
@@ -25,7 +25,7 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
       <div class="label" v-if="label">{{ label }}</div>
       <div class="player-info">
         <div class="player-name">{{ firstName + " " + lastName }}</div>
-        <div class="player-position">{{ position }}</div>
+        <div class="player-position">{{ PLAYER_POSITION_TRANSLATION[position] }}</div>
       </div>
     </div>
   </div>

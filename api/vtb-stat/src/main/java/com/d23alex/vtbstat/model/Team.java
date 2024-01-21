@@ -16,6 +16,7 @@ public class Team {
     Long id;
     String name;
     String city;
+    @Column(name="description", length=1024)
     String description;
     @ManyToOne
     Arena HomeArena;
