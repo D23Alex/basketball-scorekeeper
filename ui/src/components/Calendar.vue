@@ -42,6 +42,13 @@ export default {
                 games[i].id
             )
           ).data.performance,
+          gameStatus: (
+              await axios.get(
+                  API +
+                  "/games/status/" +
+                  games[i].id
+              )
+          ).data,
         });
       }
     },
@@ -74,7 +81,7 @@ export default {
             :season="season"
             :team1-score="preview.team1Performance.totals.points"
             :team2-score="preview.team2Performance.totals.points"
-            :game-status="'TODO: статус игры'"
+            :game-status="preview.gameStatus"
             :team1-info="preview.game.team1"
             :team2-info="preview.game.team2"
             :game-scheduled-start="preview.game.scheduledStartTime"
