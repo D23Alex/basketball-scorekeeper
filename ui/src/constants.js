@@ -64,3 +64,9 @@ export const EVENT_NAME_BY_SLUG = {
     "turnover": "потеря",
 }
 
+export const GAME_STATUS_TRANSLATION = {
+    "UNKNOWN": "незвестно",
+    "NOT_STARTED": "не начата",
+    "FINISHED": "завершена",
+    "IN_PROGRESS": "live",
+}

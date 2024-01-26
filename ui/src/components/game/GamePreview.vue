@@ -1,5 +1,6 @@
 <script setup>
 import TeamPreview from "@/components/league/TeamPreview.vue";
+import {GAME_STATUS_TRANSLATION} from "../../constants";
 
 let props = defineProps({
   team1Info: {
@@ -23,7 +24,7 @@ let props = defineProps({
 
 <template>
   <div class="game-preview" @click="$router.push({ path: '/game/' + gameId })">
-    <div class="status">{{ gameStatus }}</div>
+    <div class="status">{{ GAME_STATUS_TRANSLATION[gameStatus] }}</div>
     <div class="scheduled-start">{{ gameScheduledStart.split('T')[0] }}</div>
     <div class="teams-scores">
       <TeamPreview :season="season" :team-id="team1Info.id" :team-city="team1Info.city" :team-name="team1Info.name" />

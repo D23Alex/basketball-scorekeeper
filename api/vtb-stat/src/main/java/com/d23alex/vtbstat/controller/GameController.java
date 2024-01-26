@@ -1,6 +1,10 @@
 package com.d23alex.vtbstat.controller;
 
 import com.d23alex.vtbstat.LeagueSchedule;
+import com.d23alex.vtbstat.payload.performance.TeamSingleGamePerformance;
+import com.d23alex.vtbstat.payload.statistics.GameEventLog;
+import com.d23alex.vtbstat.payload.statistics.Performance;
+import com.d23alex.vtbstat.payload.statistics.Rules;
 import com.d23alex.vtbstat.repository.DatabaseQueries;
 import com.d23alex.vtbstat.model.Game;
 import org.springframework.http.HttpStatus;
@@ -69,5 +73,30 @@ public class GameController {
     @GetMapping("/api/games/get_all")
     public Set<Game> getAllGames() {
         return databaseQueries.getAllGames();
+    }
+
+    @GetMapping("/api/games/status/{id}")
+    public Rules.GameStatus getGameStatusByGameId(@PathVariable Long id) {
+        Optional<GameEventLog> gameEventLog = databaseQueries.gameEventsByGameId(id);
+        if (gameEventLog.isEmpty())
+            return Rules.GameStatus.UNKNOWN;
+
+        Game game = gameEventLog.get().getGame();
+        int periodStarts = gameEventLog.get().getPeriodStarts().size();
+        int periodEndings = gameEventLog.get().getPeriodEndings().size();
+        var team1Lineup = databaseQueries.teamLineupInGame(game.getTeam1().getId(), game.getId());
+        var team2Lineup = databaseQueries.teamLineupInGame(game.getTeam2().getId(), game.getId());
+        long team1Points = TeamSingleGamePerformance.builder()
+                .game(game)
+                .team(game.getTeam1())
+                .performance(new Performance(team1Lineup, gameEventLog.get())).build()
+                .getPerformance().getTotals().getPoints();
+        long team2Points = TeamSingleGamePerformance.builder()
+                .game(game)
+                .team(game.getTeam2())
+                .performance(new Performance(team2Lineup, gameEventLog.get())).build()
+                .getPerformance().getTotals().getPoints();
+
+        return Rules.calculateGameStatus(team1Points, team2Points, periodStarts, periodEndings);
     }
 }
