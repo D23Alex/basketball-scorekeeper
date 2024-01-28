@@ -9,6 +9,10 @@ export default defineConfig({
   baseUrl: '/basketball-scorekeeper/',
   publicPath: '/basketball-scorekeeper/',
   plugins: [vue()],
+  server: {
+    host: 'frontend',
+    port: 3000
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

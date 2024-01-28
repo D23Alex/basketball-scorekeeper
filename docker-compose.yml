@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  backend:
+    build: api/vtb-stat/
+    container_name: backend
+    ports:
+      - 8080
+    depends_on:
+      - db
+
+  frontend:
+    build: ui/
+    container_name: frontend
+    ports:
+      - 80:3000
+
+  db:
+    image: postgres:16.1-alpine3.18
+    container_name: db
+    env_file:
+      - .env
+    ports: 
+      - 5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
+
