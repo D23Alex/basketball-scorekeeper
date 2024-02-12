@@ -6,6 +6,7 @@ defineProps({
   freeThrowAttempt: {},
   players: Array,
   initialGameTimeInSeconds: Number,
+  teamIdByPlayerId: {},
 })
 </script>
 
@@ -33,7 +34,7 @@ export default {
 
 <template>
 <div class="field-goal-attempt">
-  <SelectPlayer @selectedplayerchanged="updateShooter"
+  <SelectPlayer @selectedplayerchanged="updateShooter" :team-id-by-player-id="this.teamIdByPlayerId"
                 :label="'бросил'" :selected-player="freeThrowAttempt.shooter" :players="players"/>
   <SelectBoolean @selectedbooleanchanged="updateIsSuccessful"
                  :label="'попадание'" :selected-value="freeThrowAttempt.isSuccessful"/>

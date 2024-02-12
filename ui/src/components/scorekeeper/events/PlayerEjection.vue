@@ -7,6 +7,7 @@ defineProps({
   playerEjection: {},
   players: Array,
   initialGameTimeInSeconds: Number,
+  teamIdByPlayerId: {},
 })
 </script>
 
@@ -34,7 +35,7 @@ export default {
 
 <template>
 <div class="field-goal-attempt">
-  <SelectPlayer @selectedplayerchanged="updateEjectedPlayer"
+  <SelectPlayer @selectedplayerchanged="updateEjectedPlayer" :team-id-by-player-id="this.teamIdByPlayerId"
                 :label="'удалён'" :selected-player="playerEjection.ejectedPlayer" :players="players"/>
   <SelectFromEnum @selectedoptionchanged="updateEjectionCause"
                   :label="'причина'" :selected-option="playerEjection.ejectionCause === null? ['OTHER', 'другое']

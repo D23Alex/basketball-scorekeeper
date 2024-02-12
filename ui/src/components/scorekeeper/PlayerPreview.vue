@@ -4,7 +4,6 @@ import {IMAGES_PATH} from "@/constants";
 defineProps({
   playerId: Number,
   teamId: Number,
-  jerseyNumber: Number,
   firstName: String,
   lastName: String
 })
@@ -21,7 +20,6 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
     <img v-bind:src=" IMAGES_PATH + '/players/' + 2023 + '/' + playerId + '.jpg'"
          alt="player image" style="width: 150px; height: 150px;"/>
   </div>
-  <div> {{ jerseyNumber }} </div>
   <div> {{ firstName + ' ' + lastName }} </div>
 </div>
 </template>
@@ -30,7 +28,7 @@ import {TEAM_MAIN_COLOR_BY_ID} from "@/constants"
 .player-preview {
   background-color: v-bind(TEAM_MAIN_COLOR_BY_ID[teamId]);
   width: 150px;
-  height: 200px;
+  height: 180px;
 }
 
 </style>

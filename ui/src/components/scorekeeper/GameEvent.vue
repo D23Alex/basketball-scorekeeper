@@ -5,6 +5,7 @@ import PersonalFoul from "@/components/scorekeeper/events/PersonalFoul.vue";
 import PlayerEjection from "@/components/scorekeeper/events/PlayerEjection.vue";
 import PlayerTechnicalFoul from "@/components/scorekeeper/events/PlayerTechnicalFoul.vue";
 import Turnover from "@/components/scorekeeper/events/Turnover.vue";
+import {EVENT_NAME_BY_SLUG} from "../../constants";
 
 defineProps({
   unsavedByDefault: Boolean,
@@ -12,6 +13,7 @@ defineProps({
   ev: Object,
   players: Array,
   initialGameTimeInSeconds: Number,
+  teamIdByPlayerId: {},
 })
 </script>
 
@@ -65,27 +67,26 @@ export default {
 
 <template>
   <div v-if="!deleted" class="game-event">
-    <div>Ивент</div>
-    <div>{{ type }}</div>
+    <div>{{ EVENT_NAME_BY_SLUG[type] }}</div>
     <div class="clickable" @click="deleteEvent()">удалить</div>
     <div class="clickable" v-if="hasUnsavedChanges" @click="saveEvent()">сохранить</div>
     <FieldGoalAttempt v-if="type === 'field-goal-attempt'" @fieldgoalattemptchanged="updateEventLocally"
-                      :field-goal-attempt="ev"
+                      :field-goal-attempt="ev" :team-id-by-player-id="this.teamIdByPlayerId"
                       :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
     <FreeThrowAttempt v-if="type === 'free-throw-attempt'" @freethrowattemptchanged="updateEventLocally"
-                      :free-throw-attempt="ev"
+                      :free-throw-attempt="ev" :team-id-by-player-id="this.teamIdByPlayerId"
                       :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
     <PersonalFoul v-if="type === 'personal-foul'" @personalfoulchanged="updateEventLocally"
-                      :personal-foul="ev"
+                      :personal-foul="ev" :team-id-by-player-id="this.teamIdByPlayerId"
                       :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
     <PlayerEjection v-if="type === 'player-ejection'" @playerejectionchanged="updateEventLocally"
-                      :player-ejection="ev"
+                      :player-ejection="ev" :team-id-by-player-id="this.teamIdByPlayerId"
                       :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
     <PlayerTechnicalFoul v-if="type === 'player-technical-foul'" @playertechnicalfoulchanged="updateEventLocally"
-                    :player-technical-foul="ev"
+                    :player-technical-foul="ev" :team-id-by-player-id="this.teamIdByPlayerId"
                     :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
     <Turnover v-if="type === 'turnover'" @turnoverchanged="updateEventLocally"
-                         :turnover="ev"
+                         :turnover="ev" :team-id-by-player-id="this.teamIdByPlayerId"
                          :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
   </div>
 </template>

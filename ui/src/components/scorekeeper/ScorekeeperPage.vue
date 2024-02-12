@@ -5,12 +5,14 @@ import PlayerPreview from "@/components/scorekeeper/PlayerPreview.vue";
 import axios from "axios";
 import {API} from "@/constants";
 import Timer from "@/components/scorekeeper/Timer.vue";
+import playerPage from "@/components/player/PlayerPage.vue";
 
 export default {
   components: {Timer, GameEvent, GamePreview, PlayerPreview},
   data() {
     return {
       allLoaded: false,
+      teamIdByPlayerId: {},
       currentGameTimeInSeconds: 0,
       eventsWithTypesOrderedByMillisSinceStart: [],
       eventOptions: [
@@ -65,13 +67,16 @@ export default {
         .filter(occurrence => occurrence.team.id === this.game.team2.id)
         .map(occurrence => occurrence.player);
     this.updateEventsWithTypesOrderedByMillisSinceStart();
+
+    this.team1Lineup.forEach(player=> this.teamIdByPlayerId[player.id] = this.game.team1.id);
+    this.team2Lineup.forEach(player=> this.teamIdByPlayerId[player.id] = this.game.team2.id);
+
     this.allLoaded = true;
   },
 
   methods: {
     updateGameTime(timeIsSeconds) {
       this.currentGameTimeInSeconds = timeIsSeconds;
-      console.log('updated');
     },
 
     updateEventsWithTypesOrderedByMillisSinceStart() {
@@ -158,12 +163,10 @@ export default {
                  :game-scheduled-start="game.scheduledStartTime"
                  :game-id="game.id"/>
     <div class="lineups">
-      Игроки
       <div class="lineup">
         <div v-for="player in team1Lineup"
              @click.prevent.stop="handleClick($event, player)">
           <PlayerPreview :player-id="player.id"
-                         :jersey-number="1"
                          :teamId="game.team1.id"
                          :first-name="player.firstName"
                          :last-name="player.lastName"/>
@@ -173,7 +176,6 @@ export default {
         <div v-for="player in team2Lineup"
              @click.prevent.stop="handleClick($event, player)">
           <PlayerPreview :player-id="player.id"
-                         :jersey-number="1"
                          :teamId="game.team2.id"
                          :first-name="player.firstName"
                          :last-name="player.lastName"/>
@@ -188,12 +190,13 @@ export default {
     <div>
       Ивенты уже имеющиеся в базе
       <div v-for="eventAndType in eventsWithTypesOrderedByMillisSinceStart">
-        <GameEvent :type="eventAndType.type" :ev="eventAndType.ev" :players="team1Lineup.concat(team2Lineup)"/>
+        <GameEvent :type="eventAndType.type" :ev="eventAndType.ev" :players="team1Lineup.concat(team2Lineup)"
+                   :team-id-by-player-id="this.teamIdByPlayerId"/>
       </div>
       Новые ивенты
       <div v-for="eventAndType in eventsNotSaved">
         <GameEvent unsaved-by-default="true" :type="eventAndType.type" :ev="eventAndType.ev"
-                   :players="team1Lineup.concat(team2Lineup)"/>
+                   :players="team1Lineup.concat(team2Lineup)" :team-id-by-player-id="this.teamIdByPlayerId"/>
       </div>
     </div>
   </template>

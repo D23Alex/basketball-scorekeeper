@@ -6,6 +6,7 @@ defineProps({
   fieldGoalAttempt: {},
   players: Array,
   initialGameTimeInSeconds: Number,
+  teamIdByPlayerId: {},
 })
 </script>
 
@@ -45,13 +46,13 @@ export default {
 
 <template>
 <div class="field-goal-attempt">
-  <SelectPlayer @selectedplayerchanged="updateShooter"
+  <SelectPlayer @selectedplayerchanged="updateShooter" :team-id-by-player-id="this.teamIdByPlayerId"
                 :label="'бросил'" :selected-player="fieldGoalAttempt.shooter" :players="players"/>
-  <SelectPlayer @selectedplayerchanged="updateAssistant"
+  <SelectPlayer @selectedplayerchanged="updateAssistant" :team-id-by-player-id="this.teamIdByPlayerId"
                 :label="'результативная передача'" :selected-player="fieldGoalAttempt.assistant" :players="players"/>
-  <SelectPlayer @selectedplayerchanged="updateReboundedBy"
+  <SelectPlayer @selectedplayerchanged="updateReboundedBy" :team-id-by-player-id="this.teamIdByPlayerId"
                 :label="'подобрал'" :selected-player="fieldGoalAttempt.reboundedBy" :players="players"/>
-  <SelectPlayer @selectedplayerchanged="updateBlockedBy"
+  <SelectPlayer @selectedplayerchanged="updateBlockedBy" :team-id-by-player-id="this.teamIdByPlayerId"
                 :label="'блок'" :selected-player="fieldGoalAttempt.blockedBy" :players="players"/>
   <SelectBoolean @selectedbooleanchanged="updateIsSuccessful"
                  :label="'попадание'" :selected-value="fieldGoalAttempt.isSuccessful"/>
