@@ -16,9 +16,8 @@ export default {
 
   methods: {
     async loadSeasonDependentInfo() {
-      let games = (
-        await axios.get(API + "/games/all-in-season/" + this.season)
-      ).data;
+      let games = (await axios.get(API + "/games/all-in-season/" + this.season))
+        .data;
 
       this.gamePreviews = [];
       for (let i = 0; i < games.length; i++) {
@@ -42,13 +41,8 @@ export default {
                 games[i].id
             )
           ).data.performance,
-          gameStatus: (
-              await axios.get(
-                  API +
-                  "/games/status/" +
-                  games[i].id
-              )
-          ).data,
+          gameStatus: (await axios.get(API + "/games/status/" + games[i].id))
+            .data,
         });
       }
     },
@@ -69,14 +63,18 @@ export default {
 
 <template>
   <div>
-    <select v-model="season" style="height: 50px;">
+    <select v-model="season" style="height: 50px">
       <option v-for="season in availableSeasons" :key="season" :value="season">
         {{ season }}
       </option>
     </select>
-    <div class="game-previews" style="width: 1300px;">
+    <div class="game-previews" style="width: 100%">
       <template v-if="allLoaded">
-        <div v-for="preview in gamePreviews" :key="preview.game.id" class="game-preview-container">
+        <div
+          v-for="preview in gamePreviews"
+          :key="preview.game.id"
+          class="game-preview-container"
+        >
           <GamePreview
             :season="season"
             :team1-score="preview.team1Performance.totals.points"
