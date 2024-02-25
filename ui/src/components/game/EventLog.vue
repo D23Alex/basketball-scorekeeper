@@ -21,36 +21,45 @@ defineProps({
     substitutionIns: [],
     substitutionOuts: [],
     timeouts: [],
-    turnovers: []
-  }
-})
+    turnovers: [],
+  },
+});
 </script>
 
 <script>
-  export default {
-    data() {
-      return {
-        eventsWithTypesOrderedByMillisSinceStart: [],
-      }
-    },
+export default {
+  data() {
+    return {
+      eventsWithTypesOrderedByMillisSinceStart: [],
+    };
+  },
 
-    mounted() {
-      this.updateEventsWithTypesOrderedByMillisSinceStart();
-    },
+  mounted() {
+    this.updateEventsWithTypesOrderedByMillisSinceStart();
+  },
 
-    methods: {
-      updateEventsWithTypesOrderedByMillisSinceStart() {
-        this.eventsWithTypesOrderedByMillisSinceStart = this.gameEventLog.fieldGoalAttempts.map(ev => ({type: "field-goal-attempt", ev: ev}))
-            .concat(this.gameEventLog.freeThrowAttempts.map(ev => ({type: "free-throw-attempt", ev: ev})))
-            .sort((a, b) => a.ev.millisecondsSinceStart - b.ev.millisecondsSinceStart);
-      },
-    }
-  }
+  methods: {
+    updateEventsWithTypesOrderedByMillisSinceStart() {
+      this.eventsWithTypesOrderedByMillisSinceStart =
+        this.gameEventLog.fieldGoalAttempts
+          .map((ev) => ({ type: "field-goal-attempt", ev: ev }))
+          .concat(
+            this.gameEventLog.freeThrowAttempts.map((ev) => ({
+              type: "free-throw-attempt",
+              ev: ev,
+            }))
+          )
+          .sort(
+            (a, b) => a.ev.millisecondsSinceStart - b.ev.millisecondsSinceStart
+          );
+    },
+  },
+};
 </script>
 
 <template>
   <div v-for="eventAndType in eventsWithTypesOrderedByMillisSinceStart">
-    <GameEvent :type="eventAndType.type" :ev="eventAndType.ev"/>
+    <GameEvent :type="eventAndType.type" :ev="eventAndType.ev" />
   </div>
 </template>
 
@@ -92,9 +101,8 @@ defineProps({
   margin-bottom: 8px;
 }
 
-/* Additional Styling, Adjust as Needed */
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   background-color: #f0f0f0;
 }
 </style>
