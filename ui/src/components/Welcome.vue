@@ -110,9 +110,8 @@ export default {
 
 .relevant-games {
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
   justify-content: center;
-  margin-top: 40px;
+  margin: 1%;
+  gap: 1%;
 }
 </style>
