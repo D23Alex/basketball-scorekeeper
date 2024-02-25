@@ -64,7 +64,6 @@ export default {
     <div class="relevant-games">
       <template v-if="allLoaded">
         <div v-for="preview in gamePreviews" :key="preview.game.id">
-          <!-- TODO: make it beutiful -->
           <GamePreview
             :season="season"
             :team1-score="preview.team1Performance.totals.points"
