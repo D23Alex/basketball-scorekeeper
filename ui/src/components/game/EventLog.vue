@@ -2,6 +2,7 @@
 import GameEvent from "@/components/game/GameEvent.vue";
 
 defineProps({
+  teamIdByPlayerId: {},
   gameEventLog: {
     periodStarts: [],
     periodEndings: [],
@@ -36,13 +37,18 @@ defineProps({
 
     mounted() {
       this.updateEventsWithTypesOrderedByMillisSinceStart();
+      console.log(this.teamIdByPlayerId);
     },
 
     methods: {
       updateEventsWithTypesOrderedByMillisSinceStart() {
-        this.eventsWithTypesOrderedByMillisSinceStart = this.gameEventLog.fieldGoalAttempts.map(ev => ({type: "field-goal-attempt", ev: ev}))
-            .concat(this.gameEventLog.freeThrowAttempts.map(ev => ({type: "free-throw-attempt", ev: ev})))
-            .sort((a, b) => a.ev.millisecondsSinceStart - b.ev.millisecondsSinceStart);
+        this.eventsWithTypesOrderedByMillisSinceStart =
+            this.gameEventLog.fieldGoalAttempts.map(ev => ({type: "field-goal-attempt", ev: ev}))
+                .concat(this.gameEventLog.freeThrowAttempts.map(ev => ({type: "free-throw-attempt", ev: ev})))
+                .concat(this.gameEventLog.personalFouls.map(ev => ({type: "personal-foul", ev: ev})))
+                .concat(this.gameEventLog.playerTechnicalFouls.map(ev => ({type: "player-technical-foul", ev: ev})))
+                .concat(this.gameEventLog.turnovers.map(ev => ({type: "turnover", ev: ev})))
+                .sort((a, b) => a.ev.millisecondsSinceStart - b.ev.millisecondsSinceStart);
       },
     }
   }
@@ -50,7 +56,7 @@ defineProps({
 
 <template>
   <div v-for="eventAndType in eventsWithTypesOrderedByMillisSinceStart">
-    <GameEvent :type="eventAndType.type" :ev="eventAndType.ev"/>
+    <GameEvent :team-id-by-player-id="teamIdByPlayerId" :type="eventAndType.type" :ev="eventAndType.ev"/>
   </div>
 </template>
 

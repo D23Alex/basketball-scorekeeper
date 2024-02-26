@@ -8,10 +8,10 @@ export default {
   components: {TeamPreview, PlayerPreview},
   data() {
     return {
-      season: 2023, //TODO: hardcoded atm
+      season: 2023,
       teamInfo: {},
       allLoaded: false,
-      availableSeasons: [2022, 2023, 2024], // TODO: hardcoded too, fix later
+      availableSeasons: [2022, 2023, 2024],
       players: []
     }
   },

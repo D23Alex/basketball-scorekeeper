@@ -5,7 +5,7 @@ import TeamPreview from "@/components/league/TeamPreview.vue";
 import {API, GAME_STATUS_TRANSLATION} from "@/constants";
 import GamePreview from "@/components/game/GamePreview.vue";
 import EventLog from "@/components/game/EventLog.vue";
-import {prettyGameTimestampBySecondsSinceStart} from "../../util";
+import {prettyGameTimestampBySecondsSinceStart} from "@/util";
 
 export default {
   computed: {
@@ -17,9 +17,10 @@ export default {
   data() {
     return {
       allLoaded: false,
+      teamIdByPlayerId: {},
       timer: null,
       game: null,
-      season: 2023, //TODO: season is hardcoded atm, deal with it later
+      season: 2023,
       gameStatus: null,
 
       team1Lineup: [],
@@ -62,6 +63,10 @@ export default {
         .filter(occurrence => occurrence.team.id === this.game.team2.id)
         .map(occurrence => occurrence.player);
     await this.updatePerformance();
+
+    this.team1Lineup.forEach(player=> this.teamIdByPlayerId[player.id] = this.game.team1.id);
+    this.team2Lineup.forEach(player=> this.teamIdByPlayerId[player.id] = this.game.team2.id);
+    console.log(this.teamIdByPlayerId);
 
     this.gameStatus = (await axios.get(API + "/games/status/" + this.$route.params.gameId)).data;
 
@@ -134,7 +139,7 @@ export default {
                    :team-city="game.team2.city" :team-name="game.team2.name"/>
     </div>
     <BoxScore :key="gameEventLog" class="box-score"/>
-    <EventLog :key="gameEventLog" :game-event-log="gameEventLog"/>
+    <EventLog :team-id-by-player-id="teamIdByPlayerId" :key="gameEventLog" :game-event-log="gameEventLog"/>
     </div>
   </template>
 </template>
