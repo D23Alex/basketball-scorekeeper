@@ -184,3 +184,10 @@ INSERT INTO lineup_occurrences (game_id, jersey_number, player_id, team_id) VALU
 INSERT INTO lineup_occurrences (game_id, jersey_number, player_id, team_id) VALUES (18, 999, 4, 2);
 INSERT INTO lineup_occurrences (game_id, jersey_number, player_id, team_id) VALUES (18, 999, 5, 2);
 INSERT INTO lineup_occurrences (game_id, jersey_number, player_id, team_id) VALUES (18, 999, 6, 2);
+
+INSERT INTO lineup_occurrences (game_id, jersey_number, player_id, team_id) VALUES (20, 999, 1, 1);
+INSERT INTO lineup_occurrences (game_id, jersey_number, player_id, team_id) VALUES (20, 999, 2, 1);
+INSERT INTO lineup_occurrences (game_id, jersey_number, player_id, team_id) VALUES (20, 999, 3, 1);
+INSERT INTO lineup_occurrences (game_id, jersey_number, player_id, team_id) VALUES (20, 999, 4, 2);
+INSERT INTO lineup_occurrences (game_id, jersey_number, player_id, team_id) VALUES (20, 999, 5, 2);
+INSERT INTO lineup_occurrences (game_id, jersey_number, player_id, team_id) VALUES (20, 999, 6, 2);
