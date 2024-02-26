@@ -1,8 +1,9 @@
 <script setup>
-import {SHOT_TYPE_TRANSLATION} from "../../../constants";
+import {SHOT_TYPE_TRANSLATION} from "@/constants";
 
 defineProps({
   fieldGoalAttempt: {},
+  teamIdByPlayerId: {},
 })
 </script>
 
@@ -21,32 +22,31 @@ export default {
                      :firstName="fieldGoalAttempt.shooter.firstName"
                      :lastName="fieldGoalAttempt.shooter.lastName"
                      :position="fieldGoalAttempt.shooter.position"
-                     :teamId="1"
-                     :label="'бросил'"/> <!-- //TODO: teamId and season are hardcoded atm -->
+                     :teamId="teamIdByPlayerId[fieldGoalAttempt.shooter.id]"
+                     :label="'бросил'"/>
       <PlayerPreview v-if="fieldGoalAttempt.reboundedBy" :playerId="fieldGoalAttempt.reboundedBy.id"
                      :season="2023"
                      :firstName="fieldGoalAttempt.reboundedBy.firstName"
                      :lastName="fieldGoalAttempt.reboundedBy.lastName"
                      :position="fieldGoalAttempt.reboundedBy.position"
-                     :teamId="1"
+                     :teamId="teamIdByPlayerId[fieldGoalAttempt.reboundedBy.id]"
                      :label="'подобрал'"/>
       <PlayerPreview v-if="fieldGoalAttempt.assistant" :playerId="fieldGoalAttempt.assistant.id"
                      :season="2023"
                      :firstName="fieldGoalAttempt.assistant.firstName"
                      :lastName="fieldGoalAttempt.assistant.lastName"
                      :position="fieldGoalAttempt.assistant.position"
-                     :teamId="1"
+                     :teamId="teamIdByPlayerId[fieldGoalAttempt.assistant.id]"
                      :label="'результативная передача'"/>
       <PlayerPreview v-if="fieldGoalAttempt.blockedBy" :playerId="fieldGoalAttempt.blockedBy.id"
                      :season="2023"
                      :firstName="fieldGoalAttempt.blockedBy.firstName"
                      :lastName="fieldGoalAttempt.blockedBy.lastName"
                      :position="fieldGoalAttempt.blockedBy.position"
-                     :teamId="1"
+                     :teamId="teamIdByPlayerId[fieldGoalAttempt.blockedBy.id]"
                      :label="'блок'"/>
     </div>
     <div class="info">
-      <div class="type">{{ SHOT_TYPE_TRANSLATION[fieldGoalAttempt.type] }}</div>
       <div class="result" v-if="fieldGoalAttempt.isSuccessful">Попадание</div>
       <div class="result-error" v-else>Промах</div>
     </div>

@@ -24,9 +24,9 @@ export default {
         {name: "Удаление", slug: "player-ejection"},
         {name: "Технический фол", slug: "player-technical-foul"},
         {name: "Потеря", slug: "turnover"},
-        {name: "Выход в начала периода", slug: "period-starter"},
-        {name: "Выход с площадки в конеце периода", slug: "period-ender"},],
-      season: 2023, //TODO: hardcoded atm
+        {name: "Выход в начале периода", slug: "period-starter"},
+        {name: "Выход с площадки в конце периода", slug: "period-ender"},],
+      season: 2023,
       game: {},
       team1Performance: {},
       team2Performance: {},
