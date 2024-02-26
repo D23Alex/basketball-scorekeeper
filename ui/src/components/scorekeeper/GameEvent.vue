@@ -112,5 +112,7 @@ export default {
 
 .clickable {
   cursor: pointer;
+  background-color: #004777;
+  border-radius: 2px;
 }
 </style>

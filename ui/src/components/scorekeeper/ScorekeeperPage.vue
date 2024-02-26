@@ -276,8 +276,8 @@ export default {
       :game-scheduled-start="game.scheduledStartTime"
       :game-id="game.id"
     />
-    <div @click="startPeriod">начать период</div>
-    <div @click="endPeriod">закончить период</div>
+    <div class="clickable" @click="startPeriod">начать период</div>
+    <div class="clickable" @click="endPeriod">закончить период</div>
     <div class="lineups">
       <div class="lineup">
         <div
@@ -352,5 +352,11 @@ export default {
 
 .player {
   margin-bottom: 5px;
+}
+
+.clickable {
+  cursor: pointer;
+  background-color: #004777;
+  border-radius: 2px;
 }
 </style>
