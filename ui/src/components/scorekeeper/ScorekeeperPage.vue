@@ -211,8 +211,7 @@ export default {
       :game-scheduled-start="game.scheduledStartTime"
       :game-id="game.id"
     />
-    <div class="lineups">
-      Игроки
+    <div class="lineups-container">
       <div class="lineup">
         <div
           v-for="player in team1Lineup"
@@ -250,7 +249,6 @@ export default {
       </vue-simple-context-menu>
     </div>
     <div>
-      Ивенты уже имеющиеся в базе
       <div v-for="eventAndType in eventsWithTypesOrderedByMillisSinceStart">
         <GameEvent
           :type="eventAndType.type"
@@ -272,9 +270,20 @@ export default {
 </template>
 
 <style scoped>
-.lineup,
-.lineups {
+.lineups-container {
+  display: flex;
+  justify-content: start;
+}
+
+.lineup {
+  flex-grow: 1;
+  border: 5px solid #000000;
   display: flex;
   flex-direction: row;
+  border-radius: 8px;
+}
+
+.player {
+  margin-bottom: 5px;
 }
 </style>
