@@ -5,7 +5,9 @@ import PersonalFoul from "@/components/scorekeeper/events/PersonalFoul.vue";
 import PlayerEjection from "@/components/scorekeeper/events/PlayerEjection.vue";
 import PlayerTechnicalFoul from "@/components/scorekeeper/events/PlayerTechnicalFoul.vue";
 import Turnover from "@/components/scorekeeper/events/Turnover.vue";
-import {EVENT_NAME_BY_SLUG} from "../../constants";
+import {EVENT_NAME_BY_SLUG} from "@/constants";
+import PeriodStarter from "@/components/scorekeeper/events/PeriodStarter.vue";
+import PeriodEnder from "@/components/scorekeeper/events/PeriodEnder.vue";
 
 defineProps({
   unsavedByDefault: Boolean,
@@ -88,6 +90,12 @@ export default {
     <Turnover v-if="type === 'turnover'" @turnoverchanged="updateEventLocally"
                          :turnover="ev" :team-id-by-player-id="this.teamIdByPlayerId"
                          :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
+    <PeriodStarter v-if="type === 'period-starter'" @periodstarterchanged="updateEventLocally"
+                    :period-starter="ev" :team-id-by-player-id="this.teamIdByPlayerId"
+                    :players="players"/>
+    <PeriodEnder v-if="type === 'period-ender'" @periodenderchanged="updateEventLocally"
+                   :period-ender="ev" :team-id-by-player-id="this.teamIdByPlayerId"
+                   :players="players"/>
   </div>
 </template>
 

@@ -6,6 +6,7 @@ import axios from "axios";
 import {API} from "@/constants";
 import Timer from "@/components/scorekeeper/Timer.vue";
 import playerPage from "@/components/player/PlayerPage.vue";
+import {secondsInPeriods} from "@/util";
 
 export default {
   components: {Timer, GameEvent, GamePreview, PlayerPreview},
@@ -15,13 +16,16 @@ export default {
       teamIdByPlayerId: {},
       currentGameTimeInSeconds: 0,
       eventsWithTypesOrderedByMillisSinceStart: [],
+      periodRelatedEventsWithTypes: [],
       eventOptions: [
         {name: "Бросок с игры", slug: "field-goal-attempt"},
         {name: "Штрафной бросок", slug: "free-throw-attempt"},
         {name: "Фол", slug: "personal-foul"},
         {name: "Удаление", slug: "player-ejection"},
         {name: "Технический фол", slug: "player-technical-foul"},
-        {name: "Потеря", slug: "turnover"},],
+        {name: "Потеря", slug: "turnover"},
+        {name: "Выход в начала периода", slug: "period-starter"},
+        {name: "Выход с площадки в конеце периода", slug: "period-ender"},],
       season: 2023, //TODO: hardcoded atm
       game: {},
       team1Performance: {},
@@ -71,6 +75,9 @@ export default {
     this.team1Lineup.forEach(player=> this.teamIdByPlayerId[player.id] = this.game.team1.id);
     this.team2Lineup.forEach(player=> this.teamIdByPlayerId[player.id] = this.game.team2.id);
 
+    console.log(1);
+    console.log(this.gameEventLog.periodStarters);
+
     this.allLoaded = true;
   },
 
@@ -79,7 +86,20 @@ export default {
       this.currentGameTimeInSeconds = timeIsSeconds;
     },
 
+    startPeriod() {
+      axios.post(API + "/events/period-start", {game: this.game, timestamp: Date.now()})
+    },
+
+    endPeriod() {
+      axios.post(API + "/events/period-ending", {game: this.game, timestamp: Date.now()})
+    },
+
     updateEventsWithTypesOrderedByMillisSinceStart() {
+      this.gameEventLog.periodStarters.forEach(ev =>
+          ev.millisecondsSinceStart = secondsInPeriods(ev.period - 1) * 1000);
+      this.gameEventLog.periodEnders.forEach(ev =>
+          ev.millisecondsSinceStart = (secondsInPeriods(ev.period) - 1) * 1000);
+
       this.eventsWithTypesOrderedByMillisSinceStart =
           this.gameEventLog.fieldGoalAttempts.map(ev => ({type: "field-goal-attempt", ev: ev}))
               .concat(this.gameEventLog.freeThrowAttempts.map(ev => ({type: "free-throw-attempt", ev: ev})))
@@ -87,6 +107,8 @@ export default {
               .concat(this.gameEventLog.playerEjections.map(ev => ({type: "player-ejection", ev: ev})))
               .concat(this.gameEventLog.playerTechnicalFouls.map(ev => ({type: "player-technical-foul", ev: ev})))
               .concat(this.gameEventLog.turnovers.map(ev => ({type: "turnover", ev: ev})))
+              .concat(this.gameEventLog.periodStarters.map(ev => ({type: "period-starter", ev: ev})))
+              .concat(this.gameEventLog.periodEnders.map(ev => ({type: "period-ender", ev: ev})))
               .sort((a, b) => a.ev.millisecondsSinceStart - b.ev.millisecondsSinceStart);
     },
 
@@ -139,6 +161,20 @@ export default {
           millisecondsSinceStart: this.currentGameTimeInSeconds * 1000,
           game: this.game
         }
+      if (eventSlug === "period-starter")
+        return {
+          player: player,
+          period: 1,
+          team: {id: this.teamIdByPlayerId[player.id]},
+          game: this.game
+        }
+      if (eventSlug === "period-ender")
+        return {
+          player: player,
+          period: 1,
+          team: {id: this.teamIdByPlayerId[player.id]},
+          game: this.game
+        }
     },
 
     handleClick(event, item) {
@@ -162,6 +198,8 @@ export default {
                  :team1-info="game.team1" :team2-info="game.team2"
                  :game-scheduled-start="game.scheduledStartTime"
                  :game-id="game.id"/>
+    <div @click="startPeriod">начать период</div>
+    <div @click="endPeriod">закончить период</div>
     <div class="lineups">
       <div class="lineup">
         <div v-for="player in team1Lineup"

@@ -17,14 +17,14 @@ public class GameEventController {
     private final DatabaseQueries databaseQueries;
     private final FieldGoalAttemptRepository fieldGoalAttemptRepository;
     private final FreeThrowAttemptRepository freeThrowAttemptRepository;
-
     private final PersonalFoulRepository personalFoulRepository;
-
     private final PlayerTechnicalFoulRepository playerTechnicalFoulRepository;
-
     private final PlayerEjectionRepository playerEjectionRepository;
-
     private final TurnoverRepository turnoverRepository;
+    private final PeriodStartRepository periodStartRepository;
+    private final PeriodEndingRepository periodEndingRepository;
+    private final PeriodStarterRepository periodStarterRepository;
+    private final PeriodEnderRepository periodEnderRepository;
 
 
     public GameEventController(DatabaseQueries databaseQueries,
@@ -33,7 +33,11 @@ public class GameEventController {
                                PersonalFoulRepository personalFoulRepository,
                                PlayerTechnicalFoulRepository playerTechnicalFoulRepository,
                                PlayerEjectionRepository playerEjectionRepository,
-                               TurnoverRepository turnoverRepository) {
+                               TurnoverRepository turnoverRepository,
+                               PeriodStartRepository periodStartRepository,
+                               PeriodEndingRepository periodEndingRepository,
+                               PeriodStarterRepository periodStarterRepository,
+                               PeriodEnderRepository periodEnderRepository) {
         this.databaseQueries = databaseQueries;
         this.fieldGoalAttemptRepository = fieldGoalAttemptRepository;
         this.freeThrowAttemptRepository = freeThrowAttemptRepository;
@@ -41,6 +45,10 @@ public class GameEventController {
         this.playerTechnicalFoulRepository = playerTechnicalFoulRepository;
         this.playerEjectionRepository = playerEjectionRepository;
         this.turnoverRepository = turnoverRepository;
+        this.periodStartRepository = periodStartRepository;
+        this.periodEndingRepository = periodEndingRepository;
+        this.periodStarterRepository = periodStarterRepository;
+        this.periodEnderRepository = periodEnderRepository;
     }
 
     @GetMapping("/api/events/game/{gameId}")
@@ -150,10 +158,6 @@ public class GameEventController {
         }
     }
 
-
-
-
-
     @GetMapping("/api/events/turnover/{id}")
     Optional<Turnover> turnoverById(@PathVariable Long id) {
         return turnoverRepository.findById(id);
@@ -168,6 +172,86 @@ public class GameEventController {
     public ResponseEntity<String> deleteTurnoverById(@PathVariable Long id) {
         try {
             turnoverRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/api/events/period-start/{id}")
+    Optional<PeriodStart> periodStartById(@PathVariable Long id) {
+        return periodStartRepository.findById(id);
+    }
+
+    @PostMapping("/api/events/period-start")
+    PeriodStart createPeriodStart(@RequestBody PeriodStart periodStart) {
+        return periodStartRepository.save(periodStart);
+    }
+
+    @DeleteMapping("/api/events/period-start/{id}")
+    public ResponseEntity<String> deletePeriodStartById(@PathVariable Long id) {
+        try {
+            periodStartRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/api/events/period-ending/{id}")
+    Optional<PeriodEnding> periodEndingById(@PathVariable Long id) {
+        return periodEndingRepository.findById(id);
+    }
+
+    @PostMapping("/api/events/period-ending")
+    PeriodEnding createPeriodEnding(@RequestBody PeriodEnding periodEnding) {
+        return periodEndingRepository.save(periodEnding);
+    }
+
+    @DeleteMapping("/api/events/period-ending/{id}")
+    public ResponseEntity<String> deletePeriodEndingById(@PathVariable Long id) {
+        try {
+            periodEndingRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/api/events/period-starter/{id}")
+    Optional<PeriodStarter> periodStarterById(@PathVariable Long id) {
+        return periodStarterRepository.findById(id);
+    }
+
+    @PostMapping("/api/events/period-starter")
+    PeriodStarter createPeriodStarter(@RequestBody PeriodStarter periodStarter) {
+        return periodStarterRepository.save(periodStarter);
+    }
+
+    @DeleteMapping("/api/events/period-starter/{id}")
+    public ResponseEntity<String> deletePeriodStarterById(@PathVariable Long id) {
+        try {
+            periodStarterRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/api/events/period-ender/{id}")
+    Optional<PeriodEnder> periodEnderById(@PathVariable Long id) {
+        return periodEnderRepository.findById(id);
+    }
+
+    @PostMapping("/api/events/period-ender")
+    PeriodEnder createPeriodEnder(@RequestBody PeriodEnder periodEnder) {
+        return periodEnderRepository.save(periodEnder);
+    }
+
+    @DeleteMapping("/api/events/period-ender/{id}")
+    public ResponseEntity<String> deletePeriodEnderById(@PathVariable Long id) {
+        try {
+            periodEnderRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);

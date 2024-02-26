@@ -1,6 +1,6 @@
 <script setup>
 import TeamPreview from "@/components/league/TeamPreview.vue";
-import {GAME_STATUS_TRANSLATION} from "../../constants";
+import {GAME_STATUS_TRANSLATION} from "@/constants";
 
 let props = defineProps({
   team1Info: {
