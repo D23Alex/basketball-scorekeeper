@@ -68,48 +68,56 @@ export default {
     <div class="display">
       {{ prettyGameTimestampBySecondsSinceStart(secondsSinceStart()) }}
     </div>
-    <div class="controls">
-      <div
-        @click="
-          rewind(
-            periodsInSeconds(secondsSinceStart()) <= RULES.mainPeriods + 1
-              ? RULES.mainPeriodInSeconds
-              : RULES.overtimePeriodInSeconds
-          )
-        "
-        class="control-btn"
-      >
-        |&lt;
-      </div>
-      <div @click="rewind(60)" class="control-btn">&lt;&lt;</div>
-      <div @click="rewind(10)" class="control-btn">&lt;</div>
-      <div @click="rewind(1)" class="control-btn">-</div>
-      <div @click="toggleTimer()" class="control-btn">
-        {{ stopwatch.isRunning ? "stop" : "go" }}
-      </div>
-      <div @click="forward(1)" class="control-btn">+</div>
-      <div @click="forward(10)" class="control-btn">></div>
-      <div @click="forward(60)" class="control-btn">>></div>
-      <div
-        @click="
-          forward(
-            secondsSinceStart() < 2100
-              ? RULES.mainPeriodInSeconds
-              : RULES.overtimePeriodInSeconds
-          )
-        "
-        class="control-btn"
-      >
-        >|
+    <div class="controls-frame">
+      <div class="controls">
+        <div
+          @click="
+            rewind(
+              periodsInSeconds(secondsSinceStart()) <= RULES.mainPeriods + 1
+                ? RULES.mainPeriodInSeconds
+                : RULES.overtimePeriodInSeconds
+            )
+          "
+          class="control-btn"
+        >
+          |&lt;
+        </div>
+        <div @click="rewind(60)" class="control-btn">&lt;&lt;</div>
+        <div @click="rewind(10)" class="control-btn">&lt;</div>
+        <div @click="rewind(1)" class="control-btn">-</div>
+        <div @click="toggleTimer()" class="control-btn">
+          {{ stopwatch.isRunning ? "stop" : "go" }}
+        </div>
+        <div @click="forward(1)" class="control-btn">+</div>
+        <div @click="forward(10)" class="control-btn">></div>
+        <div @click="forward(60)" class="control-btn">>></div>
+        <div
+          @click="
+            forward(
+              secondsSinceStart() < 2100
+                ? RULES.mainPeriodInSeconds
+                : RULES.overtimePeriodInSeconds
+            )
+          "
+          class="control-btn"
+        >
+          >|
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.controls-frame {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #ddd;
+}
+
 .controls {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
 }
 
