@@ -2,18 +2,18 @@
 import axios from "axios";
 import BoxScore from "@/components/game/BoxScore.vue";
 import TeamPreview from "@/components/league/TeamPreview.vue";
-import {API, GAME_STATUS_TRANSLATION} from "@/constants";
+import { API, GAME_STATUS_TRANSLATION } from "@/constants";
 import GamePreview from "@/components/game/GamePreview.vue";
 import EventLog from "@/components/game/EventLog.vue";
-import {prettyGameTimestampBySecondsSinceStart} from "@/util";
+import { prettyGameTimestampBySecondsSinceStart } from "@/util";
 
 export default {
   computed: {
     GAME_STATUS_TRANSLATION() {
-      return GAME_STATUS_TRANSLATION
-    }
+      return GAME_STATUS_TRANSLATION;
+    },
   },
-  components: {GamePreview, TeamPreview, BoxScore, EventLog},
+  components: { GamePreview, TeamPreview, BoxScore, EventLog },
   data() {
     return {
       allLoaded: false,
@@ -48,78 +48,103 @@ export default {
         substitutionIns: [],
         substitutionOuts: [],
         timeouts: [],
-        turnovers: []
-      }
-    }
+        turnovers: [],
+      },
+    };
   },
 
   async mounted() {
-    this.gameEventLog = (await axios.get(API + "/events/game/" + this.$route.params.gameId)).data;
-    this.game = (await axios.get(API + "/games/" + this.$route.params.gameId)).data;
+    this.gameEventLog = (
+      await axios.get(API + "/events/game/" + this.$route.params.gameId)
+    ).data;
+    this.game = (
+      await axios.get(API + "/games/" + this.$route.params.gameId)
+    ).data;
     this.team1Lineup = this.gameEventLog.lineupOccurrences
-        .filter(occurrence => occurrence.team.id === this.game.team1.id)
-        .map(occurrence => occurrence.player);
+      .filter((occurrence) => occurrence.team.id === this.game.team1.id)
+      .map((occurrence) => occurrence.player);
     this.team2Lineup = this.gameEventLog.lineupOccurrences
-        .filter(occurrence => occurrence.team.id === this.game.team2.id)
-        .map(occurrence => occurrence.player);
+      .filter((occurrence) => occurrence.team.id === this.game.team2.id)
+      .map((occurrence) => occurrence.player);
     await this.updatePerformance();
 
-    this.team1Lineup.forEach(player=> this.teamIdByPlayerId[player.id] = this.game.team1.id);
-    this.team2Lineup.forEach(player=> this.teamIdByPlayerId[player.id] = this.game.team2.id);
+    this.team1Lineup.forEach(
+      (player) => (this.teamIdByPlayerId[player.id] = this.game.team1.id)
+    );
+    this.team2Lineup.forEach(
+      (player) => (this.teamIdByPlayerId[player.id] = this.game.team2.id)
+    );
     console.log(this.teamIdByPlayerId);
 
-    this.gameStatus = (await axios.get(API + "/games/status/" + this.$route.params.gameId)).data;
+    this.gameStatus = (
+      await axios.get(API + "/games/status/" + this.$route.params.gameId)
+    ).data;
 
     this.timer = setInterval(() => {
       this.updateGameEventLog();
-    }, 10000) // TODO: only do regular updates on a game that is online at the moment
+    }, 10000); // TODO: only do regular updates on a game that is online at the moment
 
     this.allLoaded = true;
   },
 
   beforeDestroy() {
-    clearInterval(this.timer)
+    clearInterval(this.timer);
   },
 
   methods: {
     prettyGameTimestampBySecondsSinceStart,
     lastEventTimestamp() {
       let allEvents = this.gameEventLog.fieldGoalAttempts
-          .concat(this.gameEventLog.fieldGoalAttempts)
-          .concat(this.gameEventLog.freeThrowAttempts)
-          .concat(this.gameEventLog.substitutionCalls)
-          .concat(this.gameEventLog.playerEjections)
-          .concat(this.gameEventLog.coachTechnicalFouls)
-          .concat(this.gameEventLog.freeThrowAttempts)
-          .concat(this.gameEventLog.playerTechnicalFouls)
-          .concat(this.gameEventLog.turnovers)
-          .concat(this.gameEventLog.periodStarters)
-          .concat(this.gameEventLog.periodEnders)
-          .sort((a, b) => b.millisecondsSinceStart - a.millisecondsSinceStart)
-      if (allEvents.length === 0)
-        return 0
-      return allEvents[0].millisecondsSinceStart
-
+        .concat(this.gameEventLog.fieldGoalAttempts)
+        .concat(this.gameEventLog.freeThrowAttempts)
+        .concat(this.gameEventLog.substitutionCalls)
+        .concat(this.gameEventLog.playerEjections)
+        .concat(this.gameEventLog.coachTechnicalFouls)
+        .concat(this.gameEventLog.freeThrowAttempts)
+        .concat(this.gameEventLog.playerTechnicalFouls)
+        .concat(this.gameEventLog.turnovers)
+        .concat(this.gameEventLog.periodStarters)
+        .concat(this.gameEventLog.periodEnders)
+        .sort((a, b) => b.millisecondsSinceStart - a.millisecondsSinceStart);
+      if (allEvents.length === 0) return 0;
+      return allEvents[0].millisecondsSinceStart;
     },
     async updatePerformance() {
-      this.team1Performance = (await axios.get(API + "/stats/team-single-game-performance/"
-          + this.game.team1.id + "/" + this.$route.params.gameId)).data.performance;
+      this.team1Performance = (
+        await axios.get(
+          API +
+            "/stats/team-single-game-performance/" +
+            this.game.team1.id +
+            "/" +
+            this.$route.params.gameId
+        )
+      ).data.performance;
       console.log(this.team1Performance);
-      this.team2Performance = (await axios.get(API + "/stats/team-single-game-performance/"
-          + this.game.team2.id + "/" + this.$route.params.gameId)).data.performance;
+      this.team2Performance = (
+        await axios.get(
+          API +
+            "/stats/team-single-game-performance/" +
+            this.game.team2.id +
+            "/" +
+            this.$route.params.gameId
+        )
+      ).data.performance;
     },
 
     async updateGameEventLog() {
-      this.gameStatus = (await axios.get(API + "/games/status/" + this.$route.params.gameId)).data;
-      let newEventLog = (await axios.get(API + "/events/game/" + this.$route.params.gameId)).data;
+      this.gameStatus = (
+        await axios.get(API + "/games/status/" + this.$route.params.gameId)
+      ).data;
+      let newEventLog = (
+        await axios.get(API + "/events/game/" + this.$route.params.gameId)
+      ).data;
       if (JSON.stringify(this.gameEventLog) !== JSON.stringify(newEventLog)) {
         this.gameEventLog = newEventLog;
-        if (this.game !== null)
-          await this.updatePerformance();
+        if (this.game !== null) await this.updatePerformance();
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <template>
@@ -128,24 +153,38 @@ export default {
       <div class="game-container">
         <div>{{ GAME_STATUS_TRANSLATION[gameStatus] }}</div>
         <div v-if="gameStatus === 'IN_PROGRESS'">
-          {{ prettyGameTimestampBySecondsSinceStart(lastEventTimestamp() / 1000) }}
+          {{
+            prettyGameTimestampBySecondsSinceStart(lastEventTimestamp() / 1000)
+          }}
         </div>
-      <TeamPreview :season="season" :team-id="game.team1.id"
-                   :team-city="game.team1.city" :team-name="game.team1.name"/>
-      <div class="score-container">
-        {{ team1Performance.totals.points }} - {{ team2Performance.totals.points }}
+        <TeamPreview
+          :season="season"
+          :team-id="game.team1.id"
+          :team-city="game.team1.city"
+          :team-name="game.team1.name"
+        />
+        <div class="score-container">
+          {{ team1Performance.totals.points }} -
+          {{ team2Performance.totals.points }}
+        </div>
+        <TeamPreview
+          :season="season"
+          :team-id="game.team2.id"
+          :team-city="game.team2.city"
+          :team-name="game.team2.name"
+        />
       </div>
-      <TeamPreview :season="season" :team-id="game.team2.id"
-                   :team-city="game.team2.city" :team-name="game.team2.name"/>
-    </div>
-    <BoxScore :key="gameEventLog" class="box-score"/>
-    <EventLog :team-id-by-player-id="teamIdByPlayerId" :key="gameEventLog" :game-event-log="gameEventLog"/>
+      <BoxScore :key="gameEventLog" class="box-score" />
+      <EventLog
+        :team-id-by-player-id="teamIdByPlayerId"
+        :key="gameEventLog"
+        :game-event-log="gameEventLog"
+      />
     </div>
   </template>
 </template>
 
 <style scoped>
-
 .box-score {
   margin-top: 70px; /* Отступ сверху в 40px */
 }
@@ -165,12 +204,11 @@ export default {
 }
 
 .outer {
-    background-color: #D9D9D9;
-    /* FIXME: in percents */
-    height: 595px; 
-    width: 100%;
-    padding: 50px;
-    overflow: auto;
-  }
-
+  background-color: #d9d9d9;
+  /* FIXME: in percents */
+  height: 80%;
+  width: 100%;
+  padding: 50px;
+  overflow: auto;
+}
 </style>

@@ -1,6 +1,6 @@
 <script setup>
-import TeamPreview from "@/components/league/TeamPreview.vue";
-import { GAME_STATUS_TRANSLATION } from "@/constants";
+import TeamPreviewMini from "@/components/league/TeamPreviewMini.vue";
+import { GAME_STATUS_TRANSLATION } from "../../constants";
 
 let props = defineProps({
   team1Info: {
@@ -27,7 +27,7 @@ let props = defineProps({
     <div class="status">{{ GAME_STATUS_TRANSLATION[gameStatus] }}</div>
     <div class="scheduled-start">{{ gameScheduledStart.split("T")[0] }}</div>
     <div class="teams-scores">
-      <TeamPreview
+      <TeamPreviewMini
         :season="season"
         :team-id="team1Info.id"
         :team-city="team1Info.city"
@@ -36,7 +36,7 @@ let props = defineProps({
       <div class="score">{{ team1Score }}</div>
       <div class="score-separator">-</div>
       <div class="score">{{ team2Score }}</div>
-      <TeamPreview
+      <TeamPreviewMini
         :season="season"
         :team-id="team2Info.id"
         :team-city="team2Info.city"

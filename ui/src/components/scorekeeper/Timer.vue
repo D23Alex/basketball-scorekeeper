@@ -1,34 +1,42 @@
 <script setup>
-import {RULES} from "@/constants";
-import {periodsInSeconds, prettyGameTimestampBySecondsSinceStart} from "@/util";
+import { RULES } from "@/constants";
+import {
+  periodsInSeconds,
+  prettyGameTimestampBySecondsSinceStart,
+} from "@/util";
 
 defineProps({
-  initialTime: Number
+  initialTime: Number,
 });
 </script>
 
 <script>
-import { useStopwatch } from 'vue-timer-hook';
-import {RULES} from "@/constants";
-import {periodsInSeconds} from "@/util";
+import { useStopwatch } from "vue-timer-hook";
+import { RULES } from "@/constants";
+import { periodsInSeconds } from "@/util";
 
 export default {
   data() {
     return {
-      stopwatch: useStopwatch(this.initialTime !== undefined ? this.initialTime : 0, false),
-    }
+      stopwatch: useStopwatch(
+        this.initialTime !== undefined ? this.initialTime : 0,
+        false
+      ),
+    };
   },
   methods: {
     useStopwatch,
 
     toggleTimer() {
-      if (this.stopwatch.isRunning)
-        this.stopwatch.pause();
+      if (this.stopwatch.isRunning) this.stopwatch.pause();
       else this.stopwatch.start();
     },
 
     setTime(seconds) {
-      this.stopwatch = useStopwatch(Math.max(0, seconds), this.stopwatch.isRunning);
+      this.stopwatch = useStopwatch(
+        Math.max(0, seconds),
+        this.stopwatch.isRunning
+      );
     },
 
     forward(seconds) {
@@ -40,19 +48,19 @@ export default {
     },
 
     secondsSinceStart() {
-      return (this.stopwatch.minutes) * 60 + this.stopwatch.seconds;
+      return this.stopwatch.minutes * 60 + this.stopwatch.seconds;
     },
   },
 
   watch: {
-    "stopwatch.seconds" : function (val) {
-      this.$emit('selectedtimechanged', this.secondsSinceStart());
+    "stopwatch.seconds": function (val) {
+      this.$emit("selectedtimechanged", this.secondsSinceStart());
     },
-    "stopwatch.minutes" : function (val) {
-      this.$emit('selectedtimechanged', this.secondsSinceStart());
+    "stopwatch.minutes": function (val) {
+      this.$emit("selectedtimechanged", this.secondsSinceStart());
     },
-  }
-}
+  },
+};
 </script>
 
 <template>
@@ -60,55 +68,92 @@ export default {
     <div class="display">
       {{ prettyGameTimestampBySecondsSinceStart(secondsSinceStart()) }}
     </div>
-    <div class="controls">
-      <div @click="rewind(periodsInSeconds(secondsSinceStart()) <= RULES.mainPeriods + 1 ?
-        RULES.mainPeriodInSeconds : RULES.overtimePeriodInSeconds)">
-        |&lt;
-      </div>
-      <div @click="rewind(60)">
-        &lt;&lt;
-      </div>
-      <div @click="rewind(10)">
-        &lt;
-      </div>
-      <div @click="rewind(1)">
-        -
-      </div>
-      <div @click="toggleTimer()">{{stopwatch.isRunning ? 'stop' : 'go'}}</div>
-      <div @click="forward(1)">
-        +
-      </div>
-      <div @click="forward(10)">
+    <div class="controls-frame">
+      <div class="controls">
+        <div
+          @click="
+            rewind(
+              periodsInSeconds(secondsSinceStart()) <= RULES.mainPeriods + 1
+                ? RULES.mainPeriodInSeconds
+                : RULES.overtimePeriodInSeconds
+            )
+          "
+          class="control-btn"
         >
-      </div>
-      <div @click="forward(60)">
-        >>
-      </div>
-      <div @click="forward(secondsSinceStart() < 2100 ? RULES.mainPeriodInSeconds : RULES.overtimePeriodInSeconds)">
-        >|
+          |&lt;
+        </div>
+        <div @click="rewind(60)" class="control-btn">&lt;&lt;</div>
+        <div @click="rewind(10)" class="control-btn">&lt;</div>
+        <div @click="rewind(1)" class="control-btn">-</div>
+        <div @click="toggleTimer()" class="control-btn">
+          {{ stopwatch.isRunning ? "stop" : "go" }}
+        </div>
+        <div @click="forward(1)" class="control-btn">+</div>
+        <div @click="forward(10)" class="control-btn">></div>
+        <div @click="forward(60)" class="control-btn">>></div>
+        <div
+          @click="
+            forward(
+              secondsSinceStart() < 2100
+                ? RULES.mainPeriodInSeconds
+                : RULES.overtimePeriodInSeconds
+            )
+          "
+          class="control-btn"
+        >
+          >|
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.controls, .display {
+.controls-frame {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #ddd;
+}
+
+.controls {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+}
+
+.control-btn {
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.control-btn:hover {
+  background-color: #45a049;
+}
+
+.display {
+  display: flex;
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  width: 100%;
+  background-color: azure;
 }
 
 .timer {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.controls > div {
-  border: 1px solid black;
-}
-
-.controls > div:hover {
-  cursor: pointer;
-  background-color: red;
+  justify-content: center;
+  font-weight: bold;
 }
 </style>
