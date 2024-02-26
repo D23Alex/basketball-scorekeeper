@@ -140,13 +140,20 @@ export default {
 }
 
 .display {
+  display: flex;
   font-size: 20px;
-  margin-bottom: 20px;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  width: 100%;
+  background-color: azure;
 }
 
 .timer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  font-weight: bold;
 }
 </style>
