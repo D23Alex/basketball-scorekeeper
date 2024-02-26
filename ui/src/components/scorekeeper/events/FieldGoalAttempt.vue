@@ -46,13 +46,13 @@ export default {
 
 <template>
 <div class="field-goal-attempt">
-  <SelectPlayer @selectedplayerchanged="updateShooter" :team-id-by-player-id="this.teamIdByPlayerId"
+  <SelectPlayer @selectedplayerchanged="updateShooter" :team-id-by-player-id="teamIdByPlayerId"
                 :label="'бросил'" :selected-player="fieldGoalAttempt.shooter" :players="players"/>
-  <SelectPlayer @selectedplayerchanged="updateAssistant" :team-id-by-player-id="this.teamIdByPlayerId"
+  <SelectPlayer @selectedplayerchanged="updateAssistant" :team-id-by-player-id="teamIdByPlayerId"
                 :label="'результативная передача'" :selected-player="fieldGoalAttempt.assistant" :players="players"/>
-  <SelectPlayer @selectedplayerchanged="updateReboundedBy" :team-id-by-player-id="this.teamIdByPlayerId"
+  <SelectPlayer @selectedplayerchanged="updateReboundedBy" :team-id-by-player-id="teamIdByPlayerId"
                 :label="'подобрал'" :selected-player="fieldGoalAttempt.reboundedBy" :players="players"/>
-  <SelectPlayer @selectedplayerchanged="updateBlockedBy" :team-id-by-player-id="this.teamIdByPlayerId"
+  <SelectPlayer @selectedplayerchanged="updateBlockedBy" :team-id-by-player-id="teamIdByPlayerId"
                 :label="'блок'" :selected-player="fieldGoalAttempt.blockedBy" :players="players"/>
   <SelectBoolean @selectedbooleanchanged="updateIsSuccessful"
                  :label="'попадание'" :selected-value="fieldGoalAttempt.isSuccessful"/>

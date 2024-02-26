@@ -41,9 +41,9 @@ export default {
 
 <template>
 <div class="field-goal-attempt">
-  <SelectPlayer @selectedplayerchanged="updateFoulingPlayer" :team-id-by-player-id="this.teamIdByPlayerId"
+  <SelectPlayer @selectedplayerchanged="updateFoulingPlayer" :team-id-by-player-id="teamIdByPlayerId"
                 :label="'сфолил'" :selected-player="personalFoul.foulingPlayer" :players="players"/>
-  <SelectPlayer @selectedplayerchanged="updateFouledPlayer" :team-id-by-player-id="this.teamIdByPlayerId"
+  <SelectPlayer @selectedplayerchanged="updateFouledPlayer" :team-id-by-player-id="teamIdByPlayerId"
                 :label="'на ком сфолили'" :selected-player="personalFoul.fouledPlayer" :players="players"/>
   <SelectBoolean @selectedbooleanchanged="updateIsUnsportsmanlike"
                  :label="'неспортивный'" :selected-value="personalFoul.isUnsportsmanlike"/>

@@ -30,7 +30,7 @@ export default {
 
 <template>
 <div class="period-starter">
-  <SelectPlayer @selectedplayerchanged="updatePlayer" :team-id-by-player-id="this.teamIdByPlayerId"
+  <SelectPlayer @selectedplayerchanged="updatePlayer" :team-id-by-player-id="teamIdByPlayerId"
                 :label="'вышел на площадку'" :selected-player="periodStarter.player" :players="players"/>
   <SelectFromEnum @selectedoptionchanged="updatePeriod"
                   :label="'период'" :selected-option="[periodStarter.period, PERIOD_TRANSLATION[periodStarter.period]]"

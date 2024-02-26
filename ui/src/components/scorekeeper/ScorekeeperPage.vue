@@ -229,12 +229,12 @@ export default {
       Ивенты уже имеющиеся в базе
       <div v-for="eventAndType in eventsWithTypesOrderedByMillisSinceStart">
         <GameEvent :type="eventAndType.type" :ev="eventAndType.ev" :players="team1Lineup.concat(team2Lineup)"
-                   :team-id-by-player-id="this.teamIdByPlayerId"/>
+                   :team-id-by-player-id="teamIdByPlayerId"/>
       </div>
       Новые ивенты
       <div v-for="eventAndType in eventsNotSaved">
         <GameEvent unsaved-by-default="true" :type="eventAndType.type" :ev="eventAndType.ev"
-                   :players="team1Lineup.concat(team2Lineup)" :team-id-by-player-id="this.teamIdByPlayerId"/>
+                   :players="team1Lineup.concat(team2Lineup)" :team-id-by-player-id="teamIdByPlayerId"/>
       </div>
     </div>
   </template>

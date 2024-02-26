@@ -40,9 +40,9 @@ export default {
 
 <template>
 <div class="field-goal-attempt">
-  <SelectPlayer @selectedplayerchanged="updatePlayer" :team-id-by-player-id="this.teamIdByPlayerId"
+  <SelectPlayer @selectedplayerchanged="updatePlayer" :team-id-by-player-id="teamIdByPlayerId"
                 :label="'потеря'" :selected-player="turnover.player" :players="players"/>
-  <SelectPlayer @selectedplayerchanged="updateStealer" :team-id-by-player-id="this.teamIdByPlayerId"
+  <SelectPlayer @selectedplayerchanged="updateStealer" :team-id-by-player-id="teamIdByPlayerId"
                 :label="'перехват'" :selected-player="turnover.stealer" :players="players"/>
   <SelectFromEnum @selectedoptionchanged="updateCause"
                   :label="'причина'" :selected-option="turnover.cause === null? ['OTHER', 'другое']

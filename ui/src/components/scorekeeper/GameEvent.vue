@@ -73,28 +73,28 @@ export default {
     <div class="clickable" @click="deleteEvent()">удалить</div>
     <div class="clickable" v-if="hasUnsavedChanges" @click="saveEvent()">сохранить</div>
     <FieldGoalAttempt v-if="type === 'field-goal-attempt'" @fieldgoalattemptchanged="updateEventLocally"
-                      :field-goal-attempt="ev" :team-id-by-player-id="this.teamIdByPlayerId"
+                      :field-goal-attempt="ev" :team-id-by-player-id="teamIdByPlayerId"
                       :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
     <FreeThrowAttempt v-if="type === 'free-throw-attempt'" @freethrowattemptchanged="updateEventLocally"
-                      :free-throw-attempt="ev" :team-id-by-player-id="this.teamIdByPlayerId"
+                      :free-throw-attempt="ev" :team-id-by-player-id="teamIdByPlayerId"
                       :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
     <PersonalFoul v-if="type === 'personal-foul'" @personalfoulchanged="updateEventLocally"
-                      :personal-foul="ev" :team-id-by-player-id="this.teamIdByPlayerId"
+                      :personal-foul="ev" :team-id-by-player-id="teamIdByPlayerId"
                       :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
     <PlayerEjection v-if="type === 'player-ejection'" @playerejectionchanged="updateEventLocally"
-                      :player-ejection="ev" :team-id-by-player-id="this.teamIdByPlayerId"
+                      :player-ejection="ev" :team-id-by-player-id="teamIdByPlayerId"
                       :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
     <PlayerTechnicalFoul v-if="type === 'player-technical-foul'" @playertechnicalfoulchanged="updateEventLocally"
-                    :player-technical-foul="ev" :team-id-by-player-id="this.teamIdByPlayerId"
+                    :player-technical-foul="ev" :team-id-by-player-id="teamIdByPlayerId"
                     :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
     <Turnover v-if="type === 'turnover'" @turnoverchanged="updateEventLocally"
-                         :turnover="ev" :team-id-by-player-id="this.teamIdByPlayerId"
+                         :turnover="ev" :team-id-by-player-id="teamIdByPlayerId"
                          :players="players" :initial-game-time-in-seconds="initialGameTimeInSeconds"/>
     <PeriodStarter v-if="type === 'period-starter'" @periodstarterchanged="updateEventLocally"
-                    :period-starter="ev" :team-id-by-player-id="this.teamIdByPlayerId"
+                    :period-starter="ev" :team-id-by-player-id="teamIdByPlayerId"
                     :players="players"/>
     <PeriodEnder v-if="type === 'period-ender'" @periodenderchanged="updateEventLocally"
-                   :period-ender="ev" :team-id-by-player-id="this.teamIdByPlayerId"
+                   :period-ender="ev" :team-id-by-player-id="teamIdByPlayerId"
                    :players="players"/>
   </div>
 </template>
