@@ -5,6 +5,7 @@ defineProps({
   playerTechnicalFoul: {},
   players: Array,
   initialGameTimeInSeconds: Number,
+  teamIdByPlayerId: {},
 })
 </script>
 
@@ -28,7 +29,7 @@ export default {
 
 <template>
 <div class="field-goal-attempt">
-  <SelectPlayer @selectedplayerchanged="updateFoulingPlayer"
+  <SelectPlayer @selectedplayerchanged="updateFoulingPlayer" :team-id-by-player-id="this.teamIdByPlayerId"
                 :label="'сфолил'" :selected-player="playerTechnicalFoul.foulingPlayer" :players="players"/>
   <Timer @selectedtimechanged="updateTime"
          :initial-time="Math.floor(playerTechnicalFoul.millisecondsSinceStart / 1000)"/>

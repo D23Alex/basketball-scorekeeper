@@ -2,7 +2,8 @@
 defineProps({
   label: String,
   players: Array,
-  selectedPlayer: {}
+  selectedPlayer: {},
+  teamIdByPlayerId: {},
 })
 </script>
 
@@ -30,8 +31,7 @@ export default {
     <PlayerPreview v-if="selected !== null" :player-id="selected.id"
                    :firstName="selected.firstName"
                    :lastName="selected.lastName"
-                   :teamId="1"
-                   :jerseyNumber="1"/>
+                   :teamId="teamIdByPlayerId[selected.id]"/>
     <select v-model="selected" style="height: 50px;">
       <option v-for="player in players.concat(null)" v-bind:value="player">
         {{ player !== null ? player.firstName + " " + player.lastName : "никто" }}

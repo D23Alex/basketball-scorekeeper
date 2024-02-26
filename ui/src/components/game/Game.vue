@@ -2,12 +2,17 @@
 import axios from "axios";
 import BoxScore from "@/components/game/BoxScore.vue";
 import TeamPreview from "@/components/league/TeamPreview.vue";
-import {API} from "@/constants";
+import {API, GAME_STATUS_TRANSLATION} from "@/constants";
 import GamePreview from "@/components/game/GamePreview.vue";
 import EventLog from "@/components/game/EventLog.vue";
-
+import {prettyGameTimestampBySecondsSinceStart} from "../../util";
 
 export default {
+  computed: {
+    GAME_STATUS_TRANSLATION() {
+      return GAME_STATUS_TRANSLATION
+    }
+  },
   components: {GamePreview, TeamPreview, BoxScore, EventLog},
   data() {
     return {
@@ -15,6 +20,7 @@ export default {
       timer: null,
       game: null,
       season: 2023, //TODO: season is hardcoded atm, deal with it later
+      gameStatus: null,
 
       team1Lineup: [],
       team2Lineup: [],
@@ -57,6 +63,8 @@ export default {
         .map(occurrence => occurrence.player);
     await this.updatePerformance();
 
+    this.gameStatus = (await axios.get(API + "/games/status/" + this.$route.params.gameId)).data;
+
     this.timer = setInterval(() => {
       this.updateGameEventLog();
     }, 10000) // TODO: only do regular updates on a game that is online at the moment
@@ -69,6 +77,25 @@ export default {
   },
 
   methods: {
+    prettyGameTimestampBySecondsSinceStart,
+    lastEventTimestamp() {
+      let allEvents = this.gameEventLog.fieldGoalAttempts
+          .concat(this.gameEventLog.fieldGoalAttempts)
+          .concat(this.gameEventLog.freeThrowAttempts)
+          .concat(this.gameEventLog.substitutionCalls)
+          .concat(this.gameEventLog.playerEjections)
+          .concat(this.gameEventLog.coachTechnicalFouls)
+          .concat(this.gameEventLog.freeThrowAttempts)
+          .concat(this.gameEventLog.playerTechnicalFouls)
+          .concat(this.gameEventLog.turnovers)
+          .concat(this.gameEventLog.periodStarters)
+          .concat(this.gameEventLog.periodEnders)
+          .sort((a, b) => b.millisecondsSinceStart - a.millisecondsSinceStart)
+      if (allEvents.length === 0)
+        return 0
+      return allEvents[0].millisecondsSinceStart
+
+    },
     async updatePerformance() {
       this.team1Performance = (await axios.get(API + "/stats/team-single-game-performance/"
           + this.game.team1.id + "/" + this.$route.params.gameId)).data.performance;
@@ -78,6 +105,7 @@ export default {
     },
 
     async updateGameEventLog() {
+      this.gameStatus = (await axios.get(API + "/games/status/" + this.$route.params.gameId)).data;
       let newEventLog = (await axios.get(API + "/events/game/" + this.$route.params.gameId)).data;
       if (JSON.stringify(this.gameEventLog) !== JSON.stringify(newEventLog)) {
         this.gameEventLog = newEventLog;
@@ -93,6 +121,10 @@ export default {
   <template v-if="allLoaded">
     <div class="outer">
       <div class="game-container">
+        <div>{{ GAME_STATUS_TRANSLATION[this.gameStatus] }}</div>
+        <div v-if="this.gameStatus === 'IN_PROGRESS'">
+          {{ prettyGameTimestampBySecondsSinceStart(lastEventTimestamp() / 1000) }}
+        </div>
       <TeamPreview :season="season" :team-id="game.team1.id"
                    :team-city="game.team1.city" :team-name="game.team1.name"/>
       <div class="score-container">

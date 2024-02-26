@@ -5,21 +5,27 @@ import PlayerPreview from "@/components/scorekeeper/PlayerPreview.vue";
 import axios from "axios";
 import {API} from "@/constants";
 import Timer from "@/components/scorekeeper/Timer.vue";
+import playerPage from "@/components/player/PlayerPage.vue";
+import {secondsInPeriods} from "@/util";
 
 export default {
   components: {Timer, GameEvent, GamePreview, PlayerPreview},
   data() {
     return {
       allLoaded: false,
+      teamIdByPlayerId: {},
       currentGameTimeInSeconds: 0,
       eventsWithTypesOrderedByMillisSinceStart: [],
+      periodRelatedEventsWithTypes: [],
       eventOptions: [
         {name: "Бросок с игры", slug: "field-goal-attempt"},
         {name: "Штрафной бросок", slug: "free-throw-attempt"},
         {name: "Фол", slug: "personal-foul"},
         {name: "Удаление", slug: "player-ejection"},
         {name: "Технический фол", slug: "player-technical-foul"},
-        {name: "Потеря", slug: "turnover"},],
+        {name: "Потеря", slug: "turnover"},
+        {name: "Выход в начала периода", slug: "period-starter"},
+        {name: "Выход с площадки в конеце периода", slug: "period-ender"},],
       season: 2023, //TODO: hardcoded atm
       game: {},
       team1Performance: {},
@@ -65,16 +71,35 @@ export default {
         .filter(occurrence => occurrence.team.id === this.game.team2.id)
         .map(occurrence => occurrence.player);
     this.updateEventsWithTypesOrderedByMillisSinceStart();
+
+    this.team1Lineup.forEach(player=> this.teamIdByPlayerId[player.id] = this.game.team1.id);
+    this.team2Lineup.forEach(player=> this.teamIdByPlayerId[player.id] = this.game.team2.id);
+
+    console.log(1);
+    console.log(this.gameEventLog.periodStarters);
+
     this.allLoaded = true;
   },
 
   methods: {
     updateGameTime(timeIsSeconds) {
       this.currentGameTimeInSeconds = timeIsSeconds;
-      console.log('updated');
+    },
+
+    startPeriod() {
+      axios.post(API + "/events/period-start", {game: this.game, timestamp: Date.now()})
+    },
+
+    endPeriod() {
+      axios.post(API + "/events/period-ending", {game: this.game, timestamp: Date.now()})
     },
 
     updateEventsWithTypesOrderedByMillisSinceStart() {
+      this.gameEventLog.periodStarters.forEach(ev =>
+          ev.millisecondsSinceStart = secondsInPeriods(ev.period - 1) * 1000);
+      this.gameEventLog.periodEnders.forEach(ev =>
+          ev.millisecondsSinceStart = (secondsInPeriods(ev.period) - 1) * 1000);
+
       this.eventsWithTypesOrderedByMillisSinceStart =
           this.gameEventLog.fieldGoalAttempts.map(ev => ({type: "field-goal-attempt", ev: ev}))
               .concat(this.gameEventLog.freeThrowAttempts.map(ev => ({type: "free-throw-attempt", ev: ev})))
@@ -82,6 +107,8 @@ export default {
               .concat(this.gameEventLog.playerEjections.map(ev => ({type: "player-ejection", ev: ev})))
               .concat(this.gameEventLog.playerTechnicalFouls.map(ev => ({type: "player-technical-foul", ev: ev})))
               .concat(this.gameEventLog.turnovers.map(ev => ({type: "turnover", ev: ev})))
+              .concat(this.gameEventLog.periodStarters.map(ev => ({type: "period-starter", ev: ev})))
+              .concat(this.gameEventLog.periodEnders.map(ev => ({type: "period-ender", ev: ev})))
               .sort((a, b) => a.ev.millisecondsSinceStart - b.ev.millisecondsSinceStart);
     },
 
@@ -134,6 +161,20 @@ export default {
           millisecondsSinceStart: this.currentGameTimeInSeconds * 1000,
           game: this.game
         }
+      if (eventSlug === "period-starter")
+        return {
+          player: player,
+          period: 1,
+          team: {id: this.teamIdByPlayerId[player.id]},
+          game: this.game
+        }
+      if (eventSlug === "period-ender")
+        return {
+          player: player,
+          period: 1,
+          team: {id: this.teamIdByPlayerId[player.id]},
+          game: this.game
+        }
     },
 
     handleClick(event, item) {
@@ -157,13 +198,13 @@ export default {
                  :team1-info="game.team1" :team2-info="game.team2"
                  :game-scheduled-start="game.scheduledStartTime"
                  :game-id="game.id"/>
+    <div @click="startPeriod">начать период</div>
+    <div @click="endPeriod">закончить период</div>
     <div class="lineups">
-      Игроки
       <div class="lineup">
         <div v-for="player in team1Lineup"
              @click.prevent.stop="handleClick($event, player)">
           <PlayerPreview :player-id="player.id"
-                         :jersey-number="1"
                          :teamId="game.team1.id"
                          :first-name="player.firstName"
                          :last-name="player.lastName"/>
@@ -173,7 +214,6 @@ export default {
         <div v-for="player in team2Lineup"
              @click.prevent.stop="handleClick($event, player)">
           <PlayerPreview :player-id="player.id"
-                         :jersey-number="1"
                          :teamId="game.team2.id"
                          :first-name="player.firstName"
                          :last-name="player.lastName"/>
@@ -188,12 +228,13 @@ export default {
     <div>
       Ивенты уже имеющиеся в базе
       <div v-for="eventAndType in eventsWithTypesOrderedByMillisSinceStart">
-        <GameEvent :type="eventAndType.type" :ev="eventAndType.ev" :players="team1Lineup.concat(team2Lineup)"/>
+        <GameEvent :type="eventAndType.type" :ev="eventAndType.ev" :players="team1Lineup.concat(team2Lineup)"
+                   :team-id-by-player-id="this.teamIdByPlayerId"/>
       </div>
       Новые ивенты
       <div v-for="eventAndType in eventsNotSaved">
         <GameEvent unsaved-by-default="true" :type="eventAndType.type" :ev="eventAndType.ev"
-                   :players="team1Lineup.concat(team2Lineup)"/>
+                   :players="team1Lineup.concat(team2Lineup)" :team-id-by-player-id="this.teamIdByPlayerId"/>
       </div>
     </div>
   </template>

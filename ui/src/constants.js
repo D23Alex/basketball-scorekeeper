@@ -39,6 +39,16 @@ export const EJECTION_CAUSE_TRANSLATION = {
     "UNSPORTSMANLIKE_BEHAVIOR": "неспортивное поведение"
 }
 
+export const PERIOD_TRANSLATION = {
+    1: "1 четверть",
+    2: "2 четверть",
+    3: "3 четверть",
+    4: "4 четверть",
+    5: "OT",
+    6: "2OT",
+    7: "3OT"
+}
+
 export const PLAYER_POSITION_TRANSLATION = {
     "SHOOTING_GUARD": "атакующий защитник",
     "POINT_GUARD": "разыгрывающий защитник",
@@ -62,6 +72,9 @@ export const EVENT_NAME_BY_SLUG = {
     "personal-foul": "нарушение",
     "player-ejection": "удаление игрока",
     "turnover": "потеря",
+    "period-start": "начало периода",
+    "period-starter": "выход игрока в начале периода",
+    "period-ender": "уход игрока с площадки в конце периода",
 }
 
 export const GAME_STATUS_TRANSLATION = {
