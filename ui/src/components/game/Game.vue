@@ -150,14 +150,13 @@ export default {
 <template>
   <template v-if="allLoaded">
     <div class="outer">
+      <div>{{ GAME_STATUS_TRANSLATION[gameStatus] }}</div>
+      <div v-if="gameStatus === 'IN_PROGRESS'">
+        {{
+          prettyGameTimestampBySecondsSinceStart(lastEventTimestamp() / 1000)
+        }}
+      </div>
       <div class="game-container">
-        <div>{{ GAME_STATUS_TRANSLATION[gameStatus] }}</div>
-        <div v-if="gameStatus === 'IN_PROGRESS'">
-          {{
-            prettyGameTimestampBySecondsSinceStart(lastEventTimestamp() / 1000)
-          }}
-        </div>
-        <br/>
         <TeamPreview
           :season="season"
           :team-id="game.team1.id"
