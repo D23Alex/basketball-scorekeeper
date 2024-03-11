@@ -157,6 +157,7 @@ export default {
             prettyGameTimestampBySecondsSinceStart(lastEventTimestamp() / 1000)
           }}
         </div>
+        <br/>
         <TeamPreview
           :season="season"
           :team-id="game.team1.id"
