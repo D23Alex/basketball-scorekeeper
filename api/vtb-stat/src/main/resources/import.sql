@@ -134,7 +134,8 @@ INSERT INTO free_throw_attempts (is_successful, game_id, milliseconds_since_star
 -- фол в поле в нападении
 INSERT INTO personal_fouls (is_offensive, is_unsportsmanlike, fouled_player_id, fouling_player_id, game_id, milliseconds_since_start) VALUES (true, false, 1, 4, 1, 11000);
 
-INSERT INTO field_goal_attempts (is_successful, type, game_id, milliseconds_since_start, shooter_id, blocked_by_id) VALUES (false, 1, 1, 12000, 1, 4);
+INSERT INTO field_goal_attempts (is_success
+ful, type, game_id, milliseconds_since_start, shooter_id, blocked_by_id) VALUES (false, 1, 1, 12000, 1, 4);
 
 -- Команда 1 берёт таймаут, игрок 3 выходит на поле, 2 садится
 INSERT INTO substitution_calls (calling_team_id, game_id, milliseconds_since_start) VALUES (1, 1, 13000);
@@ -172,10 +173,10 @@ INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2
 INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-01-30 19:00:00', 1, 2);
 INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (4, 4, '2024-01-31 19:00:00', 4, 5);
 
-INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-02-26 18:00:00', 1, 2);
-INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (4, 4, '2024-02-27 19:00:00', 4, 5);
-INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-02-28 20:00:00', 1, 2);
-INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (5, 3, '2024-03-02 17:00:00', 3, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-03-11 18:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (4, 4, '2024-03-12 19:00:00', 4, 5);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-03-13 20:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (5, 3, '2024-03-14 17:00:00', 3, 2);
 
 
 INSERT INTO lineup_occurrences (game_id, jersey_number, player_id, team_id) VALUES (18, 999, 1, 1);
