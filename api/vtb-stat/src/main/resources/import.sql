@@ -173,10 +173,10 @@ INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2
 INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-01-30 19:00:00', 1, 2);
 INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (4, 4, '2024-01-31 19:00:00', 4, 5);
 
-INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-03-11 18:00:00', 1, 2);
-INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (4, 4, '2024-03-12 19:00:00', 4, 5);
-INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-03-13 20:00:00', 1, 2);
-INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (5, 3, '2024-03-14 17:00:00', 3, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-04-18 18:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (4, 4, '2024-04-19 19:00:00', 4, 5);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (3, 1, '2024-04-20 20:00:00', 1, 2);
+INSERT INTO games (arena_id, home_team_id, scheduled_start_time, team1_id, team2_id) VALUES (5, 3, '2024-04-21 17:00:00', 3, 2);
 
 
 INSERT INTO lineup_occurrences (game_id, jersey_number, player_id, team_id) VALUES (18, 999, 1, 1);
